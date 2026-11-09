@@ -1,0 +1,32 @@
+{
+ "name": "财经日报 Daily Briefing",
+ "short_name": "财经日报",
+ "description": "证券时报 · 中国证券报 · 第一财经 · Reuters · FT · 经济学人 每日资讯汇总",
+ "start_url": "./index.html",
+ "scope": "./",
+ "display": "standalone",
+ "orientation": "portrait",
+ "background_color": "#0e1116",
+ "theme_color": "#0e1116",
+ "lang": "zh-CN",
+ "icons": [
+  {
+   "src": "icons/icon-192.png",
+   "sizes": "192x192",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icons/icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any"
+  },
+  {
+   "src": "icons/icon-maskable-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "maskable"
+  }
+ ]
+}

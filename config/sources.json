@@ -1,0 +1,321 @@
+{
+  "version": 1,
+  "updated": "2026-11-07",
+  "notes": "抓取源配置。cn_* 为可直连全文源；en_* 走 rss2json 代理仅取标题+摘要（原站不可直连或存在付费墙）。",
+  "sources": [
+    {
+      "id": "stcn",
+      "name": "证券时报",
+      "lang": "zh",
+      "fulltext": true,
+      "list_pages": [
+        {
+          "url": "https://www.stcn.com/article/list/yw.html",
+          "channel": "要闻"
+        },
+        {
+          "url": "https://www.stcn.com/article/list/finance.html",
+          "channel": "金融"
+        },
+        {
+          "url": "https://www.stcn.com/article/list/cj.html",
+          "channel": "财经"
+        },
+        {
+          "url": "https://www.stcn.com/article/list/company.html",
+          "channel": "公司"
+        },
+        {
+          "url": "https://www.stcn.com/article/list/comment.html",
+          "channel": "评论"
+        }
+      ],
+      "link_pattern": "\"(/article/detail/\\d+\\.html)\"",
+      "link_prefix": "https://www.stcn.com",
+      "content_selectors": [
+        "div.article-content",
+        "div.detail-content",
+        "div#content",
+        "div.article_content"
+      ]
+    },
+    {
+      "id": "cs",
+      "name": "中国证券报",
+      "lang": "zh",
+      "fulltext": true,
+      "list_pages": [
+        {
+          "url": "https://www.cs.com.cn/",
+          "channel": "首页"
+        },
+        {
+          "url": "https://www.cs.com.cn/sylm/",
+          "channel": "要闻"
+        }
+      ],
+      "link_pattern": "(https://jnzstatic\\.cs\\.com\\.cn/zzb/htmlInfo/\\d+\\.html)",
+      "link_prefix": "",
+      "content_selectors": [
+        "div.Custom_UnionStyle",
+        "div.cont_article"
+      ]
+    },
+    {
+      "id": "yicai",
+      "name": "第一财经",
+      "lang": "zh",
+      "fulltext": true,
+      "list_pages": [
+        {
+          "url": "https://www.yicai.com/news/",
+          "channel": "新闻"
+        },
+        {
+          "url": "https://www.yicai.com/brief/",
+          "channel": "简报"
+        }
+      ],
+      "link_pattern": "(/news/\\d+\\.html)",
+      "link_prefix": "https://www.yicai.com",
+      "content_selectors": [
+        "div.m-txt",
+        "div.article-content",
+        "div#multi-text",
+        "div.g-bd"
+      ]
+    },
+    {
+      "id": "reuters",
+      "name": "Reuters 路透",
+      "lang": "en",
+      "fulltext": false,
+      "proxy_rss": [
+        {
+          "url": "https://news.google.com/rss/search?q=site:reuters.com+when:1d&hl=en-US&gl=US&ceid=US:en",
+          "channel": "Top"
+        }
+      ]
+    },
+    {
+      "id": "ft",
+      "name": "FT 金融时报",
+      "lang": "en",
+      "fulltext": false,
+      "proxy_rss": [
+        {
+          "url": "https://www.ft.com/rss/home",
+          "channel": "Home"
+        },
+        {
+          "url": "https://www.ft.com/companies?format=rss",
+          "channel": "Companies"
+        }
+      ]
+    },
+    {
+      "id": "economist",
+      "name": "The Economist 经济学人",
+      "lang": "en",
+      "fulltext": false,
+      "proxy_rss": [
+        {
+          "url": "https://www.economist.com/finance-and-economics/rss.xml",
+          "channel": "Finance & economics"
+        },
+        {
+          "url": "https://www.economist.com/business/rss.xml",
+          "channel": "Business"
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "key": "macro",
+      "label": "宏观与政策",
+      "keywords": [
+        "央行",
+        "货币政策",
+        "财政",
+        "国务院",
+        "发改委",
+        "统计局",
+        "GDP",
+        "CPI",
+        "PMI",
+        "降准",
+        "降息",
+        "LPR",
+        "国债",
+        "财政部",
+        "政策",
+        "规划",
+        "关税",
+        "美联储",
+        "Federal Reserve",
+        "inflation",
+        "rate cut",
+        "stimulus",
+        "tariff"
+      ]
+    },
+    {
+      "key": "market",
+      "label": "市场与行情",
+      "keywords": [
+        "A股",
+        "沪指",
+        "深证",
+        "创业板",
+        "科创板",
+        "港股",
+        "美股",
+        "债券",
+        "汇率",
+        "人民币",
+        "原油",
+        "黄金",
+        "涨",
+        "跌",
+        "行情",
+        "资金",
+        "北向",
+        "IPO",
+        "market",
+        "stocks",
+        "shares",
+        "bond",
+        "yield",
+        "oil",
+        "gold",
+        "dollar"
+      ]
+    },
+    {
+      "key": "company",
+      "label": "公司与产业",
+      "keywords": [
+        "公司",
+        "上市",
+        "业绩",
+        "营收",
+        "净利",
+        "并购",
+        "重组",
+        "股东",
+        "回购",
+        "增持",
+        "减持",
+        "芯片",
+        "新能源",
+        "汽车",
+        "光伏",
+        "锂电",
+        "AI",
+        "人工智能",
+        "company",
+        "earnings",
+        "merger",
+        "acquisition",
+        "Nvidia",
+        "Tesla",
+        "chip"
+      ]
+    },
+    {
+      "key": "finance",
+      "label": "金融机构",
+      "keywords": [
+        "银行",
+        "券商",
+        "基金",
+        "保险",
+        "信托",
+        "理财",
+        "资管",
+        "信贷",
+        "不良",
+        "bank",
+        "fund",
+        "insurer",
+        "asset management"
+      ]
+    },
+    {
+      "key": "regulation",
+      "label": "监管与合规",
+      "keywords": [
+        "证监会",
+        "银保监会",
+        "金融监管总局",
+        "交易所",
+        "处罚",
+        "立案",
+        "退市",
+        "违规",
+        "信息披露",
+        "监管",
+        "regulator",
+        "SEC",
+        "probe",
+        "fine",
+        "lawsuit"
+      ]
+    },
+    {
+      "key": "global",
+      "label": "国际视野",
+      "keywords": [
+        "美国",
+        "欧洲",
+        "日本",
+        "欧盟",
+        "中东",
+        "俄",
+        "乌克兰",
+        "特朗普",
+        "白宫",
+        "America",
+        "Europe",
+        "China",
+        "Beijing",
+        "Washington",
+        "Trump",
+        "Japan",
+        "OPEC",
+        "geopolitic"
+      ]
+    },
+    {
+      "key": "tech",
+      "label": "科技前沿",
+      "keywords": [
+        "科技",
+        "半导体",
+        "算力",
+        "大模型",
+        "数据中心",
+        "量子",
+        "机器人",
+        "生物医药",
+        "创新药",
+        "tech",
+        "semiconductor",
+        "AI model",
+        "data centre",
+        "robot"
+      ]
+    }
+  ],
+  "settings": {
+    "max_articles_per_source": 16,
+    "max_articles_total": 72,
+    "min_content_chars": 180,
+    "request_timeout": 18,
+    "request_delay": 0.6,
+    "retries": 2,
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "max_age_days": 4
+  }
+}

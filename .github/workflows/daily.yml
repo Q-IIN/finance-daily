@@ -1,0 +1,53 @@
+name: Daily Finance Briefing
+
+on:
+  schedule:
+    - cron: '30 23 * * *'   # 每天 北京时间 07:30（早报）
+    - cron: '0 13 * * *'    # 每天 北京时间 21:00（晚报）
+    - cron: '0 0 * * 3'     # 每周三 北京时间 08:00（含《财经》杂志）
+  workflow_dispatch:        # 允许在 Actions 页手动触发
+
+permissions:
+  contents: write
+
+concurrency:
+  group: finance-daily
+  cancel-in-progress: true
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps
+        run: pip install beautifulsoup4
+
+      - name: Collect daily (+magazine on Wednesday)
+        env:
+          FINANCE_DAILY_OUT: docs
+        run: |
+          set -e
+          if [ "${{ github.event.schedule }}" = "0 0 * * 3" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo ">> run daily + magazine"
+            python3 scripts/run_daily.py --all
+          else
+            echo ">> run daily only"
+            python3 scripts/run_daily.py
+          fi
+
+      - name: Commit & push docs
+        run: |
+          git config user.name "finance-daily-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add docs
+          if git diff --cached --quiet; then
+            echo "no changes"
+          else
+            git commit -m "chore: update briefing $(date -u '+%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
