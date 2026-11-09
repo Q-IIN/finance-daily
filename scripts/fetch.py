@@ -168,8 +168,12 @@ def extract_article(html, selectors):
 
 def collect_fulltext(source, settings, limit):
     items, seen = [], set()
+    budget = settings.get("per_source_budget", 120)
+    t_start = time.time()
     pattern = re.compile(source["link_pattern"])
     for page in source.get("list_pages", []):
+        if time.time() - t_start > budget:
+            print(f"  [预算] {source['name']} 超过 {budget}s，提前结束本源")
         try:
             list_html = http_get(page["url"], timeout=settings["request_timeout"])
         except Exception as exc:  # noqa: BLE001
@@ -184,6 +188,9 @@ def collect_fulltext(source, settings, limit):
         print(f"  · {page['channel']}: 发现 {len(links)} 条链接")
         for url in links:
             if len(items) >= limit:
+                return items
+            if time.time() - t_start > budget:
+                print(f"  [预算] {source['name']} 正文采集超时，已得 {len(items)} 条，结束")
                 return items
             try:
                 html = http_get(url, timeout=settings["request_timeout"])
