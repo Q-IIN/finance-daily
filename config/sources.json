@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated": "2026-11-07",
+  "updated": "2026-11-09",
   "notes": "抓取源配置。cn_* 为可直连全文源；en_* 走 rss2json 代理仅取标题+摘要（原站不可直连或存在付费墙）。",
   "sources": [
     {
@@ -37,7 +37,8 @@
         "div.detail-content",
         "div#content",
         "div.article_content"
-      ]
+      ],
+      "max_age_days": 4
     },
     {
       "id": "cs",
@@ -59,7 +60,8 @@
       "content_selectors": [
         "div.Custom_UnionStyle",
         "div.cont_article"
-      ]
+      ],
+      "max_age_days": 4
     },
     {
       "id": "yicai",
@@ -83,7 +85,8 @@
         "div.article-content",
         "div#multi-text",
         "div.g-bd"
-      ]
+      ],
+      "max_age_days": 4
     },
     {
       "id": "reuters",
@@ -95,7 +98,8 @@
           "url": "https://news.google.com/rss/search?q=site:reuters.com+when:1d&hl=en-US&gl=US&ceid=US:en",
           "channel": "Top"
         }
-      ]
+      ],
+      "max_age_days": 5
     },
     {
       "id": "ft",
@@ -111,7 +115,8 @@
           "url": "https://www.ft.com/companies?format=rss",
           "channel": "Companies"
         }
-      ]
+      ],
+      "max_age_days": 10
     },
     {
       "id": "economist",
@@ -127,7 +132,8 @@
           "url": "https://www.economist.com/business/rss.xml",
           "channel": "Business"
         }
-      ]
+      ],
+      "max_age_days": 21
     }
   ],
   "categories": [
@@ -317,6 +323,7 @@
     "retries": 2,
     "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "max_age_days": 4,
-    "per_source_budget": 100
+    "per_source_budget": 100,
+    "probe_timeout": 8
   }
 }
