@@ -1,22 +1,22 @@
 {
  "date": "2026-11-09",
- "generated_at": "2026-11-09 05:52:53 +0000",
- "total": 69,
+ "generated_at": "2026-11-09 05:55:29 +0000",
+ "total": 72,
  "per_source": {
   "stcn": 16,
-  "cs": 16,
   "yicai": 16,
-  "reuters": 6,
-  "ft": 12,
-  "economist": 6
+  "cs": 14,
+  "reuters": 5,
+  "ft": 10,
+  "economist": 11
  },
  "per_source_names": {
   "证券时报": 16,
-  "中国证券报": 16,
   "第一财经": 16,
-  "Reuters 路透": 6,
-  "FT 金融时报": 12,
-  "The Economist 经济学人": 6
+  "中国证券报": 14,
+  "Reuters 路透": 5,
+  "FT 金融时报": 10,
+  "The Economist 经济学人": 11
  },
  "articles": [
   {
@@ -748,6 +748,38 @@
    "id": "4c3842cbf7e17d89"
   },
   {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Business",
+   "title": "Can a DoorDash-Instacart fusion stand up to Amazon and Walmart?",
+   "url": "https://www.economist.com/business/2026/11/05/can-a-doordash-instacart-fusion-stand-up-to-amazon-and-walmart",
+   "published": " hu, 05 Nov 2026",
+   "content": "The proposed merger shows the danger that delivery startups face",
+   "chars": 64,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "company",
+   "category_label": "公司与产业",
+   "id": "ab413490fe9c9ce9"
+  },
+  {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Business",
+   "title": "Firms are racing to protect themselves from AI cyber threats",
+   "url": "https://www.economist.com/business/2026/11/05/firms-are-racing-to-protect-themselves-from-ai-cyber-threats",
+   "published": " hu, 05 Nov 2026",
+   "content": "Hackers have unleashed a devastating wave of attacks. More may follow",
+   "chars": 69,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "company",
+   "category_label": "公司与产业",
+   "id": "f199c66ececed0e3"
+  },
+  {
    "source_id": "stcn",
    "source": "证券时报",
    "lang": "zh",
@@ -952,6 +984,38 @@
    "id": "dc545c1e66f74fd7"
   },
   {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Business",
+   "title": "America’s copper giant has big dreams—but cautious plans",
+   "url": "https://www.economist.com/business/2026/11/05/americas-copper-giant-has-big-dreams-but-cautious-plans",
+   "published": " hu, 05 Nov 2026",
+   "content": "Freeport-McMoRan’s strategy hints at doubts that prices will continue to rise",
+   "chars": 77,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "global",
+   "category_label": "国际视野",
+   "id": "67ffcad841c15a0f"
+  },
+  {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Business",
+   "title": "The break-up of CVS marks a turning point in American health care",
+   "url": "https://www.economist.com/business/2026/11/05/the-break-up-of-cvs-marks-a-turning-point-in-american-health-care",
+   "published": " hu, 05 Nov 2026",
+   "content": "The trend towards vertical integration may soon reverse",
+   "chars": 55,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "global",
+   "category_label": "国际视野",
+   "id": "5fa9752aa70b4def"
+  },
+  {
    "source_id": "stcn",
    "source": "证券时报",
    "lang": "zh",
@@ -1046,6 +1110,22 @@
    "carried": true
   },
   {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Business",
+   "title": "YouTube’s dominance has Hollywood running scared",
+   "url": "https://www.economist.com/business/2026/11/08/youtubes-dominance-has-hollywood-running-scared",
+   "published": "Sun, 08 Nov 2026",
+   "content": "Studios and streamers alike are struggling to respond to its success",
+   "chars": 68,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "other",
+   "category_label": "其他",
+   "id": "b00c80611bfdba6b"
+  },
+  {
    "source_id": "reuters",
    "source": "Reuters 路透",
    "lang": "en",
@@ -1060,38 +1140,6 @@
    "category": "other",
    "category_label": "其他",
    "id": "28b48762f716050c"
-  },
-  {
-   "source_id": "reuters",
-   "source": "Reuters 路透",
-   "lang": "en",
-   "channel": "Top",
-   "title": "Production suspended at Iraq's Khor Mor gas field after drone attack, sources say - Reuters",
-   "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOSjc4dFNBUmN3UHp3Uk5FLUhNOElWeTVLRDNzSHZsSTAyUWZ4elN0eHdYUVJ5MDZBb0Y3MDNaNzlWbTRHMnctUFY5dGdNWWtKUnZTdHRPeXl1UUhlUE9mdTU0d2ZWTk9Hak9HaHVXaVBJQ3BoVXdfZnFxelF2aUc1MEV1U0JFQ1lDQ0s3RXhtRnk2dmoxZ2h4a3FRazE4Y3VpbGlDYW1zdE1DcDYxU3R4aE9zOWxkdTNuRVFxMzRlTDEtMDNHRmpr?oc=5",
-   "published": "2026-11-08 21:49",
-   "content": "Production suspended at Iraq's Khor Mor gas field after drone attack, sources say Reuters",
-   "chars": 89,
-   "fulltext": false,
-   "paywalled": false,
-   "category": "other",
-   "category_label": "其他",
-   "id": "4c7303108b4a0226"
-  },
-  {
-   "source_id": "ft",
-   "source": "FT 金融时报",
-   "lang": "en",
-   "channel": "Companies",
-   "title": "Companies House faces scrutiny over ‘pervasive and systemic’ errors",
-   "url": "https://www.ft.com/content/1b67f9c7-b1ad-4b5b-b496-ac3a305ec841?syn-25a6b1a6=1",
-   "published": "2026-11-08 19:00",
-   "content": "Almost four in 10 businesses identify inconsistencies with their own records, calling official UK corporate register’s reliability into question",
-   "chars": 144,
-   "fulltext": false,
-   "paywalled": true,
-   "category": "other",
-   "category_label": "其他",
-   "id": "3a7805a2a17f5547"
   }
  ]
 }
