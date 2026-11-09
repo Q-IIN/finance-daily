@@ -1,22 +1,22 @@
 {
  "date": "2026-11-09",
- "generated_at": "2026-11-09 13:46:08 +0800",
- "total": 72,
+ "generated_at": "2026-11-09 05:48:58 +0000",
+ "total": 69,
  "per_source": {
   "stcn": 16,
-  "yicai": 15,
-  "cs": 14,
+  "cs": 16,
+  "yicai": 16,
   "reuters": 6,
-  "ft": 10,
-  "economist": 11
+  "ft": 12,
+  "economist": 6
  },
  "per_source_names": {
   "证券时报": 16,
-  "第一财经": 15,
-  "中国证券报": 14,
+  "中国证券报": 16,
+  "第一财经": 16,
   "Reuters 路透": 6,
-  "FT 金融时报": 10,
-  "The Economist 经济学人": 11
+  "FT 金融时报": 12,
+  "The Economist 经济学人": 6
  },
  "articles": [
   {
@@ -32,7 +32,8 @@
    "fulltext": true,
    "category": "macro",
    "category_label": "宏观与政策",
-   "id": "4fbbcb7c4025e4e6"
+   "id": "4fbbcb7c4025e4e6",
+   "carried": true
   },
   {
    "source_id": "stcn",
@@ -47,7 +48,8 @@
    "fulltext": true,
    "category": "macro",
    "category_label": "宏观与政策",
-   "id": "44fa2616038b975c"
+   "id": "44fa2616038b975c",
+   "carried": true
   },
   {
    "source_id": "stcn",
@@ -62,7 +64,8 @@
    "fulltext": true,
    "category": "macro",
    "category_label": "宏观与政策",
-   "id": "ebd4a62a3b4bc1cb"
+   "id": "ebd4a62a3b4bc1cb",
+   "carried": true
   },
   {
    "source_id": "yicai",
@@ -212,7 +215,8 @@
    "fulltext": true,
    "category": "market",
    "category_label": "市场与行情",
-   "id": "1de77ef2fb5fa58b"
+   "id": "1de77ef2fb5fa58b",
+   "carried": true
   },
   {
    "source_id": "yicai",
@@ -428,7 +432,8 @@
    "fulltext": true,
    "category": "company",
    "category_label": "公司与产业",
-   "id": "74abbbbbd5c87912"
+   "id": "74abbbbbd5c87912",
+   "carried": true
   },
   {
    "source_id": "stcn",
@@ -443,7 +448,8 @@
    "fulltext": true,
    "category": "company",
    "category_label": "公司与产业",
-   "id": "7c01633efeacd36a"
+   "id": "7c01633efeacd36a",
+   "carried": true
   },
   {
    "source_id": "cs",
@@ -503,7 +509,8 @@
    "fulltext": true,
    "category": "company",
    "category_label": "公司与产业",
-   "id": "78c920d51a8fc9e7"
+   "id": "78c920d51a8fc9e7",
+   "carried": true
   },
   {
    "source_id": "stcn",
@@ -518,7 +525,8 @@
    "fulltext": true,
    "category": "company",
    "category_label": "公司与产业",
-   "id": "652b11ba8548161a"
+   "id": "652b11ba8548161a",
+   "carried": true
   },
   {
    "source_id": "stcn",
@@ -533,7 +541,8 @@
    "fulltext": true,
    "category": "company",
    "category_label": "公司与产业",
-   "id": "d3decb0e80cc731f"
+   "id": "d3decb0e80cc731f",
+   "carried": true
   },
   {
    "source_id": "yicai",
@@ -726,38 +735,6 @@
    "source_id": "economist",
    "source": "The Economist 经济学人",
    "lang": "en",
-   "channel": "Business",
-   "title": "Can a DoorDash-Instacart fusion stand up to Amazon and Walmart?",
-   "url": "https://www.economist.com/business/2026/11/05/can-a-doordash-instacart-fusion-stand-up-to-amazon-and-walmart",
-   "published": "2026-11-05 13:58",
-   "content": "The proposed merger shows the danger that delivery startups face",
-   "chars": 64,
-   "fulltext": false,
-   "paywalled": true,
-   "category": "company",
-   "category_label": "公司与产业",
-   "id": "ab413490fe9c9ce9"
-  },
-  {
-   "source_id": "economist",
-   "source": "The Economist 经济学人",
-   "lang": "en",
-   "channel": "Business",
-   "title": "Firms are racing to protect themselves from AI cyber threats",
-   "url": "https://www.economist.com/business/2026/11/05/firms-are-racing-to-protect-themselves-from-ai-cyber-threats",
-   "published": "2026-11-05 13:58",
-   "content": "Hackers have unleashed a devastating wave of attacks. More may follow",
-   "chars": 69,
-   "fulltext": false,
-   "paywalled": true,
-   "category": "company",
-   "category_label": "公司与产业",
-   "id": "f199c66ececed0e3"
-  },
-  {
-   "source_id": "economist",
-   "source": "The Economist 经济学人",
-   "lang": "en",
    "channel": "Finance & economics",
    "title": "AI is turning protectionists into free traders",
    "url": "https://www.economist.com/finance-and-economics/2026/11/05/ai-is-turning-protectionists-into-free-traders",
@@ -783,7 +760,8 @@
    "fulltext": true,
    "category": "finance",
    "category_label": "金融机构",
-   "id": "cb8bba825ad90a6b"
+   "id": "cb8bba825ad90a6b",
+   "carried": true
   },
   {
    "source_id": "stcn",
@@ -798,7 +776,8 @@
    "fulltext": true,
    "category": "finance",
    "category_label": "金融机构",
-   "id": "6155c109712c0af8"
+   "id": "6155c109712c0af8",
+   "carried": true
   },
   {
    "source_id": "stcn",
@@ -813,7 +792,23 @@
    "fulltext": true,
    "category": "finance",
    "category_label": "金融机构",
-   "id": "43d1934c111361cf"
+   "id": "43d1934c111361cf",
+   "carried": true
+  },
+  {
+   "source_id": "yicai",
+   "source": "第一财经",
+   "lang": "zh",
+   "channel": "新闻",
+   "title": "银保协同赋能外贸新业态，多方合力护航企业平稳出海",
+   "url": "https://www.yicai.com/news/103431482.html",
+   "published": "2026-11-08 23:02",
+   "content": "当下，外贸发展进入新阶段，跨境电商已从外贸“新业态”升级为产业“新引擎”。\n11月7日，中国建设银行联合中国出口信用保险公司（下称“中国信保”）在上海举办“遇建进博 善建行远”助力跨境金融高质量发展方案发布与签约仪式主题活动。\n会上，中国信保副总经理徐新伟称，中国制造出海不是企业一家一家远行，而是政府领航下的银行、信保、企业多方的“联合远航”。\n破局 海外仓融资堵点 ， 构建全链路金融生态\n会上，建设银行副行长唐朔致辞称，建设银行积极构建连接中外市场的金融纽带，服务“出口中国、购在中国、投资中国”，依托“善建行远”海外综合服务平台支持贸易、服务、投资三大出海场景，全力服务开放大局。\n活动期间，建设银行与中国信保联合发布《跨境电商及海外仓“建行+信保”全链路综合金融服务方案》（下称《方案》），设置用仓无忧、用仓扩额、建仓助力三大服务包，构建“政府搭台、金融支撑、平台协作”新模式，是银保协同赋能外贸新业态的标志性实践。\n一直以来，海外仓投资面临环节多、周期长、建设“慢”的问题。会上相关负责人称，《方案》把信保承保及银行承贷方案与政府备案审批融合，打通“政府审批+金融服务”协作模式，加快海外仓投资建设步伐。\n同时，针对轻资产跨境电商用仓企业和海外仓建仓企业获取融资“难”问题，《方案》通过“保单承保+数据增信”，在降低海外仓投资和跨境电商收汇风险的同时，支持信保和银行提高授信额度，扩大融资供给。\n徐新伟称，把“信保建仓链全球”深度嵌入上海海外仓政策服务体系，放大进博会溢出效应，吸引更多跨境电商和海外仓企业来沪发展，助力上海强化全球资源配置功能，为外贸多元化发展增添韧性。\n营商环境持续 升级 ， 上海优势吸引全球资本\n会议圆桌环节，嘉宾围绕上海外资营商环境、跨国企业在华合作机遇展开研讨。\n上海外商投资协会会长黄峰表示，营商环境是上海引资核心优势，今年前9个月，上海实际使用外资金额比去年同期增长9.4%，领跑全国。黄峰还提到，上海营商环境方案持续迭代，叠加浦东、临港先行先试开放试点，以及跨国公司资产重构、科创回流两大新增动力，上海对外资吸引力持续增强。\n政策面上，上海加快国际贸易中心建设“十五五”规划中明确“支持企业在重点国别布局公共海外仓，推动海外仓企业加强与电商平台、物流配送、金融保险等企业联动，完善多元化服务体系”。\n此前，市委金融办、市商务委、市财政局共同印发的《关于深化金融支持跨境电商海外仓建设及运营的若干举措》中，要求丰富“保险增信+银行融资”模式，为海外仓建设提供风险防范和融资服务支持。\n深耕中国市场多年的跨国企业也分享了本土化实践经验。米其林大中华及蒙古区企业战略和公共事务副总裁吴俊毅表示，企业自1989年进入中国，历经37年布局，在上海设立投资总部与研发中心，多地落地生产基地。吴俊毅判断，当前中国市场机遇大于挑战，面对本土市场竞争，米其林正向深度本土化转型，加大本土人才任用，紧贴国内新能源车企需求，联动研发、供应链与地方产业生态。\n建设银行新加坡分行总经理桑爱民提到，上海背靠超大规模内需市场，拥有完整制造业链条与科创基础，重心服务国内实体经济。期待上海和新加坡的金融机构深化两地联动，打通跨区域财资中心，依托互补优势服务企业全球化资金管理。\n与会嘉宾一致认为，在制度型开放、成熟的营商环境与完备的产业底盘背景下，跨国企业、金融机构、本土产业的协同联动，将持续释放双向投资与贸易合作新空间。",
+   "chars": 1420,
+   "fulltext": true,
+   "category": "finance",
+   "category_label": "金融机构",
+   "id": "eefcd3e45c97ecb2"
   },
   {
    "source_id": "cs",
@@ -906,7 +901,8 @@
    "fulltext": true,
    "category": "global",
    "category_label": "国际视野",
-   "id": "50aa48ee5961eed6"
+   "id": "50aa48ee5961eed6",
+   "carried": true
   },
   {
    "source_id": "yicai",
@@ -956,38 +952,6 @@
    "id": "dc545c1e66f74fd7"
   },
   {
-   "source_id": "economist",
-   "source": "The Economist 经济学人",
-   "lang": "en",
-   "channel": "Business",
-   "title": "America’s copper giant has big dreams—but cautious plans",
-   "url": "https://www.economist.com/business/2026/11/05/americas-copper-giant-has-big-dreams-but-cautious-plans",
-   "published": "2026-11-05 13:58",
-   "content": "Freeport-McMoRan’s strategy hints at doubts that prices will continue to rise",
-   "chars": 77,
-   "fulltext": false,
-   "paywalled": true,
-   "category": "global",
-   "category_label": "国际视野",
-   "id": "67ffcad841c15a0f"
-  },
-  {
-   "source_id": "economist",
-   "source": "The Economist 经济学人",
-   "lang": "en",
-   "channel": "Business",
-   "title": "The break-up of CVS marks a turning point in American health care",
-   "url": "https://www.economist.com/business/2026/11/05/the-break-up-of-cvs-marks-a-turning-point-in-american-health-care",
-   "published": "2026-11-05 13:58",
-   "content": "The trend towards vertical integration may soon reverse",
-   "chars": 55,
-   "fulltext": false,
-   "paywalled": true,
-   "category": "global",
-   "category_label": "国际视野",
-   "id": "5fa9752aa70b4def"
-  },
-  {
    "source_id": "stcn",
    "source": "证券时报",
    "lang": "zh",
@@ -1000,7 +964,8 @@
    "fulltext": true,
    "category": "tech",
    "category_label": "科技前沿",
-   "id": "0656ed0b160fc7c4"
+   "id": "0656ed0b160fc7c4",
+   "carried": true
   },
   {
    "source_id": "yicai",
@@ -1061,7 +1026,8 @@
    "fulltext": true,
    "category": "other",
    "category_label": "其他",
-   "id": "fc507d6b9b50c178"
+   "id": "fc507d6b9b50c178",
+   "carried": true
   },
   {
    "source_id": "stcn",
@@ -1076,7 +1042,8 @@
    "fulltext": true,
    "category": "other",
    "category_label": "其他",
-   "id": "7e98eec44aa8c9b4"
+   "id": "7e98eec44aa8c9b4",
+   "carried": true
   },
   {
    "source_id": "reuters",
@@ -1111,20 +1078,20 @@
    "id": "4c7303108b4a0226"
   },
   {
-   "source_id": "economist",
-   "source": "The Economist 经济学人",
+   "source_id": "ft",
+   "source": "FT 金融时报",
    "lang": "en",
-   "channel": "Business",
-   "title": "YouTube’s dominance has Hollywood running scared",
-   "url": "https://www.economist.com/business/2026/11/08/youtubes-dominance-has-hollywood-running-scared",
-   "published": "2026-11-08 19:09",
-   "content": "Studios and streamers alike are struggling to respond to its success",
-   "chars": 68,
+   "channel": "Companies",
+   "title": "Companies House faces scrutiny over ‘pervasive and systemic’ errors",
+   "url": "https://www.ft.com/content/1b67f9c7-b1ad-4b5b-b496-ac3a305ec841?syn-25a6b1a6=1",
+   "published": "2026-11-08 19:00",
+   "content": "Almost four in 10 businesses identify inconsistencies with their own records, calling official UK corporate register’s reliability into question",
+   "chars": 144,
    "fulltext": false,
    "paywalled": true,
    "category": "other",
    "category_label": "其他",
-   "id": "b00c80611bfdba6b"
+   "id": "3a7805a2a17f5547"
   }
  ]
 }
