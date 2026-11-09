@@ -248,19 +248,46 @@ def strip_html(s):
     return clean_text(BeautifulSoup(s, "html.parser").get_text(" ", strip=True))
 
 
+def rss_direct(feed_url, count, timeout=25):
+    """直连解析 RSS（rss2json 被限流时的兜底）。返回 rss2json 同构的 dict。"""
+    xml = http_get(feed_url, timeout=timeout, retries=1)
+    items = []
+    for block in re.findall(r"<item[\s>].*?</item>", xml, re.S)[:count]:
+        def pick(tag):
+            m = re.search(rf"<{tag}[^>]*>(.*?)</{tag}>", block, re.S)
+            if not m:
+                return ""
+            raw = m.group(1)
+            raw = re.sub(r"^<!\[CDATA\[(.*?)\]\]>$", r"\1", raw.strip(), flags=re.S)
+            return raw.strip()
+        title = pick("title")
+        if not title:
+            continue
+        items.append({
+            "title": title,
+            "link": pick("link"),
+            "pubDate": pick("pubDate") or pick("dc:date"),
+            "description": pick("description"),
+        })
+    return {"status": "ok" if items else "error", "items": items, "message": "" if items else "empty feed"}
+
+
 def collect_rss(source, settings, limit):
     items = []
     for idx, feed in enumerate(source.get("proxy_rss", [])):
         if idx:
             time.sleep(2.0)  # rss2json 免费额度按分钟计，连续请求容易 429
+        data = {}
         try:
             data = rss2json(feed["url"], limit, settings["request_timeout"] + 8)
+            if data.get("status") != "ok":
+                raise RuntimeError(data.get("message") or "status not ok")
         except Exception as exc:  # noqa: BLE001
-            print(f"  [warn] RSS 失败 {feed['url']}: {exc}", file=sys.stderr)
+            print(f"  [warn] RSS 代理失败 {feed['channel']}: {exc}，尝试直连", file=sys.stderr)
             try:
-                time.sleep(6)
-                data = rss2json(feed["url"], limit, settings["request_timeout"] + 8)
-            except Exception:  # noqa: BLE001
+                data = rss_direct(feed["url"], limit)
+            except Exception as exc2:  # noqa: BLE001
+                print(f"  [warn] 直连也失败 {feed['channel']}: {exc2}", file=sys.stderr)
                 continue
         if data.get("status") != "ok":
             print(f"  [warn] RSS 状态异常 {feed['channel']}: {data.get('message')}", file=sys.stderr)
