@@ -1,7 +1,7 @@
 {
  "date": "2026-11-09",
- "generated_at": "2026-11-09 05:11:21 +0000",
- "total": 46,
+ "generated_at": "2026-11-09 05:37:47 +0000",
+ "total": 53,
  "per_source": {
   "stcn": 0,
   "cs": 16,
@@ -9,6 +9,14 @@
   "reuters": 6,
   "ft": 12,
   "economist": 6
+ },
+ "per_source_names": {
+  "证券时报": 0,
+  "中国证券报": 16,
+  "第一财经": 16,
+  "Reuters 路透": 6,
+  "FT 金融时报": 12,
+  "The Economist 经济学人": 6
  },
  "articles": [
   {
@@ -55,21 +63,6 @@
    "category": "macro",
    "category_label": "宏观与政策",
    "id": "5e7daf174dc97724"
-  },
-  {
-   "source_id": "cs",
-   "source": "中国证券报",
-   "lang": "zh",
-   "channel": "首页",
-   "title": "郑商所：葵花籽油期货和期权将于11月12日起上市交易",
-   "url": "https://jnzstatic.cs.com.cn/zzb/htmlInfo/137563.html",
-   "published": "2026-11-06 18:54",
-   "content": "11月6日，郑州商品交易所发布公告，葵花籽油期货自2026年11月12日（星期四）起上市交易，当日集合竞价时间为上午8:55－9:00，交易时间为9:00－11:30和13:30－15:00。11月12日当晚起开展夜盘交易，夜盘交易时间为21:00－23:00。\n首批上市交易的葵花籽油期货合约为SO2705、SO2707、SO2709、SO2711。葵花籽油期货合约交易保证金标准为8%，涨跌停板幅度为7%。根据《郑州商品交易所期货交易风险控制管理办法》有关规定，葵花籽油期货合约上市当日涨跌停板幅度为合约挂牌基准价的14%。\n此外，郑商所同日还发布公告，葵花籽油期权自2026年11月12日（星期四）晚上21:00起上市交易，当日20:55―21:00为集合竞价时间。首日上市交易合约为标的月份2705、2707的葵花籽油期权系列合约。",
-   "chars": 370,
-   "fulltext": true,
-   "category": "market",
-   "category_label": "市场与行情",
-   "id": "3b2bff34ac4606c6"
   },
   {
    "source_id": "cs",
@@ -192,19 +185,19 @@
    "id": "63d34f3bb13e119a"
   },
   {
-   "source_id": "yicai",
-   "source": "第一财经",
+   "source_id": "cs",
+   "source": "中国证券报",
    "lang": "zh",
-   "channel": "新闻",
-   "title": "核心人物风险扰动英伟达夜盘跌超 3%，国内相关标的保持韧性",
-   "url": "https://www.yicai.com/news/103431936.html",
-   "published": "2026-11-09 11:23",
-   "content": "当地时间11月8日，英伟达创始人兼CEO黄仁勋向英伟达员工发送一封道歉信，承认自己有婚外情。\n他表示，自己对妻子不忠，他的行为伤害了妻子和孩子，他愿意为自己的所作所为及造成的伤害承担全部责任。在英伟达与他共事数十年的伙伴以及董事会、合作伙伴和全球股东，值得他更好地对待，他还将全身心投入英伟达的工作。\n英伟达董事会同日宣布启动调查。“鉴于近期有报道称黄仁勋成为外国情报活动的目标，董事会启动了一项独立调查。”英伟达董事会声明称，一个由独立董事组成的委员会将在外部独立律师的协助下监督此次调查。\n关于黄仁勋婚外情一事，此前有市场消息称，黄仁勋与名为Alice Huang的女性交往亲密，两人无亲属关系，Alice Huang曾是总部位于新加坡的Megaspeed公司高管，两人的交往可能与外国情报活动相关。此次道歉前，黄仁勋曾表示，他与Alice Huang的互动与Megaspeed有关，且完全正常。\n英伟达董事会在声明中表示，尽管董事会没有理由认为国家安全或英伟达机密受到损害，但董事会的调查将审查所有可获得的信息。黄仁勋已承诺予以配合，董事会将视情况进一步更新进展。\n根据目前的信息，虽然接受调查，但黄仁勋的职位并未发生变化。英伟达发言人表示，黄仁勋将继续作为CEO领导英伟达，不会中断，此事不会让英伟达放缓脚步。\n美国总统特朗普也针对此事表示，黄仁勋应该继续执掌英伟达。特朗普称，他还没跟黄仁勋谈过此事，但他认为黄仁勋是个好人、一个正直的人，他希望一切都好。\n不过，公司高层的桃色新闻还是引起市场反应。美股夜盘英伟达跌超3%。\n但11月9日A股开盘，英伟达在国内的多家供应商股价似乎未受重大影响。涵盖AI服务器、PCB、探针等环节的英伟达概念股中，截至上午10点04分，工业富联（601138.SH）涨6.98%，胜宏科技（300476.SZ）涨8.34%，沪电股份（002463.SZ）涨6.08%，和林微纳（688661.SH）涨0.29%。\n虽然英伟达表态黄仁勋职责未变，但鉴于黄仁勋在英伟达的关键地位，市场仍担心此事对英伟达公司的负面影响。\n黄仁勋执掌英伟达超30年，是全球科技公司任职时间最长的CEO之一，他与英伟达之间已形成了深刻的绑定。黄仁勋目前63岁，目前英伟达尚未有关于接班人的明确信息，也未详细披露领导层的继任计划。黄仁勋的一儿一女都在英伟达任职，负责公司的一些战略新兴业务。\n交易平台eToro首席分析师Josh Gilbert（乔什·吉尔伯特）表示，黄仁勋的印记遍布公司崛起的每一个部分，因此任何对其所处位置的疑虑都对股东意义重大。投行伯恩斯坦分析师Stacy Rasgon（斯泰西·拉斯贡）也认为，这一事件使美国最重要公司之一的管理层受到审视，凸显了英伟达面临相当大的“关键人物”风险。\n即便英伟达员工人数已达4万多人，但英伟达组织仍相对扁平，通过更少的层级，英伟达内部的业务高管直接向黄仁勋汇报，黄仁勋得以更充分了解业务并作出决策。Stacy Rasgon也表示，英伟达不是一家普通公司，黄仁勋也不是一位普通CEO，他代表了英伟达，他明确设定长期战略和方向，并通过数十名直接下属亲自掌控公司大部分事务。\n这让一些分析人士担忧，如果经过调查后，黄仁勋在英伟达的职责生变，将对英伟达的后续发展产生影响。\nYorkville Ives & Co合伙人兼高级董事总经理Dan Ives（丹·艾夫斯）表示，显然存在黄仁勋可能因董事会调查而被免去CEO职务的风险，这将给股价增加风险，因为他对英伟达的全球故事和战略非常重要。对黄仁勋而言，当前是一个污点时刻（black eye moment），至少会引发多项国会调查，并给股价带来压力。\nJosh Gilbert则认为，调查可能打击市场情绪，但除非导致高层变动，否则不会改变英伟达的长期格局，而一旦发生高层变动，情况就完全不同。\n英伟达股价近期已经历剧烈波动。\n美股11月4日，苹果收盘市值5.08万亿美元，超过英伟达，重夺全球市值第一的位置。由于美国中期选举进展引发市场关于数据中心建设放缓、AI监管加严的担忧，美股AI基础设施相关个股波动剧烈，英伟达11月4日至5日股价累计跌去12.14%，市值跌去6046亿美元。11月6日，英伟达股价迎来反弹，涨2.78%，收盘市值4.5万亿美元，但仍低于苹果的4.98万亿美元市值。",
-   "chars": 1799,
+   "channel": "首页",
+   "title": "【涨停直击】卫星通信概念爆发，700亿龙头直线涨停",
+   "url": "https://jnzstatic.cs.com.cn/zzb/htmlInfo/137702.html",
+   "published": "2026-11-09 11:29",
+   "content": "11月9日早盘，卫星通信概念爆发，西测测试一度“20CM”涨停，中国卫星、长江通信直线涨停。截至发稿时，中国卫星涨停板上封单逾14万手，最新市值为715.41亿元。此外，斯瑞新材、星图测控涨超10%。\n消息面上，据新华社消息，9日4时24分，我国在海南商业航天发射场使用长征十二号运载火箭，成功将卫星互联网低轨29组卫星发射升空，卫星顺利进入预定轨道，发射任务获得圆满成功。\n此外，近日，《上海市卫星互联网产业创新发展行动方案（2027—2030年）》发布。方案明确，到2030年，力争实现在轨卫星总数超过3000颗、卫星互联网核心产业规模突破800亿元，转化科研成果超过100项、培育优质市场主体超过100家、打造标杆示范应用超过100项，建成具有全球影响力的卫星互联网产业创新高地。\n华龙证券认为，进入2026年，商业航天行业迎来政策、技术、产业三重催化共振的爆发元年，国内外发射任务密集落地，可回收火箭技术攻坚迎来关键突破，全产业链迎来价值重估与格局重塑，建议关注商业航天“上游研发制造—中游发射服务—下游运营应用”全产业链投资机会。",
+   "chars": 470,
    "fulltext": true,
    "category": "market",
    "category_label": "市场与行情",
-   "id": "a1c6bbfeba5a422b"
+   "id": "246cf01bb3903235"
   },
   {
    "source_id": "yicai",
@@ -220,6 +213,70 @@
    "category": "market",
    "category_label": "市场与行情",
    "id": "0abbd310d7f7be4d"
+  },
+  {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Finance & economics",
+   "title": "China’s AI stock-market struggles are a warning",
+   "url": "https://www.economist.com/finance-and-economics/2026/11/03/chinas-ai-stock-market-struggles-are-a-warning",
+   "published": "2026-11-03 20:48",
+   "content": "What happens when the supply of new tech catches up with demand?",
+   "chars": 64,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "market",
+   "category_label": "市场与行情",
+   "id": "3533456c926be0e1"
+  },
+  {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Finance & economics",
+   "title": "What markets make of the midterms",
+   "url": "https://www.economist.com/finance-and-economics/2026/11/04/what-markets-make-of-the-midterms",
+   "published": "2026-11-04 21:48",
+   "content": "Democrats triumph. Investors yawn",
+   "chars": 33,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "market",
+   "category_label": "市场与行情",
+   "id": "260127676f58e8e5"
+  },
+  {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Finance & economics",
+   "title": "William Nordhaus, favourite economist of the right and the left",
+   "url": "https://www.economist.com/finance-and-economics/2026/11/05/william-nordhaus-favourite-economist-of-the-right-and-the-left",
+   "published": "2026-11-05 10:17",
+   "content": "The Nobel-prizewinner was fascinated by what happens when markets fail",
+   "chars": 70,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "market",
+   "category_label": "市场与行情",
+   "id": "cb5e502e332acee8"
+  },
+  {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Finance & economics",
+   "title": "Markets realise they hate America’s blue wave",
+   "url": "https://www.economist.com/finance-and-economics/2026/11/05/markets-realise-they-hate-americas-blue-wave",
+   "published": "2026-11-05 23:41",
+   "content": "Investors worry that Democratic dominance will slow down the AI boom",
+   "chars": 68,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "market",
+   "category_label": "市场与行情",
+   "id": "dd4af092e9332a9a"
   },
   {
    "source_id": "ft",
@@ -252,6 +309,21 @@
    "category": "market",
    "category_label": "市场与行情",
    "id": "d9fa8b953b0046cc"
+  },
+  {
+   "source_id": "yicai",
+   "source": "第一财经",
+   "lang": "zh",
+   "channel": "新闻",
+   "title": "进博“新伙伴”加盟，临港加快探索零碳转型",
+   "url": "https://www.yicai.com/news/103431436.html",
+   "published": "2026-11-08 21:06",
+   "content": "11月8日，在第九届中国国际进口博览会期间举行的上海临港新片区零碳湾·零碳园区创新服务国际合作交流会上，临港绿创分别与罗克韦尔自动化、上电科达成战略合作，零碳园区创新服务联盟第二批成员同步亮相。\n根据战略合作备忘录，各方将以零碳湾建设为重点，围绕能碳一体化管控、园区微电网与储能控制、用能系统能效优化等方向，共同探索零碳园区示范场景，并面向园区企业提供节能降碳改造、碳排放核算、产品碳足迹核算等专业服务。\n作为上海“十五五”重点工作之一，零碳湾于2025年12月入选首批52家国家级零碳园区建设名单，成为“国家首批、上海唯一”的国家级零碳园区，承担着探索零碳转型路径、对接国际绿色贸易规则的重要使命。作为超大城市，上海将探索通过绿电直供、存量企业深度节能改造、余热回收、智慧能碳平台等组合拳，“抠”出零碳路径。\n零碳湾位于临港新片区先进制造业核心区域，规划面积14.3平方公里，集聚新能源汽车、高端装备、集成电路等重点产业的上百家规上企业。2026年5月建设启动以来，零碳湾按照“海上风光+绿电直供+源网荷储+节能降碳+资源循环”总体布局系统推进，已发布十大重大应用场景，组建创新服务联盟。\n此前发布的零碳园区十大应用场景，涵盖绿电直供/连、能碳管理平台、节能改造、零碳工厂、天然气绿色替代、虚拟电厂建设等重点方向。\n面对欧盟碳边境调节机制（CBAM）等新贸易规则，零碳园区建设更需跨领域协同、跨边界合作，以联盟平台聚合力、以场景创新促落地、以绿色金融强赋能，探索接轨国际绿色规则的“以绿制绿”零碳建设体系。\n零碳园区创新服务联盟第二批成员同步发布，新增成员覆盖跨国企业、科研院所和金融机构等多元主体，进一步壮大了零碳湾建设的“朋友圈”。\n就在2天前，同样在进博会上，瓦锡兰齐耀与临港绿创公司正式签约，将携手落地柴储光充一体化工业绿色微电网示范项目，助力临港新片区零碳湾国家级零碳园区打造。\n今年1月，工业和信息化部等五部门联合印发《工业绿色微电网建设与应用指南（2026—2030年）》，本次落地的项目围绕“柴、储、光、充”四大要素，以瓦锡兰船用柴油发动机试车发电机组为核心可调资源，配套储能系统、分布式光伏及充电设施，通过功率预测和优化调度实现源、储、荷协同。\n值得一提的是，瓦锡兰齐耀自第六届进博会起已在临港展示区连续四届参展，带动其双燃料发动机斩获批量订单，今年企业从“展商”变“投资商”，实现从技术展示、产品贸易到产业投资、生态共建的升级。",
+   "chars": 1025,
+   "fulltext": true,
+   "category": "company",
+   "category_label": "公司与产业",
+   "id": "f6a543f563531096"
   },
   {
    "source_id": "yicai",
@@ -359,6 +431,21 @@
    "id": "4ff0bf11c6b58d2f"
   },
   {
+   "source_id": "cs",
+   "source": "中国证券报",
+   "lang": "zh",
+   "channel": "首页",
+   "title": "【涨停直击】500亿MLCC概念股，直线“20CM”涨停",
+   "url": "https://jnzstatic.cs.com.cn/zzb/htmlInfo/137701.html",
+   "published": "2026-11-09 11:29",
+   "content": "11月9日早盘，MLCC概念走强，信维通信股价直线拉升“20CM”涨停。截至发稿，其涨停板上封单逾21万手，最新市值为491.14亿元。此外，斯迪克、宏明电子、利和兴等涨超4%。\n今年9月底，信维通信完成对MLCC业务主体益阳信维电科的收购，战略路径进一步向产业链上游核心材料、元件及模组延伸。此前，信维通信在接受机构调研时表示，目前高端MLCC仍处于供不应求的状态。公司正在扎实推进产能建设、客户认证与批量交付。MLCC业务的切入是公司极其重要的一次战略布局，公司有信心未来会具备与国际一流厂商竞争的实力。\n11月5日，信维通信在互动平台表示，公司MLCC业务聚焦AI芯片、数据中心及服务器、车载三大高端赛道，正加速切入国内外重点客户，也在加快提升产能。截至三季度，信维电科已进入多家北美科技客户MLCC产品验证阶段，同时也完成国内大客户的服务器高容MLCC核心料号验证并于四季度开始出货，目前已有多款料号稳定量产。截至三季度，公司电阻业务开始实现盈利，首次进入国内多家大型科技企业，预计全年电阻电容业务持续向好，同比实现高速成长。\n前三季度，公司实现营业收入65.42亿元，同比增长1.24%；归母净利润4.68亿元，同比下降3.79%。第三季度，公司实现营业收入25.1亿元，同比下降9.02%；归母净利润3.18亿元，同比下降2.2%。\n消息面上，全球MLCC龙头日本村田制作所近日宣布，2026财年至2030财年合计投入约1万亿日元，主攻多层陶瓷电容器（MLCC）产能建设，以满足AI服务器、算力硬件对高端无源元器件的激增需求。\n万联证券认为，国产算力建设方兴未艾，算力产业链中高景气细分赛道如PCB、存储、MLCC等需求旺盛，均处于景气扩张周期，亦有望提振上游设备、先进封装等需求，建议关注PCB、MLCC、半导体设备及材料、先进封装等产业链投资机遇。",
+   "chars": 782,
+   "fulltext": true,
+   "category": "company",
+   "category_label": "公司与产业",
+   "id": "b8384c93816e86eb"
+  },
+  {
    "source_id": "yicai",
    "source": "第一财经",
    "lang": "zh",
@@ -389,20 +476,20 @@
    "id": "36dc7ba0b81f0816"
   },
   {
-   "source_id": "ft",
-   "source": "FT 金融时报",
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
    "lang": "en",
-   "channel": "Home",
-   "title": "Republican infighting mounts over corruption claims after midterms wipeout",
-   "url": "https://www.ft.com/content/66e9ca46-d1ea-473c-b8d6-06ba1dfc9e76?syn-25a6b1a6=1",
-   "published": "2026-11-08 12:51",
-   "content": "Former health official’s allegations of corporate influence over Trump administration policy spark war of words",
-   "chars": 111,
+   "channel": "Finance & economics",
+   "title": "AI is turning protectionists into free traders",
+   "url": "https://www.economist.com/finance-and-economics/2026/11/05/ai-is-turning-protectionists-into-free-traders",
+   "published": "2026-11-05 10:22",
+   "content": "Barriers to commerce are rising—except in technology",
+   "chars": 52,
    "fulltext": false,
    "paywalled": true,
    "category": "company",
    "category_label": "公司与产业",
-   "id": "27e6c4ade0774d29"
+   "id": "4c3842cbf7e17d89"
   },
   {
    "source_id": "reuters",
@@ -469,6 +556,54 @@
    "id": "17df3e3aff17689b"
   },
   {
+   "source_id": "ft",
+   "source": "FT 金融时报",
+   "lang": "en",
+   "channel": "Home",
+   "title": "Russian military turns to deepfake videos to claim battlefield success",
+   "url": "https://www.ft.com/content/7f36031b-ea90-4a3a-a570-a6c6ff96e45a?syn-25a6b1a6=1",
+   "published": "2026-11-09 05:00",
+   "content": "Army units and pro-war military bloggers are posting videos researchers say have been manipulated",
+   "chars": 97,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "company",
+   "category_label": "公司与产业",
+   "id": "fd0d20394de2e067"
+  },
+  {
+   "source_id": "ft",
+   "source": "FT 金融时报",
+   "lang": "en",
+   "channel": "Home",
+   "title": "What Democrats must do now",
+   "url": "https://www.ft.com/content/ea60eed2-f307-425e-8d9a-7bd31d6ea81b?syn-25a6b1a6=1",
+   "published": "2026-11-09 05:00",
+   "content": "To keep power and make real change, they need to tell the American people painful truths",
+   "chars": 88,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "company",
+   "category_label": "公司与产业",
+   "id": "8d3337573fc37e9b"
+  },
+  {
+   "source_id": "ft",
+   "source": "FT 金融时报",
+   "lang": "en",
+   "channel": "Home",
+   "title": "Democrat triumph offers China ‘window to catch up’ on AI",
+   "url": "https://www.ft.com/content/ff0e9974-b855-4b9a-a8c9-0782e7af16ff?syn-25a6b1a6=1",
+   "published": "2026-11-09 05:00",
+   "content": "Analysts warn of impact on exporters if newly elected politicians take tougher line on US data centre construction",
+   "chars": 114,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "company",
+   "category_label": "公司与产业",
+   "id": "5e2f447a4a10cb2a"
+  },
+  {
    "source_id": "cs",
    "source": "中国证券报",
    "lang": "zh",
@@ -497,6 +632,22 @@
    "category": "finance",
    "category_label": "金融机构",
    "id": "eefcd3e45c97ecb2"
+  },
+  {
+   "source_id": "economist",
+   "source": "The Economist 经济学人",
+   "lang": "en",
+   "channel": "Finance & economics",
+   "title": "Indebted tycoons haunt China’s banking system",
+   "url": "https://www.economist.com/finance-and-economics/2026/11/05/indebted-tycoons-haunt-chinas-banking-system",
+   "published": "2026-11-05 11:54",
+   "content": "Lenders are feeling the hangover from years of Wild East capitalism",
+   "chars": 67,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "finance",
+   "category_label": "金融机构",
+   "id": "4e40639ccd053d87"
   },
   {
    "source_id": "ft",
@@ -561,38 +712,6 @@
    "id": "78b128d479cbfb0f"
   },
   {
-   "source_id": "ft",
-   "source": "FT 金融时报",
-   "lang": "en",
-   "channel": "Home",
-   "title": "America is craving a return to community",
-   "url": "https://www.ft.com/content/2a0bc83c-1c48-451a-a2b6-3371a36fc287?syn-25a6b1a6=1",
-   "published": "2026-11-08 05:00",
-   "content": "The midterms are only the latest sign of hope",
-   "chars": 45,
-   "fulltext": false,
-   "paywalled": true,
-   "category": "global",
-   "category_label": "国际视野",
-   "id": "bdd0ffe7e60e2b82"
-  },
-  {
-   "source_id": "ft",
-   "source": "FT 金融时报",
-   "lang": "en",
-   "channel": "Home",
-   "title": "A new economic agenda for America",
-   "url": "https://www.ft.com/content/81bd54ff-61b4-4fa6-83d3-5a73821a879c",
-   "published": "2026-11-08 16:00",
-   "content": "Pro-growth policies on their own won’t address the concerns of voters worried about the cost of living",
-   "chars": 102,
-   "fulltext": false,
-   "paywalled": true,
-   "category": "global",
-   "category_label": "国际视野",
-   "id": "767b598800b217a8"
-  },
-  {
    "source_id": "reuters",
    "source": "Reuters 路透",
    "lang": "en",
@@ -613,16 +732,16 @@
    "source": "FT 金融时报",
    "lang": "en",
    "channel": "Home",
-   "title": "Democrats vow to impeach Trump officials and investigate Republican donors",
-   "url": "https://www.ft.com/content/111fefdb-0f85-4f8f-854f-86a5f81aceec?syn-25a6b1a6=1",
-   "published": "2026-11-08 18:10",
-   "content": "Pete Hegseth, Elon Musk and Venezuelan oil deals are early targets for Congressional probes by incoming lawmakers",
-   "chars": 113,
+   "title": "China’s producer prices hit four-year high",
+   "url": "https://www.ft.com/content/085c4610-143a-47ad-b546-0587695294b5?syn-25a6b1a6=1",
+   "published": "2026-11-09 05:09",
+   "content": "Weak domestic demand weighs on the world’s second-largest economy even as energy crisis drives up costs",
+   "chars": 103,
    "fulltext": false,
    "paywalled": true,
    "category": "global",
    "category_label": "国际视野",
-   "id": "f8cecffcd27a508e"
+   "id": "6d0ba94e3a8da1d3"
   },
   {
    "source_id": "yicai",
@@ -640,6 +759,22 @@
    "id": "42fddef837da4680"
   },
   {
+   "source_id": "ft",
+   "source": "FT 金融时报",
+   "lang": "en",
+   "channel": "Home",
+   "title": "Tech’s teetering towers",
+   "url": "https://www.ft.com/content/d3f706c8-a936-4395-bcf1-7f8bc2bed99a?syn-25a6b1a6=1",
+   "published": "2026-11-09 05:00",
+   "content": "The AI race is defined by vertical integration. Will it withstand a storm?",
+   "chars": 74,
+   "fulltext": false,
+   "paywalled": true,
+   "category": "tech",
+   "category_label": "科技前沿",
+   "id": "5201b7814a23e762"
+  },
+  {
    "source_id": "cs",
    "source": "中国证券报",
    "lang": "zh",
@@ -653,22 +788,6 @@
    "category": "other",
    "category_label": "其他",
    "id": "c5ba5b7f0d8564f1"
-  },
-  {
-   "source_id": "ft",
-   "source": "FT 金融时报",
-   "lang": "en",
-   "channel": "Home",
-   "title": "‘Radical left’ get the headlines but centrists dominate new US Congress",
-   "url": "https://www.ft.com/content/c8692ed7-f32b-487f-9efa-3ccd3d144f42?syn-25a6b1a6=1",
-   "published": "2026-11-08 05:00",
-   "content": "Most of the Democrats who swept to power in the midterms blue wave are moderates",
-   "chars": 80,
-   "fulltext": false,
-   "paywalled": true,
-   "category": "other",
-   "category_label": "其他",
-   "id": "4d30e6a1a74e13a3"
   },
   {
    "source_id": "ft",
