@@ -171,11 +171,27 @@ def collect_fulltext(source, settings, limit):
     budget = settings.get("per_source_budget", 120)
     t_start = time.time()
     pattern = re.compile(source["link_pattern"])
-    for page in source.get("list_pages", []):
+    pages = source.get("list_pages", [])
+
+    # 先做一次短超时探测：判断本源在当前网络（如境外 GitHub 机房）是否可达。
+    # 不可达则立刻返回，避免逐页重试把整体采集拖到几分钟。
+    first_html = None
+    if pages:
+        try:
+            first_html = http_get(pages[0]["url"], timeout=settings.get("probe_timeout", 8), retries=0)
+        except Exception as exc:  # noqa: BLE001
+            print(f"  [跳过] {source['name']} 当前网络不可达（{type(exc).__name__}），本源记 0 条",
+                  file=sys.stderr)
+            return []
+
+    for idx, page in enumerate(pages):
         if time.time() - t_start > budget:
             print(f"  [预算] {source['name']} 超过 {budget}s，提前结束本源")
         try:
-            list_html = http_get(page["url"], timeout=settings["request_timeout"])
+            if idx == 0 and first_html is not None:
+                list_html = first_html
+            else:
+                list_html = http_get(page["url"], timeout=settings["request_timeout"])
         except Exception as exc:  # noqa: BLE001
             print(f"  [warn] 列表页失败 {page['url']}: {exc}", file=sys.stderr)
             continue
@@ -287,12 +303,17 @@ def fingerprint(item):
     return hashlib.md5((item["source_id"] + norm).encode()).hexdigest()[:16]
 
 
-def filter_recent(items, days):
-    """丢掉明显过期（站点首页残留旧文）的条目；无日期的保留。"""
+def filter_recent(items, days, per_source_days=None):
+    """丢掉明显过期（站点首页残留旧文）的条目；无日期的保留。
+
+    周刊类来源（如经济学人）发布间隔长，用 per_source_days 单独放宽时限。
+    """
     from datetime import timedelta
-    cutoff = datetime.now() - timedelta(days=days)
+    per_source_days = per_source_days or {}
     out = []
     for it in items:
+        d = per_source_days.get(it.get("source_id")) or days
+        cutoff = datetime.now() - timedelta(days=d)
         m = re.match(r"(\d{4})-(\d{2})-(\d{2})", it.get("published") or "")
         if not m:
             out.append(it)
@@ -332,7 +353,7 @@ def main():
     settings = cfg["settings"]
     only = {s.strip() for s in args.only.split(",") if s.strip()}
 
-    all_items, per_source = [], {}
+    all_items, per_source, per_source_names = [], {}, {}
     for source in cfg["sources"]:
         if only and source["id"] not in only:
             continue
@@ -344,12 +365,14 @@ def main():
         else:
             items = collect_rss(source, settings, min(limit, 6))
         per_source[source["id"]] = len(items)
+        per_source_names[source["name"]] = len(items)
         print(f"  ✓ {len(items)} 条，耗时 {time.time() - t0:.1f}s")
         all_items.extend(items)
 
     all_items = dedupe(all_items)
     before = len(all_items)
-    all_items = filter_recent(all_items, settings.get("max_age_days", 4))
+    age_map = {s["id"]: s.get("max_age_days") for s in cfg["sources"] if s.get("max_age_days")}
+    all_items = filter_recent(all_items, settings.get("max_age_days", 4), age_map)
     if len(all_items) != before:
         print(f"  时间过滤：{before} → {len(all_items)} 条")
     for it in all_items:
@@ -374,6 +397,7 @@ def main():
         "generated_at": stamp,
         "total": len(all_items),
         "per_source": per_source,
+        "per_source_names": per_source_names,
         "articles": all_items,
     }
     day_path = os.path.join(args.out, f"{today}.json")
