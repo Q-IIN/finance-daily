@@ -250,12 +250,18 @@ def strip_html(s):
 
 def collect_rss(source, settings, limit):
     items = []
-    for feed in source.get("proxy_rss", []):
+    for idx, feed in enumerate(source.get("proxy_rss", [])):
+        if idx:
+            time.sleep(2.0)  # rss2json 免费额度按分钟计，连续请求容易 429
         try:
             data = rss2json(feed["url"], limit, settings["request_timeout"] + 8)
         except Exception as exc:  # noqa: BLE001
             print(f"  [warn] RSS 失败 {feed['url']}: {exc}", file=sys.stderr)
-            continue
+            try:
+                time.sleep(6)
+                data = rss2json(feed["url"], limit, settings["request_timeout"] + 8)
+            except Exception:  # noqa: BLE001
+                continue
         if data.get("status") != "ok":
             print(f"  [warn] RSS 状态异常 {feed['channel']}: {data.get('message')}", file=sys.stderr)
             continue
