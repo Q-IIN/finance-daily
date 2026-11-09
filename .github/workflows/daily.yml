@@ -2,10 +2,10 @@ name: Daily Finance Briefing
 
 on:
   schedule:
-    - cron: '30 23 * * *'   # 每天 北京时间 07:30（早报）
-    - cron: '0 13 * * *'    # 每天 北京时间 21:00（晚报）
-    - cron: '0 0 * * 3'     # 每周三 北京时间 08:00（含《财经》杂志）
-  workflow_dispatch:        # 允许在 Actions 页手动触发
+    - cron: '30 23 * * *'   # Beijing 07:30 daily morning
+    - cron: '0 13 * * *'    # Beijing 21:00 daily evening
+    - cron: '0 0 * * 3'     # Wed Beijing 08:00 (+ Caijing magazine)
+  workflow_dispatch:        # manual trigger
 
 permissions:
   contents: write
