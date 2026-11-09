@@ -7,6 +7,7 @@
     python3 fetch.py --only stcn,yicai --limit 5
 """
 import argparse
+import glob
 import gzip
 import hashlib
 import io
@@ -303,6 +304,46 @@ def fingerprint(item):
     return hashlib.md5((item["source_id"] + norm).encode()).hexdigest()[:16]
 
 
+def carry_over(items, out_dir, cfg, per_source, limit):
+    """把上一版（最近一期 JSON）中、本次抓取为 0 的源的文章接回来。
+
+    典型场景：境外机房抓不到证券时报，早报会把前一次本地补的全文覆盖掉；
+    接回来后至少保留最近一版的内容，且保留原始发布时间便于辨别。
+    """
+    if not os.path.isdir(out_dir):
+        return items, {}
+    files = sorted(glob.glob(os.path.join(out_dir, "20[0-9][0-9]-[0-9][0-9]-[0-9][0-9].json")))
+    if not files:
+        return items, {}
+    try:
+        with open(files[-1], encoding="utf-8") as f:
+            prev = json.load(f)
+    except Exception:  # noqa: BLE001
+        return items, {}
+
+    missing = [s["id"] for s in cfg["sources"] if per_source.get(s["id"], 0) == 0]
+    if not missing:
+        return items, {}
+
+    seen = {it.get("id") for it in items}
+    added = {}
+    for sid in missing:
+        pool = [a for a in prev.get("articles", []) if a.get("source_id") == sid]
+        pool.sort(key=lambda a: a.get("published") or "", reverse=True)
+        n = 0
+        for a in pool:
+            if n >= limit:
+                break
+            if a.get("id") in seen:
+                continue
+            items.append({**a, "carried": True})
+            seen.add(a.get("id"))
+            n += 1
+        if n:
+            added[sid] = n
+    return items, added
+
+
 def filter_recent(items, days, per_source_days=None):
     """丢掉明显过期（站点首页残留旧文）的条目；无日期的保留。
 
@@ -380,14 +421,32 @@ def main():
         it["category"], it["category_label"] = key, label
         it["id"] = fingerprint(it)
 
+    # 某个源本次 0 条（网络不可达／限流）时，沿用上一版里该源的文章，
+    # 避免「早上那次跑不出证券时报就把全文覆盖没了」。保留原始发布时间，页面可辨新旧。
+    per_source_names_all = {s["id"]: s["name"] for s in cfg["sources"]}
+    if settings.get("carry_over_missing", True):
+        all_items, carried = carry_over(all_items, args.out, cfg, per_source,
+                                        settings["max_articles_per_source"])
+        for sid, n in carried.items():
+            per_source[sid] = per_source.get(sid, 0) + n
+            per_source_names[per_source_names_all.get(sid, sid)] = per_source.get(sid, 0)
+            print(f"  [沿用] {per_source_names_all.get(sid, sid)} 本次 0 条，沿用上一版 {n} 条")
+
     order = {c["key"]: i for i, c in enumerate(cfg["categories"] + [{"key": "other"}])}
+    # 先按发布时间倒序（最新在前），再按分类/全文属性做稳定排序，使组内保持时间倒序
+    all_items.sort(key=lambda x: x.get("published") or "", reverse=True)
     all_items.sort(key=lambda x: (order.get(x["category"], 99),
-                                  "" if x["fulltext"] else "z",
-                                  x["published"] or ""), reverse=False)
+                                  "" if x["fulltext"] else "z"))
 
     cap = settings.get("max_articles_total", 72)
     if len(all_items) > cap:
         all_items = all_items[:cap]
+        # 截断后重算各源条数，避免页面统计与实际不符
+        per_source = {}
+        for it in all_items:
+            per_source[it["source_id"]] = per_source.get(it["source_id"], 0) + 1
+        per_source_names = {per_source_names_all[k]: v for k, v in per_source.items()
+                            if k in per_source_names_all}
 
     os.makedirs(args.out, exist_ok=True)
     today = datetime.now().strftime("%Y-%m-%d")
