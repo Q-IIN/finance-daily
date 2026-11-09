@@ -316,6 +316,7 @@
     "request_delay": 0.6,
     "retries": 2,
     "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-    "max_age_days": 4
+    "max_age_days": 4,
+    "per_source_budget": 100
   }
 }
