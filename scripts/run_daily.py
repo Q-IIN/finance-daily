@@ -5,6 +5,7 @@
   python3 run_daily.py              # 每日：六家媒体日报
   python3 run_daily.py --magazine   # 每周三：《财经》杂志当期
   python3 run_daily.py --all        # 两者都跑
+  python3 run_daily.py --sync        # 跑完并推送到 GitHub Pages（境内网络可补全证券时报全文）
 """
 import subprocess
 import sys
@@ -46,6 +47,12 @@ def main():
         print("=" * 56)
         sh([sys.executable, os.path.join(SKILL_DIR, "scripts", "build.py"),
             "--data", DATA, "--out", OUT])
+
+    if "--sync" in sys.argv:
+        print("=" * 56)
+        print("③ 同步到 GitHub Pages")
+        print("=" * 56)
+        sh([sys.executable, os.path.join(SKILL_DIR, "scripts", "sync_github.py"), "--dir", OUT])
 
     print("\n✓ 完成。")
 
