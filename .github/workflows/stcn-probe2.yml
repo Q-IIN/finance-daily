@@ -1,0 +1,31 @@
+name: stcn probe 2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Probe stcn entry points
+        run: |
+          echo "== DNS =="
+          getent hosts www.stcn.com || echo "dns fail"
+          echo "== try each =="
+          try() {
+            label="$1"; shift
+            out=$(curl -s -o /tmp/o -w "%{http_code}" --max-time 20 "$@" 2>/dev/null) || true
+            sz=$(wc -c < /tmp/o 2>/dev/null || echo 0)
+            hits=$(grep -oE 'article/detail/[0-9]+\.html' /tmp/o 2>/dev/null | sort -u | wc -l)
+            echo "RESULT|$label|code=$out|size=$sz|links=$hits"
+          }
+          try "v4-list"      -4 "https://www.stcn.com/article/list/yw.html"
+          try "v6-list"      -6 "https://www.stcn.com/article/list/yw.html"
+          try "http-list"    "http://www.stcn.com/article/list/yw.html"
+          try "bare-host"    -4 "https://stcn.com"
+          try "mobile"       -4 "https://m.stcn.com"
+          try "jina-list"    "https://r.jina.ai/https://www.stcn.com/article/list/yw.html"
+          try "jina-detail"  "https://r.jina.ai/https://www.stcn.com/article/detail/4327358.html"
+          try "allorigins"   "https://api.allorigins.win/raw?url=https%3A%2F%2Fwww.stcn.com%2Farticle%2Flist%2Fyw.html"
+          try "codetabs"     "https://api.codetabs.com/v1/proxy?quest=https://www.stcn.com/article/list/yw.html"
+          echo "== done =="
