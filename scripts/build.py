@@ -285,7 +285,8 @@ def build_page(payload, all_dates, active="today", base="", banner=""):
   {''.join(render_card(a) for a in group)}
 </section>""")
 
-    src_stat = " · ".join(f"{k} {v}" for k, v in payload.get("per_source", {}).items())
+    stats = payload.get("per_source_names") or payload.get("per_source", {})
+    src_stat = " · ".join(f"{k} {v}" for k, v in stats.items())
     total_chars = sum(a.get("chars", 0) for a in arts)
     date_cn = payload["date"]
     gen = payload.get("generated_at", "")[:16]
