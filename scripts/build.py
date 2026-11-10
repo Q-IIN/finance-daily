@@ -229,18 +229,30 @@ JS = r"""
   document.addEventListener('click',function(e){
     var m=e.target.closest('.more[data-i]'); if(!m) return;
     var card=m.closest('.card'), body=card.querySelector('.body'), i=+m.dataset.i;
+    // 收起：把正文换回摘要。
+    // 注意不能只靠 CSS —— 列表页的 .body.plain 为了不被裁剪设了 max-height:none，
+    // 去掉 .open 不会收起来，必须把内容换回去，否则点了完全没反应。
     if(card.classList.contains('open')){
-      card.classList.remove('open'); m.textContent='展开全文'; return;
+      card.classList.remove('open');
+      m.textContent='展开全文';
+      if(card._sum!=null) body.innerHTML=card._sum;
+      return;
     }
-    if(card.dataset.loaded==='1'){
-      card.classList.add('open'); m.textContent='收起全文'; return;
+    // 已经取过全文：直接从内存换回来，不再走网络
+    if(card._full!=null){
+      body.innerHTML=card._full;
+      card.classList.add('open');
+      m.textContent='收起全文';
+      return;
     }
     m.style.borderColor=''; m.style.color=''; m.textContent='加载中…';
     loadDay().then(function(j){
       var a=(j.articles||[])[i];
       if(!a||!a.content) throw new Error('no content');
+      card._sum=body.innerHTML;     // 先把摘要存下来，收起时还原
       fill(body,a.content);
-      card.dataset.loaded='1'; card.classList.add('open');
+      card._full=body.innerHTML;    // 全文也存一份，二次展开不再请求
+      card.classList.add('open');
       m.textContent='收起全文';
       card.dataset.text=(a.title+' '+a.content).toLowerCase();
     }).catch(function(err){
