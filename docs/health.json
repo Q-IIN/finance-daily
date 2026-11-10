@@ -1,0 +1,18 @@
+{
+ "build_id": "6633ec334e37",
+ "date": "2026-11-10",
+ "generated_at": "2026-11-10 20:37:44 +0800",
+ "latest_published": "Sun, 08 Nov 2026",
+ "fresh_today": 40,
+ "total": 72,
+ "stale": true,
+ "per_source": {
+  "yicai": 16,
+  "stcn": 16,
+  "cs": 15,
+  "ft": 12,
+  "reuters": 6,
+  "economist": 7
+ },
+ "checked_at": "2026-11-10 20:37:45 +0800"
+}

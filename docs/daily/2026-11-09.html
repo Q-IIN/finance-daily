@@ -8,6 +8,9 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="build-id" content="6633ec334e37">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="apple-touch-icon" href="../icons/icon-192.png">
 <style>
@@ -149,6 +152,7 @@ footer a{color:var(--fg2)}
     <span><b>71k</b> 字</span>
   </div>
 </header>
+<div style="margin:16px 0 0;padding:12px 16px;border-radius:12px;background:rgba(224,74,74,.12);border:1px solid rgba(224,74,74,.45);color:#e04a4a;font-size:13.5px;line-height:1.6">⚠ 本期可能不是最新：最新文章 Sun, 08 Nov 2026，今日新文 40 条。采集任务可能失败或延迟。</div>
 
 <div class="brief">
   <h2>Today's Focus · 今日速览</h2>
@@ -991,6 +995,47 @@ footer a{color:var(--fg2)}
     var card=m.closest('.card'); card.classList.toggle('open');
     m.textContent=card.classList.contains('open')?'收起全文':'展开全文';
   });
+})();
+</script>
+<script>
+(function(){
+  var BID = "6633ec334e37", BASE = "../";
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);'
+    + 'bottom:calc(72px + env(safe-area-inset-bottom));z-index:99;display:none;'
+    + 'align-items:center;gap:10px;padding:10px 8px 10px 18px;border-radius:999px;'
+    + 'background:#d4a54a;color:#0e1116;font-size:14px;font-weight:700;'
+    + 'box-shadow:0 8px 28px rgba(0,0,0,.4);white-space:nowrap';
+  bar.innerHTML = '<span>有新内容</span>'
+    + '<button style="border:0;border-radius:999px;padding:6px 14px;font-size:13px;'
+    + 'font-weight:700;background:#0e1116;color:#f0c674">刷新</button>';
+  document.body.appendChild(bar);
+  bar.querySelector('button').addEventListener('click', function(){
+    if (window.caches && caches.keys) {
+      caches.keys().then(function(ks){ ks.forEach(function(k){ caches.delete(k); }); });
+    }
+    location.reload();
+  });
+  var busy = false;
+  function check(){
+    if (busy) return;
+    busy = true;
+    fetch(BASE + 'health.json?ts=' + Date.now(), { cache: 'no-store' })
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if (j && j.build_id && j.build_id !== BID) bar.style.display = 'flex';
+      })
+      .catch(function(){})
+      .then(function(){ busy = false; });
+  }
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden) check();
+  });
+  setInterval(check, 180000);
+  check();
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register(BASE + 'sw.js').catch(function(){});
+  }
 })();
 </script>
 </body>
