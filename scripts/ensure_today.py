@@ -18,15 +18,17 @@ import os
 import subprocess
 import sys
 from datetime import datetime
+from zoneinfo import ZoneInfo
 
 SKILL_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.environ.get("FINANCE_DAILY_OUT", "/workspace/finance-daily")
 DATA = os.path.join(OUT, "data")
 _TOKEN = os.path.expanduser("~/.codebuddy/financial-news-daily/gh_token")
+TZ = ZoneInfo(os.environ.get("FINANCE_DAILY_TZ", "Asia/Shanghai"))
 
 
 def today():
-    return datetime.now().strftime("%Y-%m-%d")
+    return datetime.now(TZ).strftime("%Y-%m-%d")
 
 
 def has_today():
@@ -46,7 +48,7 @@ def today_has_stcn():
 
 
 def is_wednesday():
-    return datetime.now().weekday() == 2  # Mon=0
+    return datetime.now(TZ).weekday() == 2  # Mon=0
 
 
 def main():

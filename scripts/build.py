@@ -2,13 +2,35 @@
 # -*- coding: utf-8 -*-
 """日报生成器：把采集到的 JSON 渲染成移动端优先的 HTML 日报 + Markdown + PWA 外壳。"""
 import argparse
+import hashlib
 import json
 import os
 import re
 import shutil
-from datetime import datetime
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 
 SKILL_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+TZ = ZoneInfo(os.environ.get("FINANCE_DAILY_TZ", "Asia/Shanghai"))
+
+
+def now():
+    return datetime.now(TZ)
+
+
+def write_if_changed(path, text):
+    """内容一致就不落盘，避免每次构建都把全部历史页面重写一遍（减少 commit 体积与 Pages 部署耗时）。"""
+    if os.path.exists(path):
+        try:
+            with open(path, encoding="utf-8") as f:
+                if f.read() == text:
+                    return False
+        except Exception:  # noqa: BLE001
+            pass
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(text)
+    return True
 
 CATEGORY_ICON = {
     "macro": "◈", "market": "◎", "company": "▣",
@@ -252,7 +274,18 @@ def render_card(a):
 </article>"""
 
 
-def build_page(payload, all_dates, active="today", base="", banner=""):
+def build_page(payload, all_dates, active="today", base="", banner="", build_id="", health=None):
+    health = health or {}
+    stale = bool(health.get("stale"))
+    stale_html = ""
+    if stale and active == "today":
+        stale_html = (
+            '<div style="margin:16px 0 0;padding:12px 16px;border-radius:12px;'
+            'background:rgba(224,74,74,.12);border:1px solid rgba(224,74,74,.45);'
+            'color:#e04a4a;font-size:13.5px;line-height:1.6">'
+            f'⚠ 本期可能不是最新：最新文章 {esc(health.get("latest_published") or "无")}，'
+            f'今日新文 {health.get("fresh_today", 0)} 条。采集任务可能失败或延迟。</div>'
+        )
     arts = payload["articles"]
     cats = []
     for a in arts:
@@ -309,6 +342,9 @@ def build_page(payload, all_dates, active="today", base="", banner=""):
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="build-id" content="{build_id}">
 <link rel="manifest" href="{base}manifest.webmanifest">
 <link rel="apple-touch-icon" href="{base}icons/icon-192.png">
 <style>{CSS}</style>
@@ -324,6 +360,7 @@ def build_page(payload, all_dates, active="today", base="", banner=""):
     <span><b>{total_chars//1000}k</b> 字</span>
   </div>
 </header>
+{stale_html}
 
 <div class="brief">
   <h2>Today's Focus · 今日速览</h2>
@@ -345,6 +382,7 @@ def build_page(payload, all_dates, active="today", base="", banner=""):
 </div>
 {nav}
 <script>{JS}</script>
+<script>{UPDATE_JS.replace('__BUILD_ID__', build_id).replace('__BASE__', base)}</script>
 </body>
 </html>"""
 
@@ -389,24 +427,116 @@ MANIFEST = {
 }
 
 SW = """
-const CACHE = 'fd-v1';
+// 版本号每次构建都会变，浏览器据此发现 SW 更新。
+const BUILD = '__BUILD_ID__';
+const CACHE = 'fd-' + BUILD;
 const SHELL = ['./index.html', './manifest.webmanifest', './icons/icon-192.png'];
+
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
-});
-self.addEventListener('activate', e => {
-  e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k)))).then(() => self.clients.claim()));
-});
-self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  e.respondWith(
-    fetch(e.request).then(res => {
-      const copy = res.clone();
-      caches.open(CACHE).then(c => c.put(e.request, copy)).catch(() => {});
-      return res;
-    }).catch(() => caches.match(e.request).then(r => r || caches.match('./index.html')))
+  e.waitUntil(
+    caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {}).then(() => self.skipWaiting())
   );
 });
+
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys()
+      .then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(() => self.clients.claim())
+  );
+});
+
+// 策略：页面/JSON 一律网络优先（3.5s 超时），只有断网时才用缓存兜底；
+// health.json 完全不缓存，保证“是否有新版本”的判断永远拿实时值。
+self.addEventListener('fetch', e => {
+  const req = e.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.origin !== location.origin) return;
+  if (url.pathname.endsWith('/health.json')) return;
+
+  const isDoc = req.mode === 'navigate' || /\\.(html|json)$/.test(url.pathname);
+  if (isDoc) {
+    e.respondWith((async () => {
+      try {
+        const res = await Promise.race([
+          fetch(req, { cache: 'no-store' }),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 3500))
+        ]);
+        if (res && res.ok) {
+          const c = await caches.open(CACHE);
+          c.put(req, res.clone()).catch(() => {});
+          return res;
+        }
+        throw new Error('bad status');
+      } catch (_) {
+        const hit = await caches.match(req);
+        if (hit) return hit;
+        const idx = await caches.match('./index.html');
+        return idx || Response.error();
+      }
+    })());
+    return;
+  }
+
+  e.respondWith(
+    caches.match(req).then(hit => {
+      if (hit) return hit;
+      return fetch(req).then(res => {
+        if (res && res.ok) {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
+        }
+        return res;
+      });
+    })
+  );
+});
+"""
+
+
+# 页面内的“版本哨兵”：即使 HTML 被浏览器/运营商缓存住，
+# 这段脚本也会带时间戳去拉 health.json，发现 build_id 变了就提示刷新。
+UPDATE_JS = """
+(function(){
+  var BID = "__BUILD_ID__", BASE = "__BASE__";
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);'
+    + 'bottom:calc(72px + env(safe-area-inset-bottom));z-index:99;display:none;'
+    + 'align-items:center;gap:10px;padding:10px 8px 10px 18px;border-radius:999px;'
+    + 'background:#d4a54a;color:#0e1116;font-size:14px;font-weight:700;'
+    + 'box-shadow:0 8px 28px rgba(0,0,0,.4);white-space:nowrap';
+  bar.innerHTML = '<span>有新内容</span>'
+    + '<button style="border:0;border-radius:999px;padding:6px 14px;font-size:13px;'
+    + 'font-weight:700;background:#0e1116;color:#f0c674">刷新</button>';
+  document.body.appendChild(bar);
+  bar.querySelector('button').addEventListener('click', function(){
+    if (window.caches && caches.keys) {
+      caches.keys().then(function(ks){ ks.forEach(function(k){ caches.delete(k); }); });
+    }
+    location.reload();
+  });
+  var busy = false;
+  function check(){
+    if (busy) return;
+    busy = true;
+    fetch(BASE + 'health.json?ts=' + Date.now(), { cache: 'no-store' })
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if (j && j.build_id && j.build_id !== BID) bar.style.display = 'flex';
+      })
+      .catch(function(){})
+      .then(function(){ busy = false; });
+  }
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden) check();
+  });
+  setInterval(check, 180000);
+  check();
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register(BASE + 'sw.js').catch(function(){});
+  }
+})();
 """
 
 
@@ -414,30 +544,48 @@ def snake(a):
     return f"{a['source']} · {a['channel']}"
 
 
-def build_markdown(payload):
-    lines = [f"# 财经日报 · {payload['date']}", "",
-             f"> 生成时间 {payload['generated_at']} · 共 {payload['total']} 篇", ""]
-    cats = []
-    for a in payload["articles"]:
-        if a["category_label"] not in cats:
-            cats.append(a["category_label"])
-    for label in cats:
-        lines.append(f"## {label}")
-        lines.append("")
-        for a in payload["articles"]:
-            if a["category_label"] != label:
-                continue
-            tag = "" if a.get("fulltext") else " `摘要`"
-            lines.append(f"### {a['title']}{tag}")
-            lines.append(f"*{snake(a)} · {a.get('published','')}*")
-            lines.append("")
-            body = a.get("content", "").strip()
-            lines.append(body if a.get("fulltext") else body)
-            lines.append("")
-            if a.get("url"):
-                lines.append(f"[原文]({a['url']})")
-                lines.append("")
-    return "\n".join(lines)
+# 历史保留天数。docs/daily/*.html 每期约 280KB，不设上限一年能撑到 250MB，
+# GitHub Pages 有 1GB 硬限制，所以保留窗口内的一律清掉。
+KEEP_DAYS = int(os.environ.get("FINANCE_DAILY_KEEP_DAYS", "90"))
+
+
+def prune(data_dir, out_dir):
+    """清理冗余产物。都是“能重新生成”或“没有任何代码读取”的东西：
+
+    · data/archive.jsonl —— 每次运行全量 append，一天两份，且 build 从不读它
+    · md/                —— 曾经生成的 Markdown 副本，页面里没有任何入口
+    · 超过 KEEP_DAYS 的 daily/*.html 与 data/*.json
+    """
+    removed = []
+
+    legacy = os.path.join(data_dir, "archive.jsonl")
+    if os.path.exists(legacy):
+        os.remove(legacy)
+        removed.append("data/archive.jsonl")
+
+    md_dir = os.path.join(out_dir, "md")
+    if os.path.isdir(md_dir):
+        shutil.rmtree(md_dir, ignore_errors=True)
+        removed.append("md/")
+
+    cutoff = (now() - timedelta(days=KEEP_DAYS)).strftime("%Y-%m-%d")
+    for sub, suffix in (("data", ".json"), ("daily", ".html")):
+        folder = os.path.join(out_dir, sub)
+        if not os.path.isdir(folder):
+            continue
+        for name in os.listdir(folder):
+            m = re.match(r"^(\d{4}-\d{2}-\d{2})" + re.escape(suffix) + r"$", name)
+            if m and m.group(1) < cutoff:
+                try:
+                    os.remove(os.path.join(folder, name))
+                    removed.append(f"{sub}/{name}")
+                except OSError:
+                    pass
+
+    if removed:
+        print(f"· 清理冗余 {len(removed)} 项：{', '.join(removed[:6])}"
+              + (" …" if len(removed) > 6 else ""))
+    return removed
 
 
 def main():
@@ -448,7 +596,8 @@ def main():
 
     os.makedirs(os.path.join(args.out, "daily"), exist_ok=True)
     os.makedirs(os.path.join(args.out, "icons"), exist_ok=True)
-    os.makedirs(os.path.join(args.out, "md"), exist_ok=True)
+
+    prune(args.data, args.out)
 
     payloads = []
     for fn in sorted(os.listdir(args.data)):
@@ -460,29 +609,65 @@ def main():
 
     latest = max(payloads, key=lambda p: p["date"])
 
-    # 每日独立页
+    # ---- 健康度：判断这一期到底是不是“今天的新内容” ----
+    today = now().strftime("%Y-%m-%d")
+    latest_pub = latest.get("latest_published") or ""
+    if not latest_pub:
+        latest_pub = max((a.get("published") or "" for a in latest["articles"]), default="")
+    fresh_today = latest.get("fresh_today")
+    if fresh_today is None:
+        fresh_today = sum(1 for a in latest["articles"]
+                          if (a.get("published") or "").startswith(today))
+    hour = now().hour
+    # 北京 09:00 之后，最新文章还不是今天的，或今日新文少于 5 条 → 判定数据陈旧
+    stale = bool(latest["date"] != today
+                 or (hour >= 9 and not latest_pub.startswith(today))
+                 or (hour >= 9 and fresh_today < 5))
+
+    build_id = hashlib.sha1(
+        (latest.get("generated_at", "") + str(latest["total"]) + latest_pub).encode()
+    ).hexdigest()[:12]
+
+    health = {
+        "build_id": build_id,
+        "date": latest["date"],
+        "generated_at": latest.get("generated_at", ""),
+        "latest_published": latest_pub,
+        "fresh_today": fresh_today,
+        "total": latest["total"],
+        "stale": stale,
+        "per_source": latest.get("per_source", {}),
+        "checked_at": now().strftime("%Y-%m-%d %H:%M:%S %z"),
+    }
+
+    dates = [x["date"] for x in payloads]
+    changed = 0
+
+    # 每日独立页（内容没变就不重写，避免每次构建把全部历史页刷一遍）
     for p in payloads:
-        html = build_page(p, [x["date"] for x in payloads], base="../", banner=magazine_banner(args.data, "../"))
-        with open(os.path.join(args.out, "daily", f"{p['date']}.html"), "w", encoding="utf-8") as f:
-            f.write(html)
-        with open(os.path.join(args.out, "md", f"{p['date']}.md"), "w", encoding="utf-8") as f:
-            f.write(build_markdown(p))
+        html = build_page(p, dates, base="../", banner=magazine_banner(args.data, "../"),
+                          build_id=build_id, health=health)
+        changed += write_if_changed(os.path.join(args.out, "daily", f"{p['date']}.html"), html)
 
     # 首页 = 最新一期（相对路径修正：daily 页里的资源路径是 ../）
-    index_html = build_page(latest, [x["date"] for x in payloads], banner=magazine_banner(args.data))
-    with open(os.path.join(args.out, "index.html"), "w", encoding="utf-8") as f:
-        f.write(index_html)
+    index_html = build_page(latest, dates, banner=magazine_banner(args.data),
+                            build_id=build_id, health=health)
+    changed += write_if_changed(os.path.join(args.out, "index.html"), index_html)
+    changed += write_if_changed(os.path.join(args.out, "archive.html"),
+                                build_archive(payloads, args.out))
 
-    with open(os.path.join(args.out, "archive.html"), "w", encoding="utf-8") as f:
-        f.write(build_archive(payloads, args.out))
+    changed += write_if_changed(os.path.join(args.out, "manifest.webmanifest"),
+                                json.dumps(MANIFEST, ensure_ascii=False, indent=1))
+    changed += write_if_changed(os.path.join(args.out, "sw.js"),
+                                SW.replace("__BUILD_ID__", build_id))
+    changed += write_if_changed(os.path.join(args.out, "health.json"),
+                                json.dumps(health, ensure_ascii=False, indent=1))
 
-    with open(os.path.join(args.out, "manifest.webmanifest"), "w", encoding="utf-8") as f:
-        json.dump(MANIFEST, f, ensure_ascii=False, indent=1)
-    with open(os.path.join(args.out, "sw.js"), "w", encoding="utf-8") as f:
-        f.write(SW)
-
-    print(f"✓ 生成 {len(payloads)} 期日报 → {args.out}")
-    print(f"✓ 最新：{latest['date']}，{latest['total']} 篇")
+    print(f"✓ 生成 {len(payloads)} 期日报 → {args.out}（{changed} 个文件有变化）")
+    print(f"✓ 最新：{latest['date']}，{latest['total']} 篇，最新文章 {latest_pub or '无'}")
+    print(f"✓ build_id={build_id} stale={stale}")
+    if stale:
+        print("⚠ 数据陈旧：最新文章不是今天的，页面已显示提示条", flush=True)
 
 
 if __name__ == "__main__":

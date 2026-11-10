@@ -10,7 +10,6 @@ import argparse
 import glob
 import gzip
 import hashlib
-import io
 import json
 import os
 import re
@@ -19,12 +18,22 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
+from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
 
 SKILL_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_PATH = os.path.join(SKILL_DIR, "config", "sources.json")
+
+# 统一业务时区。GitHub Actions 运行在 UTC，直接用 datetime.now() 会把
+# 北京时间 00:00–08:00 之间跑的批次写成“前一天”的文件名，导致早报标题显示昨天。
+TZ = ZoneInfo(os.environ.get("FINANCE_DAILY_TZ", "Asia/Shanghai"))
+
+
+def now():
+    return datetime.now(TZ)
 
 UA_POOL = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -248,6 +257,47 @@ def strip_html(s):
     return clean_text(BeautifulSoup(s, "html.parser").get_text(" ", strip=True))
 
 
+def norm_pubdate(s):
+    """把各种发布时间统一成 'YYYY-MM-DD HH:MM'（北京时间）。
+
+    RSS 的 pubDate 是 RFC822（'Sun, 08 Nov 2026 12:00:00 +0000'），原来只做了
+    .replace('T',' ')[:16]，结果存成 'Sun, 08 Nov 2026'：
+      · filter_recent 的 ^\\d{4}-\\d{2}-\\d{2} 匹配不上 → 时间过滤对 RSS 完全失效；
+      · 按字符串倒序排序时 'S' > '2' → 旧的 FT/经济学人文章永远排在最前面。
+    这两个问题叠加，就是“页面看着没更新”。
+    """
+    s = (s or "").strip()
+    if not s:
+        return ""
+    if re.match(r"^\d{4}-\d{2}-\d{2}", s):
+        try:
+            dt = datetime.fromisoformat(s.replace("Z", "+00:00"))
+            if dt.tzinfo is not None:
+                return dt.astimezone(TZ).strftime("%Y-%m-%d %H:%M")
+        except Exception:  # noqa: BLE001
+            pass
+        return s.replace("T", " ")[:16]
+    try:
+        dt = parsedate_to_datetime(s)
+        if dt is not None:
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            return dt.astimezone(TZ).strftime("%Y-%m-%d %H:%M")
+    except Exception:  # noqa: BLE001
+        pass
+    for fmt in ("%a, %d %b %Y %H:%M:%S %z", "%d %b %Y %H:%M:%S %z",
+                "%a, %d %b %Y %H:%M:%S", "%a, %d %b %Y", "%d %b %Y",
+                "%Y/%m/%d %H:%M", "%Y-%m-%d"):
+        try:
+            dt = datetime.strptime(s, fmt)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=TZ)
+            return dt.astimezone(TZ).strftime("%Y-%m-%d %H:%M")
+        except Exception:  # noqa: BLE001
+            continue
+    return ""
+
+
 def rss_direct(feed_url, count, timeout=25):
     """直连解析 RSS（rss2json 被限流时的兜底）。返回 rss2json 同构的 dict。"""
     xml = http_get(feed_url, timeout=timeout, retries=1)
@@ -382,18 +432,17 @@ def filter_recent(items, days, per_source_days=None):
 
     周刊类来源（如经济学人）发布间隔长，用 per_source_days 单独放宽时限。
     """
-    from datetime import timedelta
     per_source_days = per_source_days or {}
     out = []
     for it in items:
         d = per_source_days.get(it.get("source_id")) or days
-        cutoff = datetime.now() - timedelta(days=d)
+        cutoff = now() - timedelta(days=d)
         m = re.match(r"(\d{4})-(\d{2})-(\d{2})", it.get("published") or "")
         if not m:
             out.append(it)
             continue
         try:
-            if datetime.strptime(m.group(0), "%Y-%m-%d") >= cutoff:
+            if datetime.strptime(m.group(0), "%Y-%m-%d").date() >= cutoff.date():
                 out.append(it)
         except ValueError:
             out.append(it)
@@ -473,7 +522,11 @@ def main():
 
     cap = settings.get("max_articles_total", 72)
     if len(all_items) > cap:
-        all_items = all_items[:cap]
+        # 旧逻辑直接切尾部，等于按“分类顺序”砍，最新的文章反而可能被丢掉。
+        # 改为先按发布时间挑出最新的 cap 条，再保持分类内的展示顺序。
+        keep = {id(x) for x in sorted(all_items, key=lambda x: x.get("published") or "",
+                                      reverse=True)[:cap]}
+        all_items = [x for x in all_items if id(x) in keep]
         # 截断后重算各源条数，避免页面统计与实际不符
         per_source = {}
         for it in all_items:
@@ -482,26 +535,27 @@ def main():
                             if k in per_source_names_all}
 
     os.makedirs(args.out, exist_ok=True)
-    today = datetime.now().strftime("%Y-%m-%d")
-    stamp = datetime.now(timezone.utc).astimezone().strftime("%Y-%m-%d %H:%M:%S %z")
+    today = now().strftime("%Y-%m-%d")
+    stamp = now().strftime("%Y-%m-%d %H:%M:%S %z")
+    latest_pub = max((it.get("published") or "" for it in all_items), default="")
+    fresh_n = sum(1 for it in all_items if (it.get("published") or "").startswith(today))
     payload = {
         "date": today,
         "generated_at": stamp,
+        "timezone": str(TZ),
         "total": len(all_items),
         "per_source": per_source,
         "per_source_names": per_source_names,
+        "latest_published": latest_pub,
+        "fresh_today": fresh_n,
         "articles": all_items,
     }
     day_path = os.path.join(args.out, f"{today}.json")
     with open(day_path, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=1)
 
-    # 累积库（跨天保留，供检索）
-    with open(os.path.join(args.out, "archive.jsonl"), "a", encoding="utf-8") as f:
-        for it in all_items:
-            f.write(json.dumps({**it, "date": today}, ensure_ascii=False) + "\n")
-
     print(f"\n合计 {len(all_items)} 条（去重后）→ {day_path}")
+    print(f"最新文章时间 {latest_pub or '无'} · 今日新文 {fresh_n} 条")
     print("分布:", json.dumps(per_source, ensure_ascii=False))
 
 

@@ -78,11 +78,30 @@ def main():
     ap.add_argument("--repo", default="Q-IIN/finance-daily")
     ap.add_argument("--branch", default="master")
     ap.add_argument("--message", default="")
+    ap.add_argument("--attempts", type=int, default=4, help="ref 冲突时的重试次数")
     args = ap.parse_args()
 
     tok = token()
     files = collect_files(args.dir)
 
+    # Actions 的 git push 和本脚本会同时写同一个分支，PATCH ref 会偶发
+    # 422 non-fast-forward。这里不是简单报错退出，而是重新取最新 head 再重放一次。
+    for attempt in range(1, args.attempts + 1):
+        try:
+            done = push_once(args, tok, files)
+            return done
+        except SystemExit as exc:
+            msg = str(exc)
+            conflict = (" 422" in msg or " 409" in msg or "non-fast-forward" in msg
+                        or "Update is not a fast forward" in msg)
+            if not conflict or attempt == args.attempts:
+                raise
+            wait = 2 * attempt
+            print(f"[warn] 第 {attempt} 次推送冲突，{wait}s 后重试（{msg[:120]}）", file=sys.stderr)
+            time.sleep(wait)
+
+
+def push_once(args, tok, files):
     ref = api("GET", f"/repos/{args.repo}/git/ref/heads/{args.branch}", tok)
     head = ref["object"]["sha"]
     commit = api("GET", f"/repos/{args.repo}/git/commits/{head}", tok)
@@ -104,15 +123,17 @@ def main():
 
     if not entries:
         print("· 内容与线上一致，无需推送")
-        return
+        return True
 
     tree = api("POST", f"/repos/{args.repo}/git/trees", tok,
                {"base_tree": base_tree, "tree": entries})
     msg = args.message or f"chore: sync briefing {len(entries)} files"
     new_commit = api("POST", f"/repos/{args.repo}/git/commits", tok,
                      {"message": msg, "tree": tree["sha"], "parents": [head]})
-    api("PATCH", f"/repos/{args.repo}/git/refs/heads/{args.branch}", tok, {"sha": new_commit["sha"]})
+    api("PATCH", f"/repos/{args.repo}/git/refs/heads/{args.branch}", tok,
+        {"sha": new_commit["sha"], "force": False})
     print(f"✓ 已推送 {changed} 个文件 → {args.repo}@{new_commit['sha'][:7]}")
+    return True
 
 
 if __name__ == "__main__":
