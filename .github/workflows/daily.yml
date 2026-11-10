@@ -1,24 +1,40 @@
 name: Daily Finance Briefing
 
+# 触发策略说明（这是原来“不稳定”的核心）：
+#   GitHub Actions 的 schedule 在整点/高峰时段会排队、延迟几十分钟，甚至整次丢弃。
+#   原来只挂 2 个 cron，一旦被丢弃，当天就直接少一期，而且没人知道。
+#   现在改成「北京时间 07:00–22:00 每小时触发一次 + 幂等闸门」：
+#   每次触发先跑 should_run.py，3 小时内已经采集过就直接退出（几秒完成），
+#   因此漏跑最多 1 小时就会被下一次自动补上，而不会明显增加 Actions 用量。
 on:
   schedule:
-    - cron: '30 23 * * *'   # Beijing 07:30 daily morning
-    - cron: '0 13 * * *'    # Beijing 21:00 daily evening
-    - cron: '0 0 * * 3'     # Wed Beijing 08:00 (+ Caijing magazine)
-  workflow_dispatch:        # manual trigger
+    - cron: '0 23,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14 * * *'
+  workflow_dispatch:        # 手动触发：强制全量（含杂志）
 
 permissions:
   contents: write
+  issues: write
 
+# cancel-in-progress 必须为 false：采集跑到一半被新触发取消，
+# 就等于当天这一期凭空消失，正是“时好时坏”的来源之一。
 concurrency:
   group: finance-daily
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   collect:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      TZ: Asia/Shanghai
+      FINANCE_DAILY_TZ: Asia/Shanghai
+      FINANCE_DAILY_OUT: docs
+      FORCE_RUN: ${{ github.event_name == 'workflow_dispatch' && '1' || '' }}
+
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -27,27 +43,74 @@ jobs:
       - name: Install deps
         run: pip install beautifulsoup4
 
-      - name: Collect daily (+magazine on Wednesday)
-        env:
-          FINANCE_DAILY_OUT: docs
+      - name: Gate (幂等判重)
+        id: gate
+        run: python3 scripts/should_run.py
+
+      - name: Collect
+        if: steps.gate.outputs.run == 'true'
         run: |
           set -e
-          if [ "${{ github.event.schedule }}" = "0 0 * * 3" ] || [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            echo ">> run daily + magazine"
+          if [ "${{ steps.gate.outputs.magazine }}" = "true" ]; then
+            echo ">> daily + magazine"
             python3 scripts/run_daily.py --all
           else
-            echo ">> run daily only"
+            echo ">> daily only"
             python3 scripts/run_daily.py
           fi
 
-      - name: Commit & push docs
+      - name: Commit & push (带 rebase 重试)
+        if: steps.gate.outputs.run == 'true'
         run: |
+          set -e
           git config user.name "finance-daily-bot"
           git config user.email "bot@users.noreply.github.com"
-          git add docs
+          # -A 必须带：build.py 的 prune() 会删掉 docs/md、docs/data/archive.jsonl
+          # 和超期历史，不带 -A 这些删除不会被提交，仓库照样膨胀
+          git add -A docs
           if git diff --cached --quiet; then
             echo "no changes"
-          else
-            git commit -m "chore: update briefing $(date -u '+%Y-%m-%d %H:%M UTC')"
-            git push
+            exit 0
           fi
+          git commit -m "chore: update briefing $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M') CST"
+          for i in 1 2 3 4 5; do
+            if git push; then
+              echo "pushed"; exit 0
+            fi
+            echo "push 失败，第 $i 次，rebase 后重试"
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+            sleep $((i * 3))
+          done
+          echo "::error::push 连续失败，放弃"; exit 1
+
+      - name: 检查数据新鲜度
+        if: always()
+        run: python3 scripts/report_health.py
+
+      - name: 失败/陈旧时开 issue 提醒
+        if: failure() || env.STALE == '1'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const d = new Date().toISOString().slice(0, 10);
+            const title = `财经日报采集异常 ${d}`;
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner, repo: context.repo.repo,
+              state: 'open', labels: 'daily-alert', per_page: 20
+            });
+            if (issues.some(i => i.title === title)) {
+              console.log('已存在同类 issue，跳过');
+              return;
+            }
+            const body = [
+              `运行：${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              `触发方式：${context.eventName}`,
+              `任务状态：${process.env.JOB_STATUS || 'unknown'}`,
+              '',
+              '可能原因：采集源不可达 / rss2json 限流 / runner 抓不到境内站点。',
+              '处理：本地跑 `python3 scripts/run_daily.py --sync`，或手动 Run workflow。'
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner, repo: context.repo.repo,
+              title, body, labels: ['daily-alert']
+            });
