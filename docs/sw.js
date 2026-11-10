@@ -1,6 +1,6 @@
 
 // 版本号每次构建都会变，浏览器据此发现 SW 更新。
-const BUILD = '8bfb34b5615c';
+const BUILD = '1734796163dc';
 const CACHE = 'fd-' + BUILD;
 const SHELL = ['./index.html', './manifest.webmanifest', './icons/icon-192.png'];
 
