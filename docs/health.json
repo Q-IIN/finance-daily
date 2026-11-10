@@ -1,8 +1,8 @@
 {
- "build_id": "e63498157249",
+ "build_id": "ec508d67c5eb",
  "date": "2026-11-10",
- "generated_at": "2026-11-10 21:39:03 +0800",
- "latest_published": "2026-11-10 21:21",
+ "generated_at": "2026-11-10 21:51:43 +0800",
+ "latest_published": "2026-11-10 21:34",
  "fresh_today": 44,
  "total": 72,
  "stale": false,
@@ -14,5 +14,5 @@
   "reuters": 6,
   "economist": 7
  },
- "checked_at": "2026-11-10 21:39:03 +0800"
+ "checked_at": "2026-11-10 21:51:43 +0800"
 }

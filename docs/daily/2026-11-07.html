@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="build-id" content="e63498157249">
+<meta name="build-id" content="ec508d67c5eb">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="apple-touch-icon" href="../icons/icon-192.png">
 <style>
@@ -978,8 +978,7 @@ footer a{color:var(--fg2)}
   }
   function fill(body,text){
     body.innerHTML='';
-    String(text||'').split(/
-+/).forEach(function(t){
+    String(text||'').split(/\n+/).forEach(function(t){
       t=t.trim(); if(!t) return;
       var el=document.createElement('p'); el.textContent=t; body.appendChild(el);
     });
@@ -993,7 +992,7 @@ footer a{color:var(--fg2)}
     if(card.dataset.loaded==='1'){
       card.classList.add('open'); m.textContent='收起全文'; return;
     }
-    m.textContent='加载中…';
+    m.style.borderColor=''; m.style.color=''; m.textContent='加载中…';
     loadDay().then(function(j){
       var a=(j.articles||[])[i];
       if(!a||!a.content) throw new Error('no content');
@@ -1002,16 +1001,18 @@ footer a{color:var(--fg2)}
       m.textContent='收起全文';
       card.dataset.text=(a.title+' '+a.content).toLowerCase();
     }).catch(function(err){
-      m.textContent='展开全文';
-      if(!navigator.onLine){ alert('当前没有网络，正文取不到。'); return; }
-      alert('正文加载失败（'+err.message+'）。再点一次重试，或点标题看原文。');
+      m.textContent='加载失败，点此重试';
+      m.style.borderColor='rgba(224,74,74,.6)';
+      m.style.color='#e04a4a';
+      m.dataset.err=(err&&err.message)||'';
+      if(!navigator.onLine) m.textContent='没有网络，点此重试';
     });
   });
 })();
 </script>
 <script>
 (function(){
-  var BID = "e63498157249", BASE = "../";
+  var BID = "ec508d67c5eb", BASE = "../";
   var params = new URLSearchParams(location.search);
   // 已经带着版本参数来过一次，就不再自动跳，避免网络抖动时反复刷新
   var tried = params.get('v');
