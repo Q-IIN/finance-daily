@@ -1,9 +1,9 @@
 {
- "build_id": "1734796163dc",
+ "build_id": "0d8716981510",
  "date": "2026-11-10",
- "generated_at": "2026-11-10 21:02:33 +0800",
- "latest_published": "2026-11-10 20:53",
- "fresh_today": 43,
+ "generated_at": "2026-11-10 21:07:29 +0800",
+ "latest_published": "2026-11-10 21:04",
+ "fresh_today": 44,
  "total": 72,
  "stale": false,
  "per_source": {
@@ -14,5 +14,5 @@
   "economist": 7,
   "cs": 15
  },
- "checked_at": "2026-11-10 21:02:33 +0800"
+ "checked_at": "2026-11-10 21:07:29 +0800"
 }
