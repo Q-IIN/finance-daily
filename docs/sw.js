@@ -1,66 +1,62 @@
 
-// 版本号每次构建都会变，浏览器据此发现 SW 更新。
-const BUILD = '0d8716981510';
-const CACHE = 'fd-' + BUILD;
-const SHELL = ['./index.html', './manifest.webmanifest', './icons/icon-192.png'];
+// 每次构建 BUILD 都变，浏览器据此发现 SW 更新。
+const BUILD = '63a531d8667f';
+const CACHE = 'fd-static-' + BUILD;
+const ASSETS = ['./manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(SHELL)).catch(() => {}).then(() => self.skipWaiting())
+    caches.open(CACHE).then(c => c.addAll(ASSETS)).catch(() => {}).then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys()
-      .then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))
+      .then(ks => Promise.all(ks.map(k => (k === CACHE ? null : caches.delete(k)))))
       .then(() => self.clients.claim())
   );
 });
 
-// 策略：页面/JSON 一律网络优先（3.5s 超时），只有断网时才用缓存兜底；
-// health.json 完全不缓存，保证“是否有新版本”的判断永远拿实时值。
+// 关键取舍：文档（HTML/JSON）一律直连网络，命中缓存就算输。
+// 上一版是“网络 3.5 秒超时就回退缓存”，手机网络一慢就把昨天的页面端出来，
+// 正是“明明更新了却看到旧内容”的元凶。现在断网时给一张离线页，绝不假装成功。
+const OFFLINE = '<!doctype html><meta charset="utf-8">'
+  + '<meta name="viewport" content="width=device-width,initial-scale=1">'
+  + '<title>离线</title>'
+  + '<body style="margin:0;font:16px/1.7 -apple-system,BlinkMacSystemFont,sans-serif;'
+  + 'background:#0e1116;color:#e6e8eb;padding:64px 24px;text-align:center">'
+  + '<p style="font-size:19px;font-weight:600;margin:0 0 10px">网络没通</p>'
+  + '<p style="color:#8b93a1;font-size:14px;margin:0">拿不到最新一期，也不会给你看旧内容。<br>'
+  + '检查网络后点下面重试。</p>'
+  + '<p style="margin-top:32px"><a href="./index.html" style="display:inline-block;'
+  + 'padding:13px 30px;border-radius:999px;background:#d4a54a;color:#0e1116;'
+  + 'text-decoration:none;font-weight:600">重试</a></p>';
+
 self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== location.origin) return;
-  if (url.pathname.endsWith('/health.json')) return;
 
-  const isDoc = req.mode === 'navigate' || /\.(html|json)$/.test(url.pathname);
+  const isDoc = req.mode === 'navigate' || /\.(html|json|webmanifest)$/.test(url.pathname);
   if (isDoc) {
-    e.respondWith((async () => {
-      try {
-        const res = await Promise.race([
-          fetch(req, { cache: 'no-store' }),
-          new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 3500))
-        ]);
-        if (res && res.ok) {
-          const c = await caches.open(CACHE);
-          c.put(req, res.clone()).catch(() => {});
-          return res;
-        }
-        throw new Error('bad status');
-      } catch (_) {
-        const hit = await caches.match(req);
-        if (hit) return hit;
-        const idx = await caches.match('./index.html');
-        return idx || Response.error();
-      }
-    })());
+    e.respondWith(
+      fetch(req, { cache: 'no-store' }).catch(
+        () => new Response(OFFLINE, { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } })
+      )
+    );
     return;
   }
 
+  // 静态资源（图标等）走缓存优先，它们不会变旧
   e.respondWith(
-    caches.match(req).then(hit => {
-      if (hit) return hit;
-      return fetch(req).then(res => {
-        if (res && res.ok) {
-          const copy = res.clone();
-          caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
-        }
-        return res;
-      });
-    })
+    caches.match(req).then(hit => hit || fetch(req).then(res => {
+      if (res && res.ok) {
+        const copy = res.clone();
+        caches.open(CACHE).then(c => c.put(req, copy)).catch(() => {});
+      }
+      return res;
+    }).catch(() => Response.error()))
   );
 });

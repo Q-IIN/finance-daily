@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta name="build-id" content="0d8716981510">
+<meta name="build-id" content="63a531d8667f">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="apple-touch-icon" href="../icons/icon-192.png">
 <style>
@@ -150,6 +150,9 @@ footer a{color:var(--fg2)}
     <span class="live"><i></i>已更新 06:47</span>
     <span><b>72</b> 篇</span>
     <span><b>71k</b> 字</span>
+    <button id="fd-reload" title="强制拉取最新" style="margin-left:auto;border:1px solid var(--line);'
+      + 'background:transparent;color:var(--fg2);border-radius:999px;padding:3px 10px;'
+      + 'font-size:12px;line-height:1.6;cursor:pointer">⟳ 刷新</button>
   </div>
 </header>
 
@@ -999,7 +1002,11 @@ footer a{color:var(--fg2)}
 </script>
 <script>
 (function(){
-  var BID = "0d8716981510", BASE = "../";
+  var BID = "63a531d8667f", BASE = "../";
+  var params = new URLSearchParams(location.search);
+  // 已经带着版本参数来过一次，就不再自动跳，避免网络抖动时反复刷新
+  var tried = params.get('v');
+
   var bar = document.createElement('div');
   bar.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);'
     + 'bottom:calc(72px + env(safe-area-inset-bottom));z-index:99;display:none;'
@@ -1010,12 +1017,20 @@ footer a{color:var(--fg2)}
     + '<button style="border:0;border-radius:999px;padding:6px 14px;font-size:13px;'
     + 'font-weight:700;background:#0e1116;color:#f0c674">刷新</button>';
   document.body.appendChild(bar);
-  bar.querySelector('button').addEventListener('click', function(){
+
+  function hardReload(){
     if (window.caches && caches.keys) {
       caches.keys().then(function(ks){ ks.forEach(function(k){ caches.delete(k); }); });
     }
-    location.reload();
-  });
+    var u = new URL(location.href);
+    u.searchParams.set('v', Date.now());
+    location.replace(u.toString());
+  }
+  bar.querySelector('button').addEventListener('click', hardReload);
+
+  var btn = document.getElementById('fd-reload');
+  if (btn) btn.addEventListener('click', hardReload);
+
   var busy = false;
   function check(){
     if (busy) return;
@@ -1023,7 +1038,15 @@ footer a{color:var(--fg2)}
     fetch(BASE + 'health.json?ts=' + Date.now(), { cache: 'no-store' })
       .then(function(r){ return r.json(); })
       .then(function(j){
-        if (j && j.build_id && j.build_id !== BID) bar.style.display = 'flex';
+        if (!j || !j.build_id || j.build_id === BID) return;
+        // 页面比服务端旧：先自动带版本参数重载一次，多数情况直接就拿到新版了
+        if (!tried) {
+          var u = new URL(location.href);
+          u.searchParams.set('v', j.build_id);
+          location.replace(u.toString());
+          return;
+        }
+        bar.style.display = 'flex';
       })
       .catch(function(){})
       .then(function(){ busy = false; });
@@ -1031,10 +1054,16 @@ footer a{color:var(--fg2)}
   document.addEventListener('visibilitychange', function(){
     if (!document.hidden) check();
   });
-  setInterval(check, 180000);
+  window.addEventListener('pageshow', function(ev){
+    if (ev.persisted) check();
+  });
+  setInterval(check, 120000);
   check();
+
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register(BASE + 'sw.js').catch(function(){});
+    navigator.serviceWorker.register(BASE + 'sw.js').then(function(reg){
+      reg.update().catch(function(){});
+    }).catch(function(){});
   }
 })();
 </script>
