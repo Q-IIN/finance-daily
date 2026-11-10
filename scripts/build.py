@@ -178,7 +178,7 @@ footer a{color:var(--fg2)}
 }
 """
 
-JS = """
+JS = r"""
 (function(){
   var q=document.getElementById('q'), chips=[].slice.call(document.querySelectorAll('.chip'));
   var cards=[].slice.call(document.querySelectorAll('.card')), cats=[].slice.call(document.querySelectorAll('.cat'));
@@ -235,7 +235,7 @@ JS = """
     if(card.dataset.loaded==='1'){
       card.classList.add('open'); m.textContent='收起全文'; return;
     }
-    m.textContent='加载中…';
+    m.style.borderColor=''; m.style.color=''; m.textContent='加载中…';
     loadDay().then(function(j){
       var a=(j.articles||[])[i];
       if(!a||!a.content) throw new Error('no content');
@@ -244,9 +244,11 @@ JS = """
       m.textContent='收起全文';
       card.dataset.text=(a.title+' '+a.content).toLowerCase();
     }).catch(function(err){
-      m.textContent='展开全文';
-      if(!navigator.onLine){ alert('当前没有网络，正文取不到。'); return; }
-      alert('正文加载失败（'+err.message+'）。再点一次重试，或点标题看原文。');
+      m.textContent='加载失败，点此重试';
+      m.style.borderColor='rgba(224,74,74,.6)';
+      m.style.color='#e04a4a';
+      m.dataset.err=(err&&err.message)||'';
+      if(!navigator.onLine) m.textContent='没有网络，点此重试';
     });
   });
 })();
@@ -491,7 +493,7 @@ MANIFEST = {
     ],
 }
 
-SW = """
+SW = r"""
 // 每次构建 BUILD 都变，浏览器据此发现 SW 更新。
 const BUILD = '__BUILD_ID__';
 const CACHE = 'fd-static-' + BUILD;
@@ -558,7 +560,7 @@ self.addEventListener('fetch', e => {
 
 # 页面内的“版本哨兵”：即使 HTML 被浏览器/运营商缓存住，
 # 这段脚本也会带时间戳去拉 health.json，发现 build_id 变了就提示刷新。
-UPDATE_JS = """
+UPDATE_JS = r"""
 (function(){
   var BID = "__BUILD_ID__", BASE = "__BASE__";
   var params = new URLSearchParams(location.search);

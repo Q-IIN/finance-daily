@@ -59,6 +59,35 @@ jobs:
             python3 scripts/run_daily.py
           fi
 
+      # 页面里的 JS 是 build.py 用 Python 字符串拼出来的，一旦转义写错就会
+      # 让整段 <script> 语法失效（搜索、分类、展开全文一起挂），而页面本身
+      # 仍返回 200，从外面完全看不出来。所以发布前必须真的解析一遍。
+      - name: 校验页面内联 JS 语法
+        if: steps.gate.outputs.run == 'true'
+        run: |
+          python3 - <<'PY'
+          import re, io, glob, subprocess, sys
+          files = ["docs/index.html", "docs/archive.html"] + sorted(glob.glob("docs/daily/*.html"))
+          bad = 0
+          for f in files:
+              try:
+                  h = io.open(f, encoding="utf-8").read()
+              except OSError:
+                  continue
+              for i, js in enumerate(re.findall(r"<script>(.*?)</script>", h, re.S)):
+                  if not js.strip():
+                      continue
+                  tmp = f"/tmp/_chk_{i}.js"
+                  io.open(tmp, "w", encoding="utf-8").write(js)
+                  r = subprocess.run(["node", "--check", tmp], capture_output=True)
+                  if r.returncode:
+                      bad += 1
+                      print(f"::error file={f}::script#{i} 语法错误")
+                      print(r.stderr.decode()[:600])
+          print(f"checked {len(files)} files, {bad} broken")
+          sys.exit(1 if bad else 0)
+          PY
+
       - name: Commit & push (带 rebase 重试)
         if: steps.gate.outputs.run == 'true'
         run: |
