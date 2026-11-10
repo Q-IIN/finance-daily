@@ -19,17 +19,17 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
-from email.utils import parsedate_to_datetime
-from zoneinfo import ZoneInfo
 
 from bs4 import BeautifulSoup
+
+from pubdate import TZ, norm_pubdate
 
 SKILL_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_PATH = os.path.join(SKILL_DIR, "config", "sources.json")
 
 # 统一业务时区。GitHub Actions 运行在 UTC，直接用 datetime.now() 会把
 # 北京时间 00:00–08:00 之间跑的批次写成“前一天”的文件名，导致早报标题显示昨天。
-TZ = ZoneInfo(os.environ.get("FINANCE_DAILY_TZ", "Asia/Shanghai"))
+# TZ 与 norm_pubdate 统一由 pubdate 模块提供，build.py 也复用同一份。
 
 
 def now():
@@ -255,47 +255,6 @@ def strip_html(s):
     if not s:
         return ""
     return clean_text(BeautifulSoup(s, "html.parser").get_text(" ", strip=True))
-
-
-def norm_pubdate(s):
-    """把各种发布时间统一成 'YYYY-MM-DD HH:MM'（北京时间）。
-
-    RSS 的 pubDate 是 RFC822（'Sun, 08 Nov 2026 12:00:00 +0000'），原来只做了
-    .replace('T',' ')[:16]，结果存成 'Sun, 08 Nov 2026'：
-      · filter_recent 的 ^\\d{4}-\\d{2}-\\d{2} 匹配不上 → 时间过滤对 RSS 完全失效；
-      · 按字符串倒序排序时 'S' > '2' → 旧的 FT/经济学人文章永远排在最前面。
-    这两个问题叠加，就是“页面看着没更新”。
-    """
-    s = (s or "").strip()
-    if not s:
-        return ""
-    if re.match(r"^\d{4}-\d{2}-\d{2}", s):
-        try:
-            dt = datetime.fromisoformat(s.replace("Z", "+00:00"))
-            if dt.tzinfo is not None:
-                return dt.astimezone(TZ).strftime("%Y-%m-%d %H:%M")
-        except Exception:  # noqa: BLE001
-            pass
-        return s.replace("T", " ")[:16]
-    try:
-        dt = parsedate_to_datetime(s)
-        if dt is not None:
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
-            return dt.astimezone(TZ).strftime("%Y-%m-%d %H:%M")
-    except Exception:  # noqa: BLE001
-        pass
-    for fmt in ("%a, %d %b %Y %H:%M:%S %z", "%d %b %Y %H:%M:%S %z",
-                "%a, %d %b %Y %H:%M:%S", "%a, %d %b %Y", "%d %b %Y",
-                "%Y/%m/%d %H:%M", "%Y-%m-%d"):
-        try:
-            dt = datetime.strptime(s, fmt)
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=TZ)
-            return dt.astimezone(TZ).strftime("%Y-%m-%d %H:%M")
-        except Exception:  # noqa: BLE001
-            continue
-    return ""
 
 
 def rss_direct(feed_url, count, timeout=25):

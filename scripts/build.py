@@ -8,11 +8,10 @@ import os
 import re
 import shutil
 from datetime import datetime, timedelta
-from zoneinfo import ZoneInfo
+
+from pubdate import TZ, norm_pubdate, norm_stamp
 
 SKILL_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-TZ = ZoneInfo(os.environ.get("FINANCE_DAILY_TZ", "Asia/Shanghai"))
 
 
 def now():
@@ -607,17 +606,21 @@ def main():
     if not payloads:
         raise SystemExit("没有找到任何采集数据，请先运行 fetch.py")
 
+    # 兜底：历史 JSON 里可能残留未归一化的 RFC822 日期（carry_over 会原样继承），
+    # 渲染前统一转成 YYYY-MM-DD HH:MM，否则排序和“是否陈旧”的判断都会错。
+    for _p in payloads:
+        _p["generated_at"] = norm_stamp(_p.get("generated_at"))
+        for _a in _p.get("articles") or []:
+            _a["published"] = norm_pubdate(_a.get("published"))
+
     latest = max(payloads, key=lambda p: p["date"])
 
     # ---- 健康度：判断这一期到底是不是“今天的新内容” ----
     today = now().strftime("%Y-%m-%d")
-    latest_pub = latest.get("latest_published") or ""
-    if not latest_pub:
-        latest_pub = max((a.get("published") or "" for a in latest["articles"]), default="")
-    fresh_today = latest.get("fresh_today")
-    if fresh_today is None:
-        fresh_today = sum(1 for a in latest["articles"]
-                          if (a.get("published") or "").startswith(today))
+    latest_pub = max((a.get("published") or "" for a in latest.get("articles") or []),
+                     default="")
+    fresh_today = sum(1 for a in latest.get("articles") or []
+                      if (a.get("published") or "").startswith(today))
     hour = now().hour
     # 北京 09:00 之后，最新文章还不是今天的，或今日新文少于 5 条 → 判定数据陈旧
     stale = bool(latest["date"] != today
