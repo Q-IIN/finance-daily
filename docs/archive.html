@@ -93,15 +93,21 @@ body{scroll-padding-top:60px}
 .tm{font-size:11px;color:var(--fg3);margin-left:auto;font-variant-numeric:tabular-nums}
 .card h4{margin:0 0 9px;font-size:16.5px;line-height:1.42;font-weight:600;letter-spacing:-.2px}
 .card h4 a{color:var(--fg);text-decoration:none}
-.body{font-size:14.5px;line-height:1.78;color:var(--fg2);
-  max-height:5.5em;overflow:hidden;position:relative;transition:max-height .3s}
+.body{font-size:14.5px;line-height:1.78;color:var(--fg2);position:relative;
+  max-height:5.5em;overflow:hidden;transition:max-height .3s}
 .body::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.4em;
   background:linear-gradient(transparent,var(--card))}
 .card.open .body{max-height:none}
 .card.open .body::after{display:none}
 .body p{margin:0 0 .7em}
-.more{margin-top:8px;font-size:12.5px;color:var(--gold);cursor:pointer;
+/* 列表页只放摘要，不需要裁剪（全文是点开时按需注入的） */
+.body.plain{max-height:none;overflow:visible}
+.body.plain::after{display:none}
+.card.open .body.plain{color:var(--fg)}
+.more{margin-top:9px;font-size:12.5px;color:var(--gold);cursor:pointer;
   display:inline-block;font-weight:600;user-select:none}
+.more[data-i]{border:1px solid rgba(212,165,74,.42);border-radius:99px;padding:3px 12px}
+.more[data-i]:active{background:rgba(212,165,74,.14)}
 .pw{display:inline-block;font-size:10.5px;color:var(--fg3);border:1px dashed var(--line);
   padding:1px 6px;border-radius:4px;margin-left:6px}
 .sum-only{font-size:14px;color:var(--fg2);font-style:normal}
