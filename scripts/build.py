@@ -136,15 +136,21 @@ body{scroll-padding-top:60px}
 .tm{font-size:11px;color:var(--fg3);margin-left:auto;font-variant-numeric:tabular-nums}
 .card h4{margin:0 0 9px;font-size:16.5px;line-height:1.42;font-weight:600;letter-spacing:-.2px}
 .card h4 a{color:var(--fg);text-decoration:none}
-.body{font-size:14.5px;line-height:1.78;color:var(--fg2);
-  max-height:5.5em;overflow:hidden;position:relative;transition:max-height .3s}
+.body{font-size:14.5px;line-height:1.78;color:var(--fg2);position:relative;
+  max-height:5.5em;overflow:hidden;transition:max-height .3s}
 .body::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.4em;
   background:linear-gradient(transparent,var(--card))}
 .card.open .body{max-height:none}
 .card.open .body::after{display:none}
 .body p{margin:0 0 .7em}
-.more{margin-top:8px;font-size:12.5px;color:var(--gold);cursor:pointer;
+/* 列表页只放摘要，不需要裁剪（全文是点开时按需注入的） */
+.body.plain{max-height:none;overflow:visible}
+.body.plain::after{display:none}
+.card.open .body.plain{color:var(--fg)}
+.more{margin-top:9px;font-size:12.5px;color:var(--gold);cursor:pointer;
   display:inline-block;font-weight:600;user-select:none}
+.more[data-i]{border:1px solid rgba(212,165,74,.42);border-radius:99px;padding:3px 12px}
+.more[data-i]:active{background:rgba(212,165,74,.14)}
 .pw{display:inline-block;font-size:10.5px;color:var(--fg3);border:1px dashed var(--line);
   padding:1px 6px;border-radius:4px;margin-left:6px}
 .sum-only{font-size:14px;color:var(--fg2);font-style:normal}
@@ -201,10 +207,47 @@ JS = """
       }
     });
   });
+  // ---- 正文按需加载：整天的全文只在第一次点“展开全文”时取一次，
+  //      之后同一天所有文章都能瞬间展开，不再重复走网络。 ----
+  var DAY='__DAY__', BASE='__BASE__', _day=null, _loading=null;
+  function loadDay(){
+    if(_day) return Promise.resolve(_day);
+    if(_loading) return _loading;
+    _loading=fetch(BASE+'data/'+DAY+'.json',{cache:'no-store'})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(j){ _day=j; _loading=null; return j; })
+      .catch(function(e){ _loading=null; throw e; });
+    return _loading;
+  }
+  function fill(body,text){
+    body.innerHTML='';
+    String(text||'').split(/\n+/).forEach(function(t){
+      t=t.trim(); if(!t) return;
+      var el=document.createElement('p'); el.textContent=t; body.appendChild(el);
+    });
+  }
   document.addEventListener('click',function(e){
-    var m=e.target.closest('.more'); if(!m) return;
-    var card=m.closest('.card'); card.classList.toggle('open');
-    m.textContent=card.classList.contains('open')?'收起全文':'展开全文';
+    var m=e.target.closest('.more[data-i]'); if(!m) return;
+    var card=m.closest('.card'), body=card.querySelector('.body'), i=+m.dataset.i;
+    if(card.classList.contains('open')){
+      card.classList.remove('open'); m.textContent='展开全文'; return;
+    }
+    if(card.dataset.loaded==='1'){
+      card.classList.add('open'); m.textContent='收起全文'; return;
+    }
+    m.textContent='加载中…';
+    loadDay().then(function(j){
+      var a=(j.articles||[])[i];
+      if(!a||!a.content) throw new Error('no content');
+      fill(body,a.content);
+      card.dataset.loaded='1'; card.classList.add('open');
+      m.textContent='收起全文';
+      card.dataset.text=(a.title+' '+a.content).toLowerCase();
+    }).catch(function(err){
+      m.textContent='展开全文';
+      if(!navigator.onLine){ alert('当前没有网络，正文取不到。'); return; }
+      alert('正文加载失败（'+err.message+'）。再点一次重试，或点标题看原文。');
+    });
   });
 })();
 """
@@ -251,24 +294,45 @@ def magazine_banner(data_dir, base=""):
   <span style="color:var(--gold);font-size:12px">进入 →</span>
 </a>'''
 
-def render_card(a):
+def snippet(text, limit=104):
+    """截一段开头做摘要，尽量在句末断开，不留半句话。"""
+    t = re.sub(r"\s+", " ", (text or "")).strip()
+    if len(t) <= limit:
+        return t
+    cut = t[:limit]
+    for sep in ("。", "！", "？", ". ", "；", "，", " "):
+        i = cut.rfind(sep)
+        if i >= limit * 0.55:
+            return cut[:i + len(sep)].rstrip()
+    return cut.rstrip() + "…"
+
+
+def render_card(a, idx):
+    """列表只放标题 + 摘要，全文由 JS 点开时再取 data/{date}.json。
+
+    这一改动把首页从 296KB 压到 ~60KB，首屏不必等 72 篇全文下载完。
+    """
     color = SOURCE_COLOR.get(a["source_id"], "#666")
-    is_full = a.get("fulltext")
-    long_enough = (a.get("chars") or 0) > 300
-    body_cls = "body" if is_full else "body sum-only"
+    is_full = bool(a.get("fulltext")) and (a.get("chars") or 0) > 300
     badge = '<span class="pw">付费墙</span>' if a.get("paywalled") else ""
-    link = f'<a href="{esc(a["url"])}" target="_blank" rel="noopener">{esc(a["title"])}</a>' if a.get("url") else esc(a["title"])
-    more = '<span class="more">展开全文</span>' if (is_full and long_enough) else ""
-    if not is_full:
-        more = f'<a class="more" href="{esc(a["url"])}" target="_blank" rel="noopener">阅读原文 →</a>' if a.get("url") else ""
-    return f"""<article class="card" data-cat="{a['category']}" data-text="{esc((a['title']+' '+a['content'][:300]).lower())}">
+    link = (f'<a href="{esc(a["url"])}" target="_blank" rel="noopener">{esc(a["title"])}</a>'
+            if a.get("url") else esc(a["title"]))
+    if is_full:
+        more = f'<span class="more" data-i="{idx}">展开全文</span>'
+        text = snippet(a.get("content", ""))
+    else:
+        more = (f'<a class="more" href="{esc(a["url"])}" target="_blank" rel="noopener">阅读原文 →</a>'
+                if a.get("url") else "")
+        text = a.get("content", "")
+    search_key = esc((a["title"] + " " + (a.get("content") or "")[:160]).lower())
+    return f"""<article class="card" data-cat="{a['category']}" data-i="{idx}" data-text="{search_key}">
   <div class="card-t">
     <span class="src" style="background:{color}">{esc(a['source'])}</span>
     <span class="ch">{esc(a.get('channel',''))}</span>{badge}
     <span class="tm">{time_short(a.get('published',''))}</span>
   </div>
   <h4>{link}</h4>
-  <div class="{body_cls}">{para_html(a.get('content',''))}</div>
+  <div class="body plain">{para_html(text)}</div>
   {more}
 </article>"""
 
@@ -308,13 +372,14 @@ def build_page(payload, all_dates, active="today", base="", banner="", build_id=
         f'<button class="chip" data-cat="{k}">{esc(v)}</button>' for k, v in cats
     )
 
+    idx_of = {id(a): i for i, a in enumerate(arts)}
     sections = []
     for key, label in cats:
         group = [a for a in arts if a["category"] == key]
         sections.append(f"""<section class="cat" id="cat-{key}">
   <div class="cat-h"><span class="ic">{CATEGORY_ICON.get(key,'▪')}</span>
     <h3>{esc(label)}</h3><span class="n">{len(group)}</span></div>
-  {''.join(render_card(a) for a in group)}
+  {''.join(render_card(a, idx_of[id(a)]) for a in group)}
 </section>""")
 
     stats = payload.get("per_source_names") or payload.get("per_source", {})
@@ -357,9 +422,7 @@ def build_page(payload, all_dates, active="today", base="", banner="", build_id=
     <span class="live"><i></i>已更新 {gen[11:]}</span>
     <span><b>{len(arts)}</b> 篇</span>
     <span><b>{total_chars//1000}k</b> 字</span>
-    <button id="fd-reload" title="强制拉取最新" style="margin-left:auto;border:1px solid var(--line);'
-      + 'background:transparent;color:var(--fg2);border-radius:999px;padding:3px 10px;'
-      + 'font-size:12px;line-height:1.6;cursor:pointer">⟳ 刷新</button>
+    <button id="fd-reload" title="强制拉取最新" style="margin-left:auto;border:1px solid var(--line);background:transparent;color:var(--fg2);border-radius:999px;padding:3px 10px;font-size:12px;line-height:1.6;cursor:pointer;-webkit-appearance:none">⟳ 刷新</button>
   </div>
 </header>
 {stale_html}
@@ -383,7 +446,7 @@ def build_page(payload, all_dates, active="today", base="", banner="", build_id=
 </footer>
 </div>
 {nav}
-<script>{JS}</script>
+<script>{JS.replace('__DAY__', payload["date"]).replace('__BASE__', base)}</script>
 <script>{UPDATE_JS.replace('__BUILD_ID__', build_id).replace('__BASE__', base)}</script>
 </body>
 </html>"""
