@@ -1,9 +1,9 @@
 {
- "build_id": "2e361cb14c3d",
+ "build_id": "233cc42d4025",
  "date": "2026-11-15",
- "generated_at": "2026-11-15 00:31:35 +0800",
- "latest_published": "2026-11-14 20:33",
- "fresh_today": 0,
+ "generated_at": "2026-11-15 10:28:17 +0800",
+ "latest_published": "2026-11-15 10:24",
+ "fresh_today": 7,
  "total": 72,
  "stale": false,
  "per_source": {
@@ -14,5 +14,5 @@
   "ft": 10,
   "reuters": 6
  },
- "checked_at": "2026-11-15 00:31:35 +0800"
+ "checked_at": "2026-11-15 10:28:17 +0800"
 }
