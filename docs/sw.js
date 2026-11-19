@@ -1,6 +1,6 @@
 
 // 每次构建 BUILD 都变，浏览器据此发现 SW 更新。
-const BUILD = 'fb61d4ce95ce';
+const BUILD = '5b612d2d12a1';
 const CACHE = 'fd-static-' + BUILD;
 const ASSETS = ['./manifest.webmanifest', './icons/icon-192.png', './icons/icon-512.png'];
 
