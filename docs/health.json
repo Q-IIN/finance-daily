@@ -1,9 +1,9 @@
 {
- "build_id": "d7883d9830f3",
- "date": "2026-11-21",
- "generated_at": "2026-11-21 20:16:05 +0800",
- "latest_published": "2026-11-21 19:40",
- "fresh_today": 30,
+ "build_id": "f13099fc0b6d",
+ "date": "2026-11-22",
+ "generated_at": "2026-11-22 03:59:41 +0800",
+ "latest_published": "2026-11-21 21:57",
+ "fresh_today": 0,
  "total": 68,
  "stale": false,
  "per_source": {
@@ -14,5 +14,5 @@
   "ft": 12,
   "economist": 12
  },
- "checked_at": "2026-11-21 20:16:05 +0800"
+ "checked_at": "2026-11-22 03:59:41 +0800"
 }
