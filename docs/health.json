@@ -1,11 +1,11 @@
 {
- "build_id": "9deca465bdd7",
+ "build_id": "ad25e5ec5bc4",
  "date": "2026-11-22",
- "generated_at": "2026-11-22 10:53:38 +0800",
- "latest_published": "2026-11-22 09:37",
- "fresh_today": 4,
+ "generated_at": "2026-11-22 18:52:13 +0800",
+ "latest_published": "2026-11-22 18:50",
+ "fresh_today": 30,
  "total": 67,
- "stale": true,
+ "stale": false,
  "per_source": {
   "stcn": 12,
   "cs": 12,
@@ -14,5 +14,5 @@
   "ft": 12,
   "economist": 12
  },
- "checked_at": "2026-11-22 10:53:38 +0800"
+ "checked_at": "2026-11-22 18:52:13 +0800"
 }
