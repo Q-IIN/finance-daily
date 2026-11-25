@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=5">
+<title>财经日报 2026-11-26</title>
+<meta name="theme-color" content="#0e1116">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="build-id" content="313e8b5f543d">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../icons/icon-192.png">
+<style>
+:root{
+  --bg:#0e1116; --bg2:#151a22; --card:#1a2029; --line:#262e3a;
+  --fg:#e8ecf1; --fg2:#a4b0c0; --fg3:#6c7a8c;
+  --gold:#d4a54a; --gold2:#f0c674; --accent:#4a9eff;
+  --up:#e04a4a; --down:#2fa96b;
+  --radius:14px;
+}
+@media (prefers-color-scheme: light){
+  :root{ --bg:#f5f6f8; --bg2:#ffffff; --card:#ffffff; --line:#e4e8ee;
+    --fg:#141a22; --fg2:#4d5a6b; --fg3:#8a96a6; --gold:#9a7420; --gold2:#b8892c;
+    --accent:#1a66c9; }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--fg);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;
+  padding-bottom:calc(56px + env(safe-area-inset-bottom));
+}
+.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+
+/* header */
+header{
+  position:relative;padding:calc(26px + env(safe-area-inset-top)) 0 18px;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,rgba(212,165,74,.10),transparent 85%);
+}
+.brand{display:flex;align-items:baseline;gap:9px}
+.brand h1{
+  font-size:25px;margin:0;letter-spacing:-.4px;font-weight:700;
+  background:linear-gradient(96deg,var(--gold2),var(--gold));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.brand .en{font-size:10px;letter-spacing:2.2px;color:var(--fg3);text-transform:uppercase}
+.meta{margin-top:9px;font-size:12.5px;color:var(--fg3);
+  display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.meta b{color:var(--fg2);font-weight:600}
+.live{display:inline-flex;align-items:center;gap:5px;color:var(--down);font-weight:600}
+.live i{width:6px;height:6px;border-radius:50%;background:var(--down);
+  box-shadow:0 0 0 0 rgba(47,169,107,.6);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(47,169,107,.5)}70%{box-shadow:0 0 0 7px rgba(47,169,107,0)}100%{box-shadow:0 0 0 0 rgba(47,169,107,0)}}
+
+/* 今日速览 */
+.brief{
+  margin:18px 0 4px;padding:16px 18px;border-radius:var(--radius);
+  background:var(--bg2);border:1px solid var(--line);
+  border-left:3px solid var(--gold);
+}
+.brief h2{font-size:12px;letter-spacing:1.4px;color:var(--gold);margin:0 0 10px;
+  font-weight:700;text-transform:uppercase}
+.brief ul{margin:0;padding-left:16px}
+.brief li{font-size:14px;color:var(--fg2);margin-bottom:6px;line-height:1.55}
+.brief li a{color:var(--fg2)}
+
+/* 搜索 + 筛选 */
+.toolbar{position:sticky;top:0;z-index:30;background:var(--bg);
+  padding:11px 0 9px;border-bottom:1px solid var(--line);margin-top:16px}
+body{scroll-padding-top:60px}
+.search{width:100%;padding:10px 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--bg2);color:var(--fg);font-size:14px;outline:none;font-family:inherit}
+.search:focus{border-color:var(--gold)}
+.search::placeholder{color:var(--fg3)}
+.chips{display:flex;gap:7px;overflow-x:auto;margin-top:9px;padding-bottom:2px;
+  scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;padding:5px 12px;border-radius:99px;border:1px solid var(--line);
+  background:var(--bg2);color:var(--fg2);font-size:12.5px;cursor:pointer;
+  white-space:nowrap;transition:.16s;font-family:inherit}
+.chip.on{background:var(--gold);border-color:var(--gold);color:#1a1206;font-weight:600}
+
+/* 分类区 */
+.cat{margin-top:26px;scroll-margin-top:96px}
+.cat-h{display:flex;align-items:center;gap:9px;margin-bottom:11px;
+  padding-bottom:8px;border-bottom:1px solid var(--line)}
+.cat-h .ic{color:var(--gold);font-size:15px}
+.cat-h h3{font-size:15px;margin:0;font-weight:700;letter-spacing:.3px}
+.cat-h .n{font-size:11px;color:var(--fg3);background:var(--bg2);
+  border:1px solid var(--line);padding:1px 7px;border-radius:99px}
+
+/* 卡片 */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:15px 16px;margin-bottom:11px;transition:.18s}
+.card:active{transform:scale(.995)}
+.card-t{display:flex;gap:7px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.src{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:4px;
+  color:#fff;letter-spacing:.2px}
+.ch{font-size:11px;color:var(--fg3);border:1px solid var(--line);padding:1px 6px;border-radius:4px}
+.tm{font-size:11px;color:var(--fg3);margin-left:auto;font-variant-numeric:tabular-nums}
+.card h4{margin:0 0 9px;font-size:16.5px;line-height:1.42;font-weight:600;letter-spacing:-.2px}
+.card h4 a{color:var(--fg);text-decoration:none}
+.body{font-size:14.5px;line-height:1.78;color:var(--fg2);position:relative;
+  max-height:5.5em;overflow:hidden;transition:max-height .3s}
+.body::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2.4em;
+  background:linear-gradient(transparent,var(--card))}
+.card.open .body{max-height:none}
+.card.open .body::after{display:none}
+.body p{margin:0 0 .7em}
+/* 列表页只放摘要，不需要裁剪（全文是点开时按需注入的） */
+.body.plain{max-height:none;overflow:visible}
+.body.plain::after{display:none}
+.card.open .body.plain{color:var(--fg)}
+.more{margin-top:9px;font-size:12.5px;color:var(--gold);cursor:pointer;
+  display:inline-block;font-weight:600;user-select:none}
+.more[data-i]{border:1px solid rgba(212,165,74,.42);border-radius:99px;padding:3px 12px}
+.more[data-i]:active{background:rgba(212,165,74,.14)}
+.pw{display:inline-block;font-size:10.5px;color:var(--fg3);border:1px dashed var(--line);
+  padding:1px 6px;border-radius:4px;margin-left:6px}
+.sum-only{font-size:14px;color:var(--fg2);font-style:normal}
+
+/* footer */
+footer{margin:36px 0 10px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:11.5px;color:var(--fg3);line-height:1.85}
+footer a{color:var(--fg2)}
+
+/* 底部导航 */
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;
+  background:rgba(14,17,22,.92);backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+@media (prefers-color-scheme: light){.nav{background:rgba(255,255,255,.93)}}
+.nav a{flex:1;text-align:center;padding:9px 0 7px;font-size:10.5px;
+  color:var(--fg3);text-decoration:none;line-height:1.3}
+.nav a b{display:block;font-size:16px;font-weight:400;margin-bottom:1px}
+.nav a.on{color:var(--gold)}
+
+.empty{text-align:center;padding:60px 20px;color:var(--fg3);font-size:14px}
+@media (min-width:700px){
+  body{font-size:16.5px}
+  .card{padding:18px 20px}
+  .card h4{font-size:18px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><h1>财经日报</h1><span class="en">Daily Briefing</span></div>
+  <div class="meta">
+    <span><b>2026-11-26</b></span>
+    <span class="live"><i></i>已更新 00:56</span>
+    <span><b>72</b> 篇</span>
+    <span><b>59k</b> 字</span>
+    <button id="fd-reload" title="强制拉取最新" style="margin-left:auto;border:1px solid var(--line);background:transparent;color:var(--fg2);border-radius:999px;padding:3px 10px;font-size:12px;line-height:1.6;cursor:pointer;-webkit-appearance:none">⟳ 刷新</button>
+  </div>
+</header>
+
+
+<div class="brief">
+  <h2>Today's Focus · 今日速览</h2>
+  <ul><li><b style="color:var(--fg)">宏观与政策</b> · 聚焦新兴领域知识产权保护！第二十三届上海知识产权国际论坛开幕</li><li><b style="color:var(--fg)">市场与行情</b> · 从2元跌到2毛，网红私募产品暗藏风险多</li><li><b style="color:var(--fg)">公司与产业</b> · 【中证快报】11月25日中证投资资讯</li><li><b style="color:var(--fg)">金融机构</b> · 险资公募出手！国寿安保基金1亿元自购旗下权益类公募基金</li><li><b style="color:var(--fg)">监管与合规</b> · 四天8家A股公司“戴帽”！有的“摘帽”仅4个月再被ST</li><li><b style="color:var(--fg)">国际视野</b> · No, Burnham is not taking a risk over Europe</li><li><b style="color:var(--fg)">科技前沿</b> · TOP20城市产业新势能：合肥“二次创业”，长沙触底转型</li></ul>
+</div>
+<a href="../magazine.html" style="display:flex;gap:12px;align-items:center;margin-top:12px;padding:13px 16px;border-radius:var(--radius);background:linear-gradient(120deg,rgba(138,28,28,.22),rgba(212,165,74,.10));border:1px solid var(--line);text-decoration:none">
+  <span style="font-size:20px">▦</span>
+  <span style="flex:1;font-size:13px;color:var(--fg2);line-height:1.5">《财经》杂志 <b style="color:var(--gold2)">2026年第22期 总第755期</b> 已更新 · 7 篇<br><span style="color:var(--fg3);font-size:12px">本期主打：IBM大中华区董事长陈黎明：脱钩对中美科技创新的影响</span></span>
+  <span style="color:var(--gold);font-size:12px">进入 →</span>
+</a>
+<div class="toolbar">
+  <input id="q" class="search" type="search" placeholder="搜索标题或正文关键词…" autocomplete="off">
+  <div class="chips"><button class="chip on" data-cat="all">全部</button><button class="chip" data-cat="macro">宏观与政策</button><button class="chip" data-cat="market">市场与行情</button><button class="chip" data-cat="company">公司与产业</button><button class="chip" data-cat="finance">金融机构</button><button class="chip" data-cat="regulation">监管与合规</button><button class="chip" data-cat="global">国际视野</button><button class="chip" data-cat="tech">科技前沿</button><button class="chip" data-cat="other">其他</button></div>
+</div>
+
+<section class="cat" id="cat-macro">
+  <div class="cat-h"><span class="ic">◈</span>
+    <h3>宏观与政策</h3><span class="n">7</span></div>
+  <article class="card" data-cat="macro" data-i="0" data-text="聚焦新兴领域知识产权保护！第二十三届上海知识产权国际论坛开幕 以“新兴领域知识产权保护”为主题的第二十三届上海知识产权国际论坛今天（11月25日）开幕。国家知识产权局局长陈福利、上海市市长朱忠明、世界知识产权组织（wipo）副总干事申长雨出席开幕式并致辞。
+陈福利表示，国家知识产权局深入贯彻落实习近平主席关于知识产权工作的重要指示论述精神和党中央、国务院决策部署，从完善制度保障和">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 22:06</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454402.html" target="_blank" rel="noopener">聚焦新兴领域知识产权保护！第二十三届上海知识产权国际论坛开幕</a></h4>
+  <div class="body plain"><p>以“新兴领域知识产权保护”为主题的第二十三届上海知识产权国际论坛今天（11月25日）开幕。国家知识产权局局长陈福利、上海市市长朱忠明、世界知识产权组织（WIPO）副总干事申长雨出席开幕式并致辞。</p></div>
+  <span class="more" data-i="0">展开全文</span>
+</article><article class="card" data-cat="macro" data-i="1" data-text="一财社论：推进企业减负，让惠企政策接续有力 近来，政策面上关于企业减负的动作频频。11月22日，《减轻企业负担政策汇编（2026）》发布，收录了收费减免、税收优惠、降低企业制度性交易成本等方面共计183条正在执行的政策措施。此前，国务院减轻企业负担部际联席会议召开电视电话会议，总结今年以来企业减负情况，部署明年减负工作。
+在这次电视电话会议上，发布了中国中小企业">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 21:12</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454309.html" target="_blank" rel="noopener">一财社论：推进企业减负，让惠企政策接续有力</a></h4>
+  <div class="body plain"><p>近来，政策面上关于企业减负的动作频频。11月22日，《减轻企业负担政策汇编（2026）》发布，收录了收费减免、税收优惠、降低企业制度性交易成本等方面共计183条正在执行的政策措施。</p></div>
+  <span class="more" data-i="1">展开全文</span>
+</article><article class="card" data-cat="macro" data-i="2" data-text="​国家发展改革委：三峡水运新通道工程建设进展顺利 已完成投资超过110亿元 国家发展改革委11月25日消息，为深入贯彻党中央和国务院决策部署，加快推进三峡水运新通道工程建设，国家发展改革委副主任李春临日前在京主持召开三峡水运新通道建设有关会议。会议听取了三峡集团关于工程建设进展等有关情况的汇报，并进行了交流讨论。
+据介绍，三峡水运新通道工程开工以来，工程建设进展顺利，总体按计划进度推进。截至目">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 16:39</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139167.html" target="_blank" rel="noopener">​国家发展改革委：三峡水运新通道工程建设进展顺利 已完成投资超过110亿元</a></h4>
+  <div class="body plain"><p>国家发展改革委11月25日消息，为深入贯彻党中央和国务院决策部署，加快推进三峡水运新通道工程建设，国家发展改革委副主任李春临日前在京主持召开三峡水运新通道建设有关会议。会议听取了三峡集团关于工程建设进展等有关情况的汇报，并进行了交流讨论。</p><p>据介绍，三峡水运新通道工程开工以来，工程建设进展顺利，总体按计划进度推进。截至目前，已完成投资超过110亿元。下一步，有关方面将进一步加大工作力度，加强协同配合，高质量推进工程建设。</p></div>
+  <a class="more" href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139167.html" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="macro" data-i="3" data-text="10月物价数据出炉！cpi温和、ppi同比涨幅扩大 11月9日，10月份居民消费价格（cpi）和工业生产者出厂价格（ppi）数据出炉。
+数据显示，cpi环比持平，同比上涨0.7%，涨幅比上月回落0.2个百分点；扣除食品和能源价格的核心cpi同比上涨0.8%；ppi环比上涨0.7%，涨幅比上月回落0.5个百分点；同比上涨5.7%，涨幅比上月扩大0.7个百分点。
+分析认为，">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">要闻</span>
+    <span class="tm">11/09 12:52</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4328253.html" target="_blank" rel="noopener">10月物价数据出炉！CPI温和、PPI同比涨幅扩大</a></h4>
+  <div class="body plain"><p>11月9日，10月份居民消费价格（CPI）和工业生产者出厂价格（PPI）数据出炉。 数据显示，CPI环比持平，同比上涨0.7%，涨幅比上月回落0.2个百分点；扣除食品和能源价格的核心CPI同比上涨0.8%；</p></div>
+  <span class="more" data-i="3">展开全文</span>
+</article><article class="card" data-cat="macro" data-i="4" data-text="事关中美贸易！国务院关税税则委员会，最新公告！ 2026年11月9日，国务院关税税则委员会发布最新公告。
+国务院关税税则委员会关于调整对原产于美国的进口商品加征关税措施的公告
+税委会公告2026年第6号
+为落实中美两国元首华盛顿会晤达成的成果共识，根据《中华人民共和国关税法》、《中华人民共和国海关法》、《中华人民共和国对外贸易法》等法律法规和国际法基本原则，经国务院">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">要闻</span>
+    <span class="tm">11/09 11:08</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4328156.html" target="_blank" rel="noopener">事关中美贸易！国务院关税税则委员会，最新公告！</a></h4>
+  <div class="body plain"><p>2026年11月9日，国务院关税税则委员会发布最新公告。 国务院关税税则委员会关于调整对原产于美国的进口商品加征关税措施的公告 税委会公告2026年第6号 为落实中美两国元首华盛顿会晤达成的成果共识，</p></div>
+  <span class="more" data-i="4">展开全文</span>
+</article><article class="card" data-cat="macro" data-i="5" data-text="冲刺四季度、打好收官战 地方稳增长各展所长 四季度是全年收官之季，也是巩固经济回升向好的关键窗口期。11月6日召开的国务院常务会议要求，“确保完成全年经济社会发展主要目标任务”。记者注意到，10月以来，31个省份通过省委常委会、省委财经委或省政府常务会议等方式，对四季度经济工作作出部署。各省份纷纷提出“冲刺四季度”“打好收官战”等表述，全力以赴完成全年目标任务。">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">要闻</span>
+    <span class="tm">11/09 10:27</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4327980.html" target="_blank" rel="noopener">冲刺四季度、打好收官战 地方稳增长各展所长</a></h4>
+  <div class="body plain"><p>四季度是全年收官之季，也是巩固经济回升向好的关键窗口期。11月6日召开的国务院常务会议要求，“确保完成全年经济社会发展主要目标任务”。</p></div>
+  <span class="more" data-i="5">展开全文</span>
+</article><article class="card" data-cat="macro" data-i="6" data-text="upgrade to us gdp figures keeps december rate rise in play for fed bureau of economic analysis said economy grew at annualised rate of 4.3% in third quarter, up from initial estimate of 3.4%">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Home</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 16:07</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/a1aaf5be-176c-4c4c-99d6-00875f6933f3?syn-25a6b1a6=1" target="_blank" rel="noopener">Upgrade to US GDP figures keeps December rate rise in play for Fed</a></h4>
+  <div class="body plain"><p>Bureau of Economic Analysis said economy grew at annualised rate of 4.3% in third quarter, up from initial estimate of 3.4%</p></div>
+  <a class="more" href="https://www.ft.com/content/a1aaf5be-176c-4c4c-99d6-00875f6933f3?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article>
+</section><section class="cat" id="cat-market">
+  <div class="cat-h"><span class="ic">◎</span>
+    <h3>市场与行情</h3><span class="n">14</span></div>
+  <article class="card" data-cat="market" data-i="7" data-text="从2元跌到2毛，网红私募产品暗藏风险多 从“2元基”到“2毛基”，网红私募产品只用了不到5个月时间。
+私募排排网数据显示，基金经理吴悦风管理的嘉越月风投资创世号，截至11月20日净值仅剩0.2097元，单周下跌43.28%，较6月末2.0223元的高点跌去近九成。11月以来，该产品已经两次出现单周净值跌超40%的情形。
+剧烈波动的净值曲线之外，吴悦风拥有百万">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 22:17</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454269.html" target="_blank" rel="noopener">从2元跌到2毛，网红私募产品暗藏风险多</a></h4>
+  <div class="body plain"><p>从“2元基”到“2毛基”，网红私募产品只用了不到5个月时间。 私募排排网数据显示，基金经理吴悦风管理的嘉越月风投资创世号，截至11月20日净值仅剩0.2097元，单周下跌43.28%，</p></div>
+  <span class="more" data-i="7">展开全文</span>
+</article><article class="card" data-cat="market" data-i="8" data-text="保利发展拟发行不超过200亿元公司债券 保利发展11月25日晚间公告称，公司董事会审议通过发行公司债券方案，发行规模不超过200亿元，期限不超过10年，采用公开发行方式，募集资金拟用于偿还有息债务、补充流动资金、项目建设、并购地产项目等。
+中国证券报·中证金牛座记者观察到，近期，a股上市公司发行百亿级公司债频现。
+中信证券近日公告，公司收到中国证监会批复，同">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 22:11</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139199.html" target="_blank" rel="noopener">保利发展拟发行不超过200亿元公司债券</a></h4>
+  <div class="body plain"><p>保利发展11月25日晚间公告称，公司董事会审议通过发行公司债券方案，发行规模不超过200亿元，期限不超过10年，采用公开发行方式，募集资金拟用于偿还有息债务、补充流动资金、项目建设、并购地产项目等。</p></div>
+  <span class="more" data-i="8">展开全文</span>
+</article><article class="card" data-cat="market" data-i="9" data-text="流片不确定性升温，国产gpu四小龙股价集体重挫 一则传闻与临时新规落地后，国产半导体链遭遇资金抛售，gpu板块更是首当其冲。
+11月25日，gpu“四小龙”集体大跌，截至收盘，沐曦股份-u（688802.sh）、摩尔线程-u（688795.sh）、壁仞科技（06082.hk）和天数智芯（09903.hk）四只个股中，三只创出历史新低。壁仞科技收盘跌幅超24%。
+市场">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 20:32</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454246.html" target="_blank" rel="noopener">流片不确定性升温，国产GPU四小龙股价集体重挫</a></h4>
+  <div class="body plain"><p>一则传闻与临时新规落地后，国产半导体链遭遇资金抛售，GPU板块更是首当其冲。 11月25日，GPU“四小龙”集体大跌，截至收盘，</p></div>
+  <span class="more" data-i="9">展开全文</span>
+</article><article class="card" data-cat="market" data-i="10" data-text="多只沪深300etf尾盘大幅放量 11月25日，a股三大指数大幅调整，尾盘时刻，沪深300etf华夏、沪深300etf易方达、沪深300etf华泰柏瑞等多只沪深300etf出现大量买单。
+截至收盘，沪深300etf华夏成交额125.75亿元，较昨日的43.85亿元增长186.77%。沪深300etf易方达成交额95.45亿元，较昨日的19.06亿元增长">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 16:13</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139164.html" target="_blank" rel="noopener">多只沪深300ETF尾盘大幅放量</a></h4>
+  <div class="body plain"><p>11月25日，A股三大指数大幅调整，尾盘时刻，沪深300ETF华夏、沪深300ETF易方达、沪深300ETF华泰柏瑞等多只沪深300ETF出现大量买单。</p><p>截至收盘，沪深300ETF华夏成交额125.75亿元，较昨日的43.85亿元增长186.77%。沪深300ETF易方达成交额95.45亿元，较昨日的19.06亿元增长400.79%。沪深300ETF华泰柏瑞成交额成交额79.12亿元，较昨日的55.67亿元大幅放量。</p></div>
+  <a class="more" href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139164.html" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="market" data-i="11" data-text="上市公募reits数量达到100只 11月25日，作为民营房企落地的首单公募reit产品，广发新城吾悦商业reit在上海证券交易所上市。至此，全市场已上市公募reits数量正式达到100只，发行总规模超2500亿元；其中商业不动产reits共9只，发行总规模超300亿元。
+值得一提的是，近期，公募reits二级市场强势反弹。wind数据显示，中证reit">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 10:20</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139135.html" target="_blank" rel="noopener">上市公募REITs数量达到100只</a></h4>
+  <div class="body plain"><p>11月25日，作为民营房企落地的首单公募REIT产品，广发新城吾悦商业REIT在上海证券交易所上市。至此，全市场已上市公募REITs数量正式达到100只，发行总规模超2500亿元；</p></div>
+  <span class="more" data-i="11">展开全文</span>
+</article><article class="card" data-cat="market" data-i="12" data-text="理财净值短期回撤 机构建议理性看待波动 近期受债市久期拥挤、信用情绪扰动与权益市场调整叠加影响，部分银行理财产品净值出现明显回撤，连一些r1、r2级低风险固收产品也未能幸免。工银理财、农银理财、信银理财、光大理财、广银理财、苏银理财等多家理财子公司相继发声，核心判断趋于一致：本轮调整更多是情绪与交易层面的短期扰动，投资者宜拉长持有周期，避免在低位将浮亏变为实">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">金融</span>
+    <span class="tm">11/09 08:47</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4327897.html" target="_blank" rel="noopener">理财净值短期回撤 机构建议理性看待波动</a></h4>
+  <div class="body plain"><p>近期受债市久期拥挤、信用情绪扰动与权益市场调整叠加影响，部分银行理财产品净值出现明显回撤，连一些R1、R2级低风险固收产品也未能幸免。</p></div>
+  <span class="more" data-i="12">展开全文</span>
+</article><article class="card" data-cat="market" data-i="13" data-text="us stocks sell-off deepens as ai trade cracks tech-heavy nasdaq 100 falls more than 4% as weeks-long slide continues">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Home</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 16:23</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/705eb84c-801d-4a96-b908-e366511e886a?syn-25a6b1a6=1" target="_blank" rel="noopener">US stocks sell-off deepens as AI trade cracks</a></h4>
+  <div class="body plain"><p>Tech-heavy Nasdaq 100 falls more than 4% as weeks-long slide continues</p></div>
+  <a class="more" href="https://www.ft.com/content/705eb84c-801d-4a96-b908-e366511e886a?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="market" data-i="14" data-text="tech stocks slide as confidence in ai trade fades nasdaq 100 set to open lower as weeks-long sell-off continues">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Companies</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 11:00</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/705eb84c-801d-4a96-b908-e366511e886a?syn-25a6b1a6=1" target="_blank" rel="noopener">Tech stocks slide as confidence in AI trade fades</a></h4>
+  <div class="body plain"><p>Nasdaq 100 set to open lower as weeks-long sell-off continues</p></div>
+  <a class="more" href="https://www.ft.com/content/705eb84c-801d-4a96-b908-e366511e886a?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="market" data-i="15" data-text="an $87bn debt gamble tests the limits of the ellison family fortune the tech billionaire dynasty’s hollywood ambitions have rattled credit markets and set the stage for thousands of lay-offs">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Companies</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 11:00</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/f269760e-e9e4-4bf9-b88b-a5daaa5b5b52?syn-25a6b1a6=1" target="_blank" rel="noopener">An $87bn debt gamble tests the limits of the Ellison family fortune</a></h4>
+  <div class="body plain"><p>The tech billionaire dynasty’s Hollywood ambitions have rattled credit markets and set the stage for thousands of lay-offs</p></div>
+  <a class="more" href="https://www.ft.com/content/f269760e-e9e4-4bf9-b88b-a5daaa5b5b52?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="market" data-i="16" data-text="‘anflopic’ bodes badly for openai’s ipo prospects by pushing its listing to the limit, the claude maker has made itself a hard act to follow">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Home</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 06:00</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/1c62dcfe-826f-4638-a9ee-c3b3009bc45d" target="_blank" rel="noopener">‘Anflopic’ bodes badly for OpenAI’s IPO prospects</a></h4>
+  <div class="body plain"><p>By pushing its listing to the limit, the Claude maker has made itself a hard act to follow</p></div>
+  <a class="more" href="https://www.ft.com/content/1c62dcfe-826f-4638-a9ee-c3b3009bc45d" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="market" data-i="17" data-text="goldman says us data center boom through 2028 will lift power and gas demand - reuters goldman says us data center boom through 2028 will lift power and gas demand reuters">
+  <div class="card-t">
+    <span class="src" style="background:#e07b00">Reuters 路透</span>
+    <span class="ch">Top</span>
+    <span class="tm">11/25 03:22</span>
+  </div>
+  <h4><a href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxOc3FXeU1sR0Jwb3R5UUpxWTFidWtqTk9aUC1iNGd5Q1NWbDVxa010VmJOei1pQ2RTREJUTjYyMHZ3RFFJVTQzMkl2el9xUlhSZTRGWkpYOW9xZlB0SElCTFEwT2hPbUtGM0ItWUZ6SkdzeUw1SEs5Tk5ydk5iSWxuZWROSEVQNHg0TGk2TGtHbi1BNHlDUnQ0OFlSN0UwNDMydVF2R3Rmd18wWHFBaVJyeW1PdXAxU1NqaFliVG1ZRF8xQQ?oc=5" target="_blank" rel="noopener">Goldman says US data center boom through 2028 will lift power and gas demand - Reuters</a></h4>
+  <div class="body plain"><p>Goldman says US data center boom through 2028 will lift power and gas demand Reuters</p></div>
+  <a class="more" href="https://news.google.com/rss/articles/CBMiwgFBVV95cUxOc3FXeU1sR0Jwb3R5UUpxWTFidWtqTk9aUC1iNGd5Q1NWbDVxa010VmJOei1pQ2RTREJUTjYyMHZ3RFFJVTQzMkl2el9xUlhSZTRGWkpYOW9xZlB0SElCTFEwT2hPbUtGM0ItWUZ6SkdzeUw1SEs5Tk5ydk5iSWxuZWROSEVQNHg0TGk2TGtHbi1BNHlDUnQ0OFlSN0UwNDMydVF2R3Rmd18wWHFBaVJyeW1PdXAxU1NqaFliVG1ZRF8xQQ?oc=5" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="market" data-i="18" data-text="copper shows how ai is messing with markets the pitfalls of being a proxy bet for a technological revolution">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Finance &amp; economics</span><span class="pw">付费墙</span>
+    <span class="tm">11/24 18:12</span>
+  </div>
+  <h4><a href="https://www.economist.com/finance-and-economics/2026/11/24/copper-shows-how-ai-is-messing-with-markets" target="_blank" rel="noopener">Copper shows how AI is messing with markets</a></h4>
+  <div class="body plain"><p>The pitfalls of being a proxy bet for a technological revolution</p></div>
+  <a class="more" href="https://www.economist.com/finance-and-economics/2026/11/24/copper-shows-how-ai-is-messing-with-markets" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="market" data-i="19" data-text="bond yields are rising everywhere—except china the chinese central bank has cut interest rates despite itself">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Finance &amp; economics</span><span class="pw">付费墙</span>
+    <span class="tm">11/19 10:04</span>
+  </div>
+  <h4><a href="https://www.economist.com/finance-and-economics/2026/11/19/bond-yields-are-rising-everywhere-except-china" target="_blank" rel="noopener">Bond yields are rising everywhere—except China</a></h4>
+  <div class="body plain"><p>The Chinese central bank has cut interest rates despite itself</p></div>
+  <a class="more" href="https://www.economist.com/finance-and-economics/2026/11/19/bond-yields-are-rising-everywhere-except-china" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="market" data-i="20" data-text="anthropic soars, but it may soon be back, cap in hand the biggest ipo of all time is just a start">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Business</span><span class="pw">付费墙</span>
+    <span class="tm"></span>
+  </div>
+  <h4><a href="https://www.economist.com/business/2026/11/19/anthropic-soars-but-it-may-soon-be-back-cap-in-hand" target="_blank" rel="noopener">Anthropic soars, but it may soon be back, cap in hand</a></h4>
+  <div class="body plain"><p>The biggest IPO of all time is just a start</p></div>
+  <a class="more" href="https://www.economist.com/business/2026/11/19/anthropic-soars-but-it-may-soon-be-back-cap-in-hand" target="_blank" rel="noopener">阅读原文 →</a>
+</article>
+</section><section class="cat" id="cat-company">
+  <div class="cat-h"><span class="ic">▣</span>
+    <h3>公司与产业</h3><span class="n">33</span></div>
+  <article class="card" data-cat="company" data-i="21" data-text="【中证快报】11月25日中证投资资讯 ○交通运输部等四部门联合印发《关于做好新一轮国家综合货运枢纽补链强链提升行动第一批城市实施工作的通知》，确定了北京、呼和浩特等10个城市为新一轮国家综合货运枢纽补链强链提升行动第一批城市。
+○由我国自主提出的国际标准提案《物联网在陆上油气生产中的应用》近日在国际电工委员会（iec）成功立项。
+○珠免集团（600185）">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 22:47</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139205.html" target="_blank" rel="noopener">【中证快报】11月25日中证投资资讯</a></h4>
+  <div class="body plain"><p>○交通运输部等四部门联合印发《关于做好新一轮国家综合货运枢纽补链强链提升行动第一批城市实施工作的通知》，确定了北京、呼和浩特等10个城市为新一轮国家综合货运枢纽补链强链提升行动第一批城市。</p></div>
+  <span class="more" data-i="21">展开全文</span>
+</article><article class="card" data-cat="company" data-i="22" data-text="阿维塔定价再度失守20万元关口 11月25日，阿维塔06t max先锋版正式上市，全国建议零售价21.99万元，叠加限时权益后售价下探至19.99万元。
+阿维塔不仅不是第一次触及这一价格带，事实上在2025年，品牌的实际销售单价已经跌破了20万元。
+2025年4月19日阿维塔06上市时，官方指导价20.99万元起，叠加上市现金权益和预售现金权益后，限">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 22:45</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454416.html" target="_blank" rel="noopener">阿维塔定价再度失守20万元关口</a></h4>
+  <div class="body plain"><p>11月25日，阿维塔06T Max先锋版正式上市，全国建议零售价21.99万元，叠加限时权益后售价下探至19.99万元。</p></div>
+  <span class="more" data-i="22">展开全文</span>
+</article><article class="card" data-cat="company" data-i="23" data-text="理想汽车第三季度实现营收288.3亿元 自由现金流转正 11月25日，理想汽车发布2026年第三季度财报。报告期内公司交付新车99964辆，同比增长7.2%，环比增长1.7%；实现营收288.3亿元，同比增长5.4%，环比增长12.3%，完成此前收入指引，前三季度位列20万元以上中国新能源汽车品牌销量第一。
+受旗舰车型销售带动、产品结构优化影响，本季度公司实现毛利48.2亿">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 21:51</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139197.html" target="_blank" rel="noopener">理想汽车第三季度实现营收288.3亿元 自由现金流转正</a></h4>
+  <div class="body plain"><p>11月25日，理想汽车发布2026年第三季度财报。报告期内公司交付新车99964辆，同比增长7.2%，环比增长1.7%；</p></div>
+  <span class="more" data-i="23">展开全文</span>
+</article><article class="card" data-cat="company" data-i="24" data-text="速腾聚创第三季度营收6.73亿元 预计第四季度激光雷达销量破百万台 11月25日晚间，激光雷达公司速腾聚创发布2026年前三季度业绩公告。第三季度公司实现营收6.73亿元，同比增长65.2%；激光雷达总销量57.55万台，同比增长210.1%，两项指标均刷新单季纪录。基于现有订单情况，公司预计第四季度激光雷达销量有望突破100万台。
+业务结构方面，机器人激光雷达增长迅猛，前三季度该品类">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 21:50</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139196.html" target="_blank" rel="noopener">速腾聚创第三季度营收6.73亿元 预计第四季度激光雷达销量破百万台</a></h4>
+  <div class="body plain"><p>11月25日晚间，激光雷达公司速腾聚创发布2026年前三季度业绩公告。第三季度公司实现营收6.73亿元，同比增长65.2%；激光雷达总销量57.55万台，同比增长210.1%，两项指标均刷新单季纪录。</p></div>
+  <span class="more" data-i="24">展开全文</span>
+</article><article class="card" data-cat="company" data-i="25" data-text="累计回购金额超60亿元！宁德时代大额注销式回购提速 11月25日晚间，宁德时代公告，公司当日在深圳证券交易所回购47.44万股，付出价格总额9999.70万元。近期，公司明显加大回购力度，截至目前累计回购金额达60.8亿元。
+2026年7月，宁德时代披露200亿元—400亿元回购方案，回购股份全部用于注销，充分彰显对公司价值和未来发展前景的信心。
+从基本面看，前三季度宁">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 21:44</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139195.html" target="_blank" rel="noopener">累计回购金额超60亿元！宁德时代大额注销式回购提速</a></h4>
+  <div class="body plain"><p>11月25日晚间，宁德时代公告，公司当日在深圳证券交易所回购47.44万股，付出价格总额9999.70万元。近期，公司明显加大回购力度，截至目前累计回购金额达60.8亿元。</p></div>
+  <span class="more" data-i="25">展开全文</span>
+</article><article class="card" data-cat="company" data-i="26" data-text="亚太市场抛压延续，修复仍需更多信号验证 11月25日，亚太市场重新回到抛售轨道。
+盘面上，权重高度集中于芯片与ai硬件的韩国、日本市场成为抛售重灾区。
+截至11月25日收盘，msci亚太指数下跌2.1%，韩国综合股价指数（kospi）收跌6.16%；日经225种股票平均价格指数跌2.78%；芯片股领跌，三星电子跌10%、sk海力士跌11%、东京电子重挫12.">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 21:36</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454352.html" target="_blank" rel="noopener">亚太市场抛压延续，修复仍需更多信号验证</a></h4>
+  <div class="body plain"><p>11月25日，亚太市场重新回到抛售轨道。 盘面上，权重高度集中于芯片与AI硬件的韩国、日本市场成为抛售重灾区。 截至11月25日收盘，MSCI亚太指数下跌2.1%，</p></div>
+  <span class="more" data-i="26">展开全文</span>
+</article><article class="card" data-cat="company" data-i="27" data-text="城投“退平台”倒计时七个月：隐性债务化解接近尾声 距离2027年6月30日“退平台”大限仅剩不足七个月。截至2026年9月末，全国融资平台数量较2023年3月末已压降92%，名单出清近在眼前；但平台的职能转型、造血培育能否同步到位，备受市场关注。
+“退平台”，就是把地方政府融资平台从官方融资平台名录中移出，剥离替政府举债融资的职能，切断政府信用背书。按照银发〔2024">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 21:32</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454353.html" target="_blank" rel="noopener">城投“退平台”倒计时七个月：隐性债务化解接近尾声</a></h4>
+  <div class="body plain"><p>距离2027年6月30日“退平台”大限仅剩不足七个月。截至2026年9月末，全国融资平台数量较2023年3月末已压降92%，名单出清近在眼前；但平台的职能转型、造血培育能否同步到位，备受市场关注。</p></div>
+  <span class="more" data-i="27">展开全文</span>
+</article><article class="card" data-cat="company" data-i="28" data-text="希音三季度收入降、利润涨，许仰天称“美国市场已度过最困难阶段” 11月25日，希音（shein，00625.hk）发布截至2026年9月30日的三个月未经审计业绩，这是希音上市后发布的首份完整季度业绩，希音在财报中表示，“也是外部政策变化影响最为集中的季度”。
+财报数据显示，希音本季度收入为103亿美元，同比下降5.9%，经调整净利润同比增长26.8%、环比增长246.5%，达到7">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 21:20</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454317.html" target="_blank" rel="noopener">希音三季度收入降、利润涨，许仰天称“美国市场已度过最困难阶段”</a></h4>
+  <div class="body plain"><p>11月25日，希音（SHEIN，00625.HK）发布截至2026年9月30日的三个月未经审计业绩，这是希音上市后发布的首份完整季度业绩，希音在财报中表示，“也是外部政策变化影响最为集中的季度”。</p></div>
+  <span class="more" data-i="28">展开全文</span>
+</article><article class="card" data-cat="company" data-i="29" data-text="ai进化速递丨谷歌为gemini推出新隐私设置 ①阿里旗下ai智能体千问go今日全面开放免费代打电话服务；
+②摩尔线程全功能gpu承载magi-2首发上线；
+③华为云发布智能体伙伴开放计划；
+④谷歌为gemini推出新隐私设置：用户可独立控制聊天记录是否用于ai训练。
+第一财经广告合作，
+此内容为第一财经原创，著作权归第一财经所有。未经第一财经书面授权，不得以任何方">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 21:00</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454297.html" target="_blank" rel="noopener">AI进化速递丨谷歌为Gemini推出新隐私设置</a></h4>
+  <div class="body plain"><p>①阿里旗下AI智能体千问Go今日全面开放免费代打电话服务；</p><p>②摩尔线程全功能GPU承载MAGI-2首发上线；</p><p>③华为云发布智能体伙伴开放计划；</p><p>④谷歌为Gemini推出新隐私设置：用户可独立控制聊天记录是否用于AI训练。</p><p>第一财经广告合作，</p><p>此内容为第一财经原创，著作权归第一财经所有。未经第一财经书面授权，不得以任何方式加以使用，包括转载、摘编、复制或建立镜像。第一财经保留追究侵权者法律责任的权利。</p><p>如需获得授权请联系第一财经版权部：</p><p>banquan@yicai.com</p></div>
+  <a class="more" href="https://www.yicai.com/news/103454297.html" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="30" data-text="治疗难治性抑郁症，浙大脑机接口研究团队有了新突破 我国脑机接口科研团队在难治性抑郁症治疗领域有了关键突破。
+第一财经日前获悉，一套面向难治性抑郁症精准治疗的侵入式脑机接口系统——deepaxtiv（下称“deepaxtiv系统”），由浙大计算机学院与双脑中心脑机接口团队（下称“浙大研究团队”）等多家机构联合发布，发布机构还包括南湖脑机交叉研究院、杭州青石永隽医疗设备有">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 19:53</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454147.html" target="_blank" rel="noopener">治疗难治性抑郁症，浙大脑机接口研究团队有了新突破</a></h4>
+  <div class="body plain"><p>我国脑机接口科研团队在难治性抑郁症治疗领域有了关键突破。 第一财经日前获悉，一套面向难治性抑郁症精准治疗的侵入式脑机接口系统——DeepAxtiv（下称“DeepAxtiv系统”），</p></div>
+  <span class="more" data-i="30">展开全文</span>
+</article><article class="card" data-cat="company" data-i="31" data-text="宁德时代股价大跌，机构称锂电盈利、排产预期承压 11月25日，宁德时代a股收报208.42元，跌8.33%，总市值约9644亿元，跌破1万亿元关口，创2025年4月14日以来新低，较今年5月初的阶段性高点回撤幅度近55%；h股收报295.6港元，跌12.23%，较今年6月初的高点累计下跌近62%。
+同日，同花顺电池板块指数（881281）也大幅下挫，下跌6.12%。">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 19:31</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454142.html" target="_blank" rel="noopener">宁德时代股价大跌，机构称锂电盈利、排产预期承压</a></h4>
+  <div class="body plain"><p>11月25日，宁德时代A股收报208.42元，跌8.33%，总市值约9644亿元，跌破1万亿元关口，创2025年4月14日以来新低，较今年5月初的阶段性高点回撤幅度近55%；</p></div>
+  <span class="more" data-i="31">展开全文</span>
+</article><article class="card" data-cat="company" data-i="32" data-text="6g商用还有四年，标准、技术与商业模式如何破局？ 距离2030年6g商用的时间节点越来越近，全球6g竞争正在从前沿技术探索转向标准研制、技术验证与产业化落地并行推进的新阶段。
+中国通信标准化协会理事长闻库在11月24日举行的2026年6g发展大会上表示，今年6月，国际通信标准组织3gpp明确了6g标准研制时间表：2029年形成首个完整的6g标准版本，2030年前后具备">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 19:16</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454113.html" target="_blank" rel="noopener">6G商用还有四年，标准、技术与商业模式如何破局？</a></h4>
+  <div class="body plain"><p>距离2030年6G商用的时间节点越来越近，全球6G竞争正在从前沿技术探索转向标准研制、技术验证与产业化落地并行推进的新阶段。</p></div>
+  <span class="more" data-i="32">展开全文</span>
+</article><article class="card" data-cat="company" data-i="33" data-text="几十元的中国商品“坐飞机”出海，航空货运生意火爆 一根售价十几元的数据线，一件售价几十元的衣服，如今也可以搭乘飞机，跨越上万公里，送到海外消费者手中。
+中国制造业的升级以及企业加快出海，正在为航空货运创造新的增量市场。
+今年前三季度，我国民航旅客运输量同比增长2%，国际航线货邮运输量则同比增长12%。在高油价冲击下，多家以客运为主的国内航空公司陷入亏损，航空货运企业却">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 18:53</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454018.html" target="_blank" rel="noopener">几十元的中国商品“坐飞机”出海，航空货运生意火爆</a></h4>
+  <div class="body plain"><p>一根售价十几元的数据线，一件售价几十元的衣服，如今也可以搭乘飞机，跨越上万公里，送到海外消费者手中。 中国制造业的升级以及企业加快出海，正在为航空货运创造新的增量市场。</p></div>
+  <span class="more" data-i="33">展开全文</span>
+</article><article class="card" data-cat="company" data-i="34" data-text="中信金融资产联合首程融石设立约百亿私募股权投资基金 11月25日记者注意到，程泰信启（北京）私募股权投资基金合伙企业（有限合伙）近日成立，基金出资额100.01亿元，经营范围包含私募股权投资基金管理、创业投资基金管理服务等。股权穿透信息显示，该基金由中信金融资产认缴100亿元，首程融石（北京）基金管理有限公司认缴100万元；首程融石担任执行事务合伙人，负责基金管理运作。">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 13:32</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139154.html" target="_blank" rel="noopener">中信金融资产联合首程融石设立约百亿私募股权投资基金</a></h4>
+  <div class="body plain"><p>11月25日记者注意到，程泰信启（北京）私募股权投资基金合伙企业（有限合伙）近日成立，基金出资额100.01亿元，经营范围包含私募股权投资基金管理、创业投资基金管理服务等。</p></div>
+  <span class="more" data-i="34">展开全文</span>
+</article><article class="card" data-cat="company" data-i="35" data-text="民营房企首单商业不动产reits挂牌上市 11月25日，新城控股首单商业不动产reits（即广发新城吾悦封闭式商业不动产证券投资基金，以下简称“广发新城吾悦商业reit”）在上海证券交易所成功上市，最终募集规模15.53亿元。
+业内人士认为，作为民营房企首单商业不动产reits产品，其不仅有助于新城控股盘活存量资产、助力消费升级、服务内需增长，更将在政策利好下">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 12:07</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139146.html" target="_blank" rel="noopener">民营房企首单商业不动产REITs挂牌上市</a></h4>
+  <div class="body plain"><p>11月25日，新城控股首单商业不动产REITs（即广发新城吾悦封闭式商业不动产证券投资基金，以下简称“广发新城吾悦商业REIT”）在上海证券交易所成功上市，最终募集规模15.53亿元。</p></div>
+  <span class="more" data-i="35">展开全文</span>
+</article><article class="card" data-cat="company" data-i="36" data-text="两只人形机器人概念股，不到一分钟涨停 11月25日早盘，人形机器人概念局部活跃。汇洲智能“一”字涨停，斩获3连板。长华集团、宁波东力双双不到一分钟拉升涨停，分别斩获4连板、3连板。
+近期，人形机器人行业迎来多个利好。政策方面，近日，工业和信息化部批准《人工智能关键基础技术具身智能数据生成系统技术要求》等274项行业标准，其中包括《人形机器人训练场构建技术规">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 10:33</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139137.html" target="_blank" rel="noopener">两只人形机器人概念股，不到一分钟涨停</a></h4>
+  <div class="body plain"><p>11月25日早盘，人形机器人概念局部活跃。汇洲智能“一”字涨停，斩获3连板。长华集团、宁波东力双双不到一分钟拉升涨停，分别斩获4连板、3连板。 近期，人形机器人行业迎来多个利好。</p></div>
+  <span class="more" data-i="36">展开全文</span>
+</article><article class="card" data-cat="company" data-i="37" data-text="中信建投证券：看好2026年锂电板块超预期表现 中信建投证券近日发布研报表示，10月中国汽车工业协会口径下国内新能源车销量维持高增长态势，海外需求保持旺盛。乘联会数据显示，10月新能源乘用车批售量同比、环比双双增长，渗透率环比大幅抬升。今年新能源乘用车出口持续超预期，自6月起已连续5个月同比增幅超140%，2026年全年新能源车销量有望达到1876万辆（含商用车，此">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 08:51</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139127.html" target="_blank" rel="noopener">中信建投证券：看好2026年锂电板块超预期表现</a></h4>
+  <div class="body plain"><p>中信建投证券近日发布研报表示，10月中国汽车工业协会口径下国内新能源车销量维持高增长态势，海外需求保持旺盛。乘联会数据显示，10月新能源乘用车批售量同比、环比双双增长，渗透率环比大幅抬升。今年新能源乘用车出口持续超预期，自6月起已连续5个月同比增幅超140%，2026年全年新能源车销量有望达到1876万辆（含商用车，此前预测1856万辆），同比增长14%，继续看好锂电板块超预期表现。</p></div>
+  <a class="more" href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139127.html" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="38" data-text="稳市场！深圳召开辖区上市公司座谈会，工业富联、立讯精密等公司负责人参会 11月24日上午，深圳市委金融办联合深圳证监局、中国人民银行深圳市分行和深圳金融监管局组织召开辖区上市公司座谈会，引导上市公司用好回购、增持等市场化工具，稳定市场预期、增强投资者信心。工业富联、立讯精密、中兴通讯、汇川技术等40家上市公司负责人，以及平安集团、招商银行、中信证券、国信证券等多家金融机构代表参加会议。
+会">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/24 15:41</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139055.html" target="_blank" rel="noopener">稳市场！深圳召开辖区上市公司座谈会，工业富联、立讯精密等公司负责人参会</a></h4>
+  <div class="body plain"><p>11月24日上午，深圳市委金融办联合深圳证监局、中国人民银行深圳市分行和深圳金融监管局组织召开辖区上市公司座谈会，引导上市公司用好回购、增持等市场化工具，稳定市场预期、增强投资者信心。</p></div>
+  <span class="more" data-i="38">展开全文</span>
+</article><article class="card" data-cat="company" data-i="39" data-text="无形的服务贸易 如何在进博会上触手可及 服务贸易是以服务作为商品进行跨国或跨境交换的经济活动，具有无形性等特点。2018年首届进博会举办时，许多观众都带着疑惑：这些触不可及的“服务”，为何能拥有专属展区？八年后的今天，服务贸易展区已成为进博会最有看点的区域之一，人气居高不下。
+事实上，服务贸易并非远离生活，百姓的衣食住行都与服务贸易息息相关。在sgs展台，记">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">要闻</span>
+    <span class="tm">11/09 10:40</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4328105.html" target="_blank" rel="noopener">无形的服务贸易 如何在进博会上触手可及</a></h4>
+  <div class="body plain"><p>服务贸易是以服务作为商品进行跨国或跨境交换的经济活动，具有无形性等特点。2018年首届进博会举办时，许多观众都带着疑惑：这些触不可及的“服务”，为何能拥有专属展区？</p></div>
+  <span class="more" data-i="39">展开全文</span>
+</article><article class="card" data-cat="company" data-i="40" data-text="期货公司交易类业务“归母”新动向！业内人士：分类评价或仍是重要准入指标 今年9月，证监会正式发布修订后的《期货公司监督管理办法》，新办法明确将做市交易、资产管理、衍生品交易划为交易类业务，该类业务由期货公司本体持牌经营，不再由子公司承载，业内将这一安排通俗称为交易类业务“归母”。
+与此前的征求意见稿相比，正式发布的新规中，相关业务准入条件里删除了有关分类评级的要求。
+不过，券商中国记者近日">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">金融</span>
+    <span class="tm">11/09 10:40</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4328128.html" target="_blank" rel="noopener">期货公司交易类业务“归母”新动向！业内人士：分类评价或仍是重要准入指标</a></h4>
+  <div class="body plain"><p>今年9月，证监会正式发布修订后的《期货公司监督管理办法》，新办法明确将做市交易、资产管理、衍生品交易划为交易类业务，该类业务由期货公司本体持牌经营，不再由子公司承载，业内将这一安排通俗称为交易类业务“归母”。</p></div>
+  <span class="more" data-i="40">展开全文</span>
+</article><article class="card" data-cat="company" data-i="41" data-text="民营“活水” 政策“活力” 市场“活血” 在中国资本市场版图上，浙江是名副其实的“优等生”。截至10月31日，浙江省a股上市公司达756家，总市值约8.04万亿元，其中市值超千亿元的公司有9家；今年前三季度，浙江省a股上市公司合计实现营业收入4.18万亿元，同比增长6.26%；实现归母净利润2837.52亿元，同比增长8.98%。
+亮眼的资本市场成绩单背后，是">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">要闻</span>
+    <span class="tm">11/09 08:47</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4327890.html" target="_blank" rel="noopener">民营“活水” 政策“活力” 市场“活血”</a></h4>
+  <div class="body plain"><p>在中国资本市场版图上，浙江是名副其实的“优等生”。截至10月31日，浙江省A股上市公司达756家，总市值约8.04万亿元，其中市值超千亿元的公司有9家；</p></div>
+  <span class="more" data-i="41">展开全文</span>
+</article><article class="card" data-cat="company" data-i="42" data-text="湖南企业借力中部农博会打通产销链路 11月6日至9日，第二十七届中国中部（湖南）农业博览会（以下简称“中部农博会”）在长沙国际会展中心举办。本届中部农博会主题为“科技引领、品牌赋能，助力乡村全面振兴”，展览面积约8万平方米，设置6个展馆，成为中部地区涉农上市公司展示产品、对接渠道、推介新品的重要平台。
+《证券日报》记者在走访展馆时看到，多家湖南本土涉农企">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">要闻</span>
+    <span class="tm">11/09 08:17</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4327811.html" target="_blank" rel="noopener">湖南企业借力中部农博会打通产销链路</a></h4>
+  <div class="body plain"><p>11月6日至9日，第二十七届中国中部（湖南）农业博览会（以下简称“中部农博会”）在长沙国际会展中心举办。本届中部农博会主题为“科技引领、品牌赋能，助力乡村全面振兴”，展览面积约8万平方米，设置6个展馆，</p></div>
+  <span class="more" data-i="42">展开全文</span>
+</article><article class="card" data-cat="company" data-i="43" data-text="氢氧化锂期货和期权获批注册 11月6日，中国证监会发布通知，同意广州期货交易所（以下简称“广期所”）氢氧化锂期货和期权注册，这意味着绿色期货阵营扩容在即。
+多位受访人士表示，氢氧化锂期货和期权获批注册，是期货市场服务新能源和绿色低碳产业发展的重要举措，将与碳酸锂期货、期权形成协同效应，进一步完善锂电产业链风险管理工具谱系，提升我国锂资源及新能源材">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">金融</span>
+    <span class="tm">11/09 08:17</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4327796.html" target="_blank" rel="noopener">氢氧化锂期货和期权获批注册</a></h4>
+  <div class="body plain"><p>11月6日，中国证监会发布通知，同意广州期货交易所（以下简称“广期所”）氢氧化锂期货和期权注册，这意味着绿色期货阵营扩容在即。</p></div>
+  <span class="more" data-i="43">展开全文</span>
+</article><article class="card" data-cat="company" data-i="44" data-text="jensen huang returns. but nvidia will never be the same he now faces a hostile congress, rattled employees and wary business partners">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Business</span><span class="pw">付费墙</span>
+    <span class="tm">11/23 00:00</span>
+  </div>
+  <h4><a href="https://www.economist.com/business/2026/11/23/jensen-huang-returns-but-nvidia-will-never-be-the-same" target="_blank" rel="noopener">Jensen Huang returns. But Nvidia will never be the same</a></h4>
+  <div class="body plain"><p>He now faces a hostile Congress, rattled employees and wary business partners</p></div>
+  <a class="more" href="https://www.economist.com/business/2026/11/23/jensen-huang-returns-but-nvidia-will-never-be-the-same" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="45" data-text="bartleby newsletter: valley mentality andrew palmer, bartleby columnist, asks why people who think that ai might have terrible outcomes persist in developing it">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Business</span><span class="pw">付费墙</span>
+    <span class="tm">11/23 00:00</span>
+  </div>
+  <h4><a href="https://www.economist.com/business/2026/11/23/bartleby-newsletter-valley-mentality" target="_blank" rel="noopener">Bartleby newsletter: Valley mentality</a></h4>
+  <div class="body plain"><p>Andrew Palmer, Bartleby columnist, asks why people who think that AI might have terrible outcomes persist in developing it</p></div>
+  <a class="more" href="https://www.economist.com/business/2026/11/23/bartleby-newsletter-valley-mentality" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="46" data-text="easyjet profits tumble 96% after fuel prices soar falling consumer demand also hits airline in final set of annual results before takeover by apollo next year">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Companies</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 11:53</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/8606f7ee-f98b-44f5-ae5a-120b696afca5?syn-25a6b1a6=1" target="_blank" rel="noopener">EasyJet profits tumble 96% after fuel prices soar</a></h4>
+  <div class="body plain"><p>Falling consumer demand also hits airline in final set of annual results before takeover by Apollo next year</p></div>
+  <a class="more" href="https://www.ft.com/content/8606f7ee-f98b-44f5-ae5a-120b696afca5?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="47" data-text="the investigations facing nvidia and jensen huang returning ceo and chipmaker face scrutiny from federal and state authorities, congress and shareholders">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Companies</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 11:25</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/b68742ac-f7b9-4aca-b4d9-48245e749b60?syn-25a6b1a6=1" target="_blank" rel="noopener">The investigations facing Nvidia and Jensen Huang</a></h4>
+  <div class="body plain"><p>Returning CEO and chipmaker face scrutiny from federal and state authorities, Congress and shareholders</p></div>
+  <a class="more" href="https://www.ft.com/content/b68742ac-f7b9-4aca-b4d9-48245e749b60?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="48" data-text="heathrow seeks to pass on £300mn third runway planning costs to passengers airport wants permission from regulator to claw back money through higher traveller charges">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Companies</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 11:24</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/800abc68-933a-40f5-be6a-3e2f4a55ff88?syn-25a6b1a6=1" target="_blank" rel="noopener">Heathrow seeks to pass on £300mn third runway planning costs to passengers</a></h4>
+  <div class="body plain"><p>Airport wants permission from regulator to claw back money through higher traveller charges</p></div>
+  <a class="more" href="https://www.ft.com/content/800abc68-933a-40f5-be6a-3e2f4a55ff88?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="49" data-text="shein to pay $100mn to resolve us allegations it deceived customers regulators claim retailer made misleading claims on origin of its cotton fabrics and suppressed negative reviews">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Companies</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 11:18</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/0128d44e-8ca1-49b8-868b-b8fe0e4824c6?syn-25a6b1a6=1" target="_blank" rel="noopener">Shein to pay $100mn to resolve US allegations it deceived customers</a></h4>
+  <div class="body plain"><p>Regulators claim retailer made misleading claims on origin of its cotton fabrics and suppressed negative reviews</p></div>
+  <a class="more" href="https://www.ft.com/content/0128d44e-8ca1-49b8-868b-b8fe0e4824c6?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="50" data-text="exclusive: alice huang-linked firms listed $270 million in ai servers in china, records show - reuters exclusive: alice huang-linked firms listed $270 million in ai servers in china, records show reuters">
+  <div class="card-t">
+    <span class="src" style="background:#e07b00">Reuters 路透</span>
+    <span class="ch">Top</span>
+    <span class="tm">11/25 06:13</span>
+  </div>
+  <h4><a href="https://news.google.com/rss/articles/CBMixAFBVV95cUxPYXNKWVJFdGJPenhtYnNFM2VnNnJGdUpjaUlfVDMycE9TWlVUOWJwNVNmU0dyMC1OUF90NzQ1TUZwdDlERUc0RENMRU44MVo2eGhsT1V3MTFpLXh0OTM3cW1hWkNZbGFzc3V5WVdFenoxTE5uZkZoaDNXdW41cmFzVThQZnVNYUR2N3hMcE1EeUQ4cGotR3FVYjJKV0FudldtekoyZUQ3b2NlNTUxWmNfODdPd3RHVlNZM2tsYWpwSFVjZGFY?oc=5" target="_blank" rel="noopener">EXCLUSIVE: Alice Huang-linked firms listed $270 million in AI servers in China, records show - Reuters</a></h4>
+  <div class="body plain"><p>EXCLUSIVE: Alice Huang-linked firms listed $270 million in AI servers in China, records show Reuters</p></div>
+  <a class="more" href="https://news.google.com/rss/articles/CBMixAFBVV95cUxPYXNKWVJFdGJPenhtYnNFM2VnNnJGdUpjaUlfVDMycE9TWlVUOWJwNVNmU0dyMC1OUF90NzQ1TUZwdDlERUc0RENMRU44MVo2eGhsT1V3MTFpLXh0OTM3cW1hWkNZbGFzc3V5WVdFenoxTE5uZkZoaDNXdW41cmFzVThQZnVNYUR2N3hMcE1EeUQ4cGotR3FVYjJKV0FudldtekoyZUQ3b2NlNTUxWmNfODdPd3RHVlNZM2tsYWpwSFVjZGFY?oc=5" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="51" data-text="us shelves plans for business deals with russia to end ukraine war, ft says - reuters us shelves plans for business deals with russia to end ukraine war, ft says reuters">
+  <div class="card-t">
+    <span class="src" style="background:#e07b00">Reuters 路透</span>
+    <span class="ch">Top</span>
+    <span class="tm">11/25 05:16</span>
+  </div>
+  <h4><a href="https://news.google.com/rss/articles/CBMixgFBVV95cUxPZFZhN2w2ckJtVC03TWJPb2FwbDlrZzdDd0tRUWRmeGh0WXJBeWZjelhNMFNlMjNPTzJZVjB2MVhtZzhqSE9rdzZkbE5kZW5HbDdxeVVhd1g0aUExaHZGMm5oVy1YTkcyMmdaN0s5aG9kNERVZWl0OHpVaFRNVkFaNVQwTnFKMjAwWFMtenFJU002WlBIbWVqRVZHTWlWa19BXzNDaDJVVmUyRExDUXBHZnVmTHMwV01iSHRPallncHNkT09hNnc?oc=5" target="_blank" rel="noopener">US shelves plans for business deals with Russia to end Ukraine war, FT says - Reuters</a></h4>
+  <div class="body plain"><p>US shelves plans for business deals with Russia to end Ukraine war, FT says Reuters</p></div>
+  <a class="more" href="https://news.google.com/rss/articles/CBMixgFBVV95cUxPZFZhN2w2ckJtVC03TWJPb2FwbDlrZzdDd0tRUWRmeGh0WXJBeWZjelhNMFNlMjNPTzJZVjB2MVhtZzhqSE9rdzZkbE5kZW5HbDdxeVVhd1g0aUExaHZGMm5oVy1YTkcyMmdaN0s5aG9kNERVZWl0OHpVaFRNVkFaNVQwTnFKMjAwWFMtenFJU002WlBIbWVqRVZHTWlWa19BXzNDaDJVVmUyRExDUXBHZnVmTHMwV01iSHRPallncHNkT09hNnc?oc=5" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="52" data-text="how much more air can come out of the ai trade? markets are troubled—for good reason">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Finance &amp; economics</span><span class="pw">付费墙</span>
+    <span class="tm">11/22 19:44</span>
+  </div>
+  <h4><a href="https://www.economist.com/finance-and-economics/2026/11/22/how-much-more-air-can-come-out-of-the-ai-trade" target="_blank" rel="noopener">How much more air can come out of the AI trade?</a></h4>
+  <div class="body plain"><p>Markets are troubled—for good reason</p></div>
+  <a class="more" href="https://www.economist.com/finance-and-economics/2026/11/22/how-much-more-air-can-come-out-of-the-ai-trade" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="company" data-i="53" data-text="the global south’s smartphone king goes big on ai faced with stiffening competition and rising costs, transsion plans its next act">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Business</span><span class="pw">付费墙</span>
+    <span class="tm"></span>
+  </div>
+  <h4><a href="https://www.economist.com/business/2026/11/19/the-global-souths-smartphone-king-goes-big-on-ai" target="_blank" rel="noopener">The global south’s smartphone king goes big on AI</a></h4>
+  <div class="body plain"><p>Faced with stiffening competition and rising costs, Transsion plans its next act</p></div>
+  <a class="more" href="https://www.economist.com/business/2026/11/19/the-global-souths-smartphone-king-goes-big-on-ai" target="_blank" rel="noopener">阅读原文 →</a>
+</article>
+</section><section class="cat" id="cat-finance">
+  <div class="cat-h"><span class="ic">◇</span>
+    <h3>金融机构</h3><span class="n">3</span></div>
+  <article class="card" data-cat="finance" data-i="54" data-text="险资公募出手！国寿安保基金1亿元自购旗下权益类公募基金 11月25日，国寿安保基金公告称，运用1亿元自有资金自购旗下权益类公募基金。公司以真金白银践行长期投资、价值投资理念，传递对中国资本市场长期稳定健康发展的信心。
+2026年下半年以来，a股市场经历了一轮调整与结构再平衡。国寿安保基金权益投研团队认为，短期市场波动不会改变中国资产中长期配置逻辑，在估值风险充分释放背景下，">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 13:57</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139158.html" target="_blank" rel="noopener">险资公募出手！国寿安保基金1亿元自购旗下权益类公募基金</a></h4>
+  <div class="body plain"><p>11月25日，国寿安保基金公告称，运用1亿元自有资金自购旗下权益类公募基金。公司以真金白银践行长期投资、价值投资理念，传递对中国资本市场长期稳定健康发展的信心。</p></div>
+  <span class="more" data-i="54">展开全文</span>
+</article><article class="card" data-cat="finance" data-i="55" data-text="银保协同赋能外贸新业态，多方合力护航企业平稳出海 当下，外贸发展进入新阶段，跨境电商已从外贸“新业态”升级为产业“新引擎”。
+11月7日，中国建设银行联合中国出口信用保险公司（下称“中国信保”）在上海举办“遇建进博 善建行远”助力跨境金融高质量发展方案发布与签约仪式主题活动。
+会上，中国信保副总经理徐新伟称，中国制造出海不是企业一家一家远行，而是政府领航下的银行、信保">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">金融</span>
+    <span class="tm">11/09 10:30</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4328114.html" target="_blank" rel="noopener">银保协同赋能外贸新业态，多方合力护航企业平稳出海</a></h4>
+  <div class="body plain"><p>当下，外贸发展进入新阶段，跨境电商已从外贸“新业态”升级为产业“新引擎”。 11月7日，中国建设银行联合中国出口信用保险公司（下称“中国信保”）在上海举办“遇建进博</p></div>
+  <span class="more" data-i="55">展开全文</span>
+</article><article class="card" data-cat="finance" data-i="56" data-text="saudi arabia’s $1trn wealth pot suffers an identity crisis the public investment fund is distracted, and not just by war">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Finance &amp; economics</span><span class="pw">付费墙</span>
+    <span class="tm">11/22 11:13</span>
+  </div>
+  <h4><a href="https://www.economist.com/finance-and-economics/2026/11/22/saudi-arabias-1trn-wealth-pot-suffers-an-identity-crisis" target="_blank" rel="noopener">Saudi Arabia’s $1trn wealth pot suffers an identity crisis</a></h4>
+  <div class="body plain"><p>The Public Investment Fund is distracted, and not just by war</p></div>
+  <a class="more" href="https://www.economist.com/finance-and-economics/2026/11/22/saudi-arabias-1trn-wealth-pot-suffers-an-identity-crisis" target="_blank" rel="noopener">阅读原文 →</a>
+</article>
+</section><section class="cat" id="cat-regulation">
+  <div class="cat-h"><span class="ic">⚖</span>
+    <h3>监管与合规</h3><span class="n">3</span></div>
+  <article class="card" data-cat="regulation" data-i="57" data-text="四天8家a股公司“戴帽”！有的“摘帽”仅4个月再被st 又一批a股公司集中“戴帽”，财务造假成为重要导火索。
+根据公告，明日起（11月26日），神雾节能（000820.sz）、大烨智能（300670.sz）将被实施其他风险警示，股票简称将分别变更为st节能、st大烨。两家公司近期均因财务造假被处罚，其中，神雾节能被查明2024年虚增营收近7000万元，公司及多名责任人被合计">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 21:19</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454326.html" target="_blank" rel="noopener">四天8家A股公司“戴帽”！有的“摘帽”仅4个月再被ST</a></h4>
+  <div class="body plain"><p>又一批A股公司集中“戴帽”，财务造假成为重要导火索。 根据公告，明日起（11月26日），神雾节能（000820.SZ）、大烨智能（300670.SZ）将被实施其他风险警示，</p></div>
+  <span class="more" data-i="57">展开全文</span>
+</article><article class="card" data-cat="regulation" data-i="58" data-text="员工履职监督不到位、材料报送存疏漏 国元证券被安徽证监局出具警示函 11月25日，安徽证监局发布对国元证券股份有限公司采取出具警示函措施的决定。
+上述决定称，安徽证监局发现国元证券股份有限公司存在以下问题：一是对员工履职监督不到位，部分员工存在违规执业行为，违反了《证券基金经营机构董事、监事、高级管理人员及从业人员监督管理办法》（证监会令第227号）第三十五条的规定；二是未及时报送有关">
+  <div class="card-t">
+    <span class="src" style="background:#1f6fb2">中国证券报</span>
+    <span class="ch">首页</span>
+    <span class="tm">11/25 21:08</span>
+  </div>
+  <h4><a href="https://jnzstatic.cs.com.cn/zzb/htmlInfo/139190.html" target="_blank" rel="noopener">员工履职监督不到位、材料报送存疏漏 国元证券被安徽证监局出具警示函</a></h4>
+  <div class="body plain"><p>11月25日，安徽证监局发布对国元证券股份有限公司采取出具警示函措施的决定。 上述决定称，安徽证监局发现国元证券股份有限公司存在以下问题：一是对员工履职监督不到位，部分员工存在违规执业行为，</p></div>
+  <span class="more" data-i="58">展开全文</span>
+</article><article class="card" data-cat="regulation" data-i="59" data-text="how the manosphere cashes in on male insecurity behind the controversial influencers lies a web of troubling sponsorship deals">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Business</span><span class="pw">付费墙</span>
+    <span class="tm">11/23 00:00</span>
+  </div>
+  <h4><a href="https://www.economist.com/business/2026/11/23/how-the-manosphere-cashes-in-on-male-insecurity" target="_blank" rel="noopener">How the manosphere cashes in on male insecurity</a></h4>
+  <div class="body plain"><p>Behind the controversial influencers lies a web of troubling sponsorship deals</p></div>
+  <a class="more" href="https://www.economist.com/business/2026/11/23/how-the-manosphere-cashes-in-on-male-insecurity" target="_blank" rel="noopener">阅读原文 →</a>
+</article>
+</section><section class="cat" id="cat-global">
+  <div class="cat-h"><span class="ic">⊕</span>
+    <h3>国际视野</h3><span class="n">5</span></div>
+  <article class="card" data-cat="global" data-i="60" data-text="no, burnham is not taking a risk over europe as long as he stops short of full rejoin, all the political danger is on the side of his opponents">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Home</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 14:44</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/84eb2d60-b229-4bc0-85ef-b56bc1a14338?syn-25a6b1a6=1" target="_blank" rel="noopener">No, Burnham is not taking a risk over Europe</a></h4>
+  <div class="body plain"><p>As long as he stops short of full Rejoin, all the political danger is on the side of his opponents</p></div>
+  <a class="more" href="https://www.ft.com/content/84eb2d60-b229-4bc0-85ef-b56bc1a14338?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="global" data-i="61" data-text="‘tech bros strike back’ as trump rescues nvidia’s huang silicon valley elites flexed their muscles in washington to back nvidia boss after humbling midterms defeat">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Home</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 05:00</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/a1374617-d3a2-415a-8490-72b164eefc0e?syn-25a6b1a6=1" target="_blank" rel="noopener">‘Tech bros strike back’ as Trump rescues Nvidia’s Huang</a></h4>
+  <div class="body plain"><p>Silicon Valley elites flexed their muscles in Washington to back Nvidia boss after humbling midterms defeat</p></div>
+  <a class="more" href="https://www.ft.com/content/a1374617-d3a2-415a-8490-72b164eefc0e?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="global" data-i="62" data-text="are america’s supply chains really more vulnerable than china’s? mapping the vulnerabilities in global commerce">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Finance &amp; economics</span><span class="pw">付费墙</span>
+    <span class="tm">11/24 20:34</span>
+  </div>
+  <h4><a href="https://www.economist.com/finance-and-economics/2026/11/24/are-americas-supply-chains-really-more-vulnerable-than-chinas" target="_blank" rel="noopener">Are America’s supply chains really more vulnerable than China’s?</a></h4>
+  <div class="body plain"><p>Mapping the vulnerabilities in global commerce</p></div>
+  <a class="more" href="https://www.economist.com/finance-and-economics/2026/11/24/are-americas-supply-chains-really-more-vulnerable-than-chinas" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="global" data-i="63" data-text="europe tightens sanctions on russia. america loosens them the west’s sanctions regimes are pulling in opposite directions">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Finance &amp; economics</span><span class="pw">付费墙</span>
+    <span class="tm">11/19 10:03</span>
+  </div>
+  <h4><a href="https://www.economist.com/finance-and-economics/2026/11/19/europe-tightens-sanctions-on-russia-america-loosens-them" target="_blank" rel="noopener">Europe tightens sanctions on Russia. America loosens them</a></h4>
+  <div class="body plain"><p>The West’s sanctions regimes are pulling in opposite directions</p></div>
+  <a class="more" href="https://www.economist.com/finance-and-economics/2026/11/19/europe-tightens-sanctions-on-russia-america-loosens-them" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="global" data-i="64" data-text="the world’s carmakers are revving up in america donald trump’s policies are only part of the explanation">
+  <div class="card-t">
+    <span class="src" style="background:#b8232f">The Economist 经济学人</span>
+    <span class="ch">Business</span><span class="pw">付费墙</span>
+    <span class="tm"></span>
+  </div>
+  <h4><a href="https://www.economist.com/business/2026/11/19/the-worlds-carmakers-are-revving-up-in-america" target="_blank" rel="noopener">The world’s carmakers are revving up in America</a></h4>
+  <div class="body plain"><p>Donald Trump’s policies are only part of the explanation</p></div>
+  <a class="more" href="https://www.economist.com/business/2026/11/19/the-worlds-carmakers-are-revving-up-in-america" target="_blank" rel="noopener">阅读原文 →</a>
+</article>
+</section><section class="cat" id="cat-tech">
+  <div class="cat-h"><span class="ic">◆</span>
+    <h3>科技前沿</h3><span class="n">1</span></div>
+  <article class="card" data-cat="tech" data-i="65" data-text="top20城市产业新势能：合肥“二次创业”，长沙触底转型 我国头部城市的产业分野日渐明显。合肥、武汉、郑州快速实现产业动能换挡，长沙则仍处于产业转型“阵痛”期。
+前三季度，3座中部省份省会城市正在跑出工业增长高增速：合肥以28.7%的规上工业增加值增速领跑我国gdp前20强城市，武汉以17.5%增速紧随其后，第三名是郑州，实现了13.2%的规上工业增加值增速。形成反差的是，同">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">要闻</span>
+    <span class="tm">11/09 08:35</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4327868.html" target="_blank" rel="noopener">TOP20城市产业新势能：合肥“二次创业”，长沙触底转型</a></h4>
+  <div class="body plain"><p>我国头部城市的产业分野日渐明显。合肥、武汉、郑州快速实现产业动能换挡，长沙则仍处于产业转型“阵痛”期。 前三季度，3座中部省份省会城市正在跑出工业增长高增速：合肥以28.7%的规上工业增加值增速领跑我国GDP…</p></div>
+  <span class="more" data-i="65">展开全文</span>
+</article>
+</section><section class="cat" id="cat-other">
+  <div class="cat-h"><span class="ic">▪</span>
+    <h3>其他</h3><span class="n">6</span></div>
+  <article class="card" data-cat="other" data-i="66" data-text="上海市人大常委会党组、市政府党组、市政协党组召开会议，坚决拥护党中央决定 上海市人大常委会党组、市政府党组、市政协党组今天（11月25日）分别召开会议，通报陈吉宁涉嫌严重违纪违法，目前正接受中央纪委国家监委审查调查。与会同志一致表示，坚决拥护党中央决定，坚决把思想和行动统一到党中央决定精神上来。
+市委副书记、市长、市政府党组书记朱忠明主持召开市政府党组会议并指出，中央纪委国家监委对陈吉宁涉嫌">
+  <div class="card-t">
+    <span class="src" style="background:#0f8a7d">第一财经</span>
+    <span class="ch">新闻</span>
+    <span class="tm">11/25 19:04</span>
+  </div>
+  <h4><a href="https://www.yicai.com/news/103454098.html" target="_blank" rel="noopener">上海市人大常委会党组、市政府党组、市政协党组召开会议，坚决拥护党中央决定</a></h4>
+  <div class="body plain"><p>上海市人大常委会党组、市政府党组、市政协党组今天（11月25日）分别召开会议，通报陈吉宁涉嫌严重违纪违法，目前正接受中央纪委国家监委审查调查。</p></div>
+  <span class="more" data-i="66">展开全文</span>
+</article><article class="card" data-cat="other" data-i="67" data-text="泰国企业与中国市场的“双向奔赴”（进博会故事） 走进第九届进博会农食产品展区，以“生态树”作为主要视觉造型的泰国正大集团展台引人注目（见图，本报记者李欣怡摄）。正大集团面向中国消费者研发的紫苏红运辣子鸡、冰花煎饺等速食系列特色产品以及与中国商超联合研发的定制产品一同亮相。
+从“出口中国”到依托中国市场实现全产业链升级，正大集团与进博会的9年之约，映射出中国超大规模市">
+  <div class="card-t">
+    <span class="src" style="background:#c0392b">证券时报</span>
+    <span class="ch">要闻</span>
+    <span class="tm">11/09 08:16</span>
+  </div>
+  <h4><a href="https://www.stcn.com/article/detail/4327821.html" target="_blank" rel="noopener">泰国企业与中国市场的“双向奔赴”（进博会故事）</a></h4>
+  <div class="body plain"><p>走进第九届进博会农食产品展区，以“生态树”作为主要视觉造型的泰国正大集团展台引人注目（见图，本报记者李欣怡摄）。正大集团面向中国消费者研发的紫苏红运辣子鸡、冰花煎饺等速食系列特色产品以及与中国商超联合研发的定…</p></div>
+  <span class="more" data-i="67">展开全文</span>
+</article><article class="card" data-cat="other" data-i="68" data-text="amazon to launch amazon autos in uk in early 2027 in first expansion beyond us - reuters amazon to launch amazon autos in uk in early 2027 in first expansion beyond us reuters">
+  <div class="card-t">
+    <span class="src" style="background:#e07b00">Reuters 路透</span>
+    <span class="ch">Top</span>
+    <span class="tm">11/25 06:04</span>
+  </div>
+  <h4><a href="https://news.google.com/rss/articles/CBMizAFBVV95cUxPWEtzNzh2NUdSdE41Yi1FYUY2Unk4Q3Z6bGlrb1UxVkxScVV5cmJzRmNZaUp4VFhCSEUwcWNOVHM2aUU3LVByVG81UEhHSFBnWWlmbnFqbC10QzhmVW5JMk84Y0RiVXpvZ3dUWElUNWVnWFBYZEN6Nk8xMVFHWlVPOUxPYi1MdHFSa3NXeVJ0ck9RdHVWYTdXSVJHZzBTZ3lNdFdzUU03MzFjaThMREZxaDUwdm8wQ2JjM25UNlR1ODlOb2c0Vk9DRHRKR3Y?oc=5" target="_blank" rel="noopener">Amazon to launch Amazon Autos in UK in early 2027 in first expansion beyond US - Reuters</a></h4>
+  <div class="body plain"><p>Amazon to launch Amazon Autos in UK in early 2027 in first expansion beyond US Reuters</p></div>
+  <a class="more" href="https://news.google.com/rss/articles/CBMizAFBVV95cUxPWEtzNzh2NUdSdE41Yi1FYUY2Unk4Q3Z6bGlrb1UxVkxScVV5cmJzRmNZaUp4VFhCSEUwcWNOVHM2aUU3LVByVG81UEhHSFBnWWlmbnFqbC10QzhmVW5JMk84Y0RiVXpvZ3dUWElUNWVnWFBYZEN6Nk8xMVFHWlVPOUxPYi1MdHFSa3NXeVJ0ck9RdHVWYTdXSVJHZzBTZ3lNdFdzUU03MzFjaThMREZxaDUwdm8wQ2JjM25UNlR1ODlOb2c0Vk9DRHRKR3Y?oc=5" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="other" data-i="69" data-text="african insurgents take war to the skies with off-the-shelf drones - reuters african insurgents take war to the skies with off-the-shelf drones reuters">
+  <div class="card-t">
+    <span class="src" style="background:#e07b00">Reuters 路透</span>
+    <span class="ch">Top</span>
+    <span class="tm">11/25 06:00</span>
+  </div>
+  <h4><a href="https://news.google.com/rss/articles/CBMirAFBVV95cUxON0RjeHRWcGl1ZElENEhBX0x2blI3b2w1OC1vZ1U3SklwRTV5ajRTWVRXczVBTlBrN0JkQldfZEozLTU1b3AxUDJTM3dnX3FoTldYTmZVZWF3dW4xSFM0c2gtWS1yTWRvSmlsRDhMa1ZncXIybHVKaXlhZE9FSHNaanRCckd2RHA0cHVOVldWUmVKMGhUV1JUZG95amFmQ3oyWjBYNmZVSl80ZzhT?oc=5" target="_blank" rel="noopener">African insurgents take war to the skies with off-the-shelf drones - Reuters</a></h4>
+  <div class="body plain"><p>African insurgents take war to the skies with off-the-shelf drones Reuters</p></div>
+  <a class="more" href="https://news.google.com/rss/articles/CBMirAFBVV95cUxON0RjeHRWcGl1ZElENEhBX0x2blI3b2w1OC1vZ1U3SklwRTV5ajRTWVRXczVBTlBrN0JkQldfZEozLTU1b3AxUDJTM3dnX3FoTldYTmZVZWF3dW4xSFM0c2gtWS1yTWRvSmlsRDhMa1ZncXIybHVKaXlhZE9FSHNaanRCckd2RHA0cHVOVldWUmVKMGhUV1JUZG95amFmQ3oyWjBYNmZVSl80ZzhT?oc=5" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="other" data-i="70" data-text="how an ex-mckinsey partner reverse engineered a $500bn wealth manager backed by abu dhabi’s mubadala capital, corient has bought 57 firms serving high-net-worth clients — and is on the hunt for more">
+  <div class="card-t">
+    <span class="src" style="background:#a0284a">FT 金融时报</span>
+    <span class="ch">Home</span><span class="pw">付费墙</span>
+    <span class="tm">11/25 05:00</span>
+  </div>
+  <h4><a href="https://www.ft.com/content/2a40938d-d3c8-47dd-a5e9-b728b685a5ed?syn-25a6b1a6=1" target="_blank" rel="noopener">How an ex-McKinsey partner reverse engineered a $500bn wealth manager</a></h4>
+  <div class="body plain"><p>Backed by Abu Dhabi’s Mubadala Capital, Corient has bought 57 firms serving high-net-worth clients — and is on the hunt for more</p></div>
+  <a class="more" href="https://www.ft.com/content/2a40938d-d3c8-47dd-a5e9-b728b685a5ed?syn-25a6b1a6=1" target="_blank" rel="noopener">阅读原文 →</a>
+</article><article class="card" data-cat="other" data-i="71" data-text="yemen's houthis threaten to target jeddah and other saudi red sea ports - reuters yemen's houthis threaten to target jeddah and other saudi red sea ports reuters">
+  <div class="card-t">
+    <span class="src" style="background:#e07b00">Reuters 路透</span>
+    <span class="ch">Top</span>
+    <span class="tm">11/25 02:42</span>
+  </div>
+  <h4><a href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbmE5cEFGWGFLVzVEUlVvWlE5NzJaT2p0MTUxclgxejJ2ZHJPbTQ5d1BLNzh6R2tFb251aWQ4dHBUTDRtaTlETkVick9uV1hKVkdZSjNPbFk5M2NBd1oxQXptdzAtLS1zVzlidDBDVXBmWFAyVnRzMGRmZHNGZVk4T3Y1aV9ycGZFcWxGejZ0T29BbG9EUks5QjZ0bzFVRG05YlVQemt4UDdDSEY5cUZrYzNsSU9VMGVX?oc=5" target="_blank" rel="noopener">Yemen's Houthis threaten to target Jeddah and other Saudi Red Sea ports - Reuters</a></h4>
+  <div class="body plain"><p>Yemen's Houthis threaten to target Jeddah and other Saudi Red Sea ports Reuters</p></div>
+  <a class="more" href="https://news.google.com/rss/articles/CBMiuAFBVV95cUxPbmE5cEFGWGFLVzVEUlVvWlE5NzJaT2p0MTUxclgxejJ2ZHJPbTQ5d1BLNzh6R2tFb251aWQ4dHBUTDRtaTlETkVick9uV1hKVkdZSjNPbFk5M2NBd1oxQXptdzAtLS1zVzlidDBDVXBmWFAyVnRzMGRmZHNGZVk4T3Y1aV9ycGZFcWxGejZ0T29BbG9EUks5QjZ0bzFVRG05YlVQemt4UDdDSEY5cUZrYzNsSU9VMGVX?oc=5" target="_blank" rel="noopener">阅读原文 →</a>
+</article>
+</section>
+
+<footer>
+  数据来源：证券时报 12 · 中国证券报 16 · 第一财经 16 · Reuters 路透 6 · FT 金融时报 12 · The Economist 经济学人 12<br>
+  国内三家（证券时报 / 中国证券报 / 第一财经）为正文全文；Reuters、FT、经济学人经 RSS 代理获取标题与摘要，原文需订阅或访问原站。<br>
+  生成于 2026-11-26 00:56:46 +0800 · 内容版权归原媒体所有。
+</footer>
+</div>
+<nav class="nav">
+  <a href="../index.html" class="on"><b>▤</b>今日</a>
+  <a href="#cat-macro"><b>◈</b>分类</a>
+  <a href="#q" onclick="document.getElementById('q').focus()"><b>⌕</b>搜索</a>
+  <a href="../magazine.html"><b>▦</b>杂志</a>
+  <a href="../archive.html"><b>☰</b>往期</a>
+</nav>
+<script>
+(function(){
+  var q=document.getElementById('q'), chips=[].slice.call(document.querySelectorAll('.chip'));
+  var cards=[].slice.call(document.querySelectorAll('.card')), cats=[].slice.call(document.querySelectorAll('.cat'));
+  var state={text:'', cat:'all'};
+
+  function apply(){
+    cards.forEach(function(c){
+      var t=c.dataset.text, cat=c.dataset.cat;
+      var okT=!state.text||t.indexOf(state.text)>-1;
+      var okC=state.cat==='all'||cat===state.cat;
+      c.style.display=(okT&&okC)?'':'none';
+    });
+    cats.forEach(function(s){
+      var vis=s.querySelectorAll('.card:not([style*="display: none"])').length;
+      s.style.display=vis?'':'none';
+    });
+  }
+  if(q) q.addEventListener('input',function(){ state.text=q.value.trim().toLowerCase(); apply(); });
+  chips.forEach(function(ch){
+    ch.addEventListener('click',function(){
+      chips.forEach(function(x){x.classList.remove('on')});
+      ch.classList.add('on'); state.cat=ch.dataset.cat; apply();
+      if(state.cat!=='all'){
+        var el=document.getElementById('cat-'+state.cat);
+        if(el) window.scrollTo({top:el.offsetTop-92,behavior:'smooth'});
+      }
+    });
+  });
+  // ---- 正文按需加载：整天的全文只在第一次点“展开全文”时取一次，
+  //      之后同一天所有文章都能瞬间展开，不再重复走网络。 ----
+  var DAY='2026-11-26', BASE='../', _day=null, _loading=null;
+  function loadDay(){
+    if(_day) return Promise.resolve(_day);
+    if(_loading) return _loading;
+    _loading=fetch(BASE+'data/'+DAY+'.json',{cache:'no-store'})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(j){ _day=j; _loading=null; return j; })
+      .catch(function(e){ _loading=null; throw e; });
+    return _loading;
+  }
+  function fill(body,text){
+    body.innerHTML='';
+    String(text||'').split(/\n+/).forEach(function(t){
+      t=t.trim(); if(!t) return;
+      var el=document.createElement('p'); el.textContent=t; body.appendChild(el);
+    });
+  }
+  document.addEventListener('click',function(e){
+    var m=e.target.closest('.more[data-i]'); if(!m) return;
+    var card=m.closest('.card'), body=card.querySelector('.body'), i=+m.dataset.i;
+    // 收起：把正文换回摘要。
+    // 注意不能只靠 CSS —— 列表页的 .body.plain 为了不被裁剪设了 max-height:none，
+    // 去掉 .open 不会收起来，必须把内容换回去，否则点了完全没反应。
+    if(card.classList.contains('open')){
+      card.classList.remove('open');
+      m.textContent='展开全文';
+      if(card._sum!=null) body.innerHTML=card._sum;
+      return;
+    }
+    // 已经取过全文：直接从内存换回来，不再走网络
+    if(card._full!=null){
+      body.innerHTML=card._full;
+      card.classList.add('open');
+      m.textContent='收起全文';
+      return;
+    }
+    m.style.borderColor=''; m.style.color=''; m.textContent='加载中…';
+    loadDay().then(function(j){
+      var a=(j.articles||[])[i];
+      if(!a||!a.content) throw new Error('no content');
+      card._sum=body.innerHTML;     // 先把摘要存下来，收起时还原
+      fill(body,a.content);
+      card._full=body.innerHTML;    // 全文也存一份，二次展开不再请求
+      card.classList.add('open');
+      m.textContent='收起全文';
+      card.dataset.text=(a.title+' '+a.content).toLowerCase();
+    }).catch(function(err){
+      m.textContent='加载失败，点此重试';
+      m.style.borderColor='rgba(224,74,74,.6)';
+      m.style.color='#e04a4a';
+      m.dataset.err=(err&&err.message)||'';
+      if(!navigator.onLine) m.textContent='没有网络，点此重试';
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var BID = "313e8b5f543d", BASE = "../";
+  var params = new URLSearchParams(location.search);
+  // 已经带着版本参数来过一次，就不再自动跳，避免网络抖动时反复刷新
+  var tried = params.get('v');
+
+  var bar = document.createElement('div');
+  bar.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);'
+    + 'bottom:calc(72px + env(safe-area-inset-bottom));z-index:99;display:none;'
+    + 'align-items:center;gap:10px;padding:10px 8px 10px 18px;border-radius:999px;'
+    + 'background:#d4a54a;color:#0e1116;font-size:14px;font-weight:700;'
+    + 'box-shadow:0 8px 28px rgba(0,0,0,.4);white-space:nowrap';
+  bar.innerHTML = '<span>有新内容</span>'
+    + '<button style="border:0;border-radius:999px;padding:6px 14px;font-size:13px;'
+    + 'font-weight:700;background:#0e1116;color:#f0c674">刷新</button>';
+  document.body.appendChild(bar);
+
+  function hardReload(){
+    if (window.caches && caches.keys) {
+      caches.keys().then(function(ks){ ks.forEach(function(k){ caches.delete(k); }); });
+    }
+    var u = new URL(location.href);
+    u.searchParams.set('v', Date.now());
+    location.replace(u.toString());
+  }
+  bar.querySelector('button').addEventListener('click', hardReload);
+
+  var btn = document.getElementById('fd-reload');
+  if (btn) btn.addEventListener('click', hardReload);
+
+  var busy = false;
+  function check(){
+    if (busy) return;
+    busy = true;
+    fetch(BASE + 'health.json?ts=' + Date.now(), { cache: 'no-store' })
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if (!j || !j.build_id || j.build_id === BID) return;
+        // 页面比服务端旧：先自动带版本参数重载一次，多数情况直接就拿到新版了
+        if (!tried) {
+          var u = new URL(location.href);
+          u.searchParams.set('v', j.build_id);
+          location.replace(u.toString());
+          return;
+        }
+        bar.style.display = 'flex';
+      })
+      .catch(function(){})
+      .then(function(){ busy = false; });
+  }
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden) check();
+  });
+  window.addEventListener('pageshow', function(ev){
+    if (ev.persisted) check();
+  });
+  setInterval(check, 120000);
+  check();
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register(BASE + 'sw.js').then(function(reg){
+      reg.update().catch(function(){});
+    }).catch(function(){});
+  }
+})();
+</script>
+</body>
+</html>
