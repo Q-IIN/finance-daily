@@ -1,18 +1,18 @@
 {
- "build_id": "3d719d0f9be6",
- "date": "2026-11-27",
- "generated_at": "2026-11-27 22:48:02 +0800",
- "latest_published": "2026-11-27 22:08",
- "fresh_today": 49,
- "total": 72,
+ "build_id": "5f0fa7e238ea",
+ "date": "2026-11-28",
+ "generated_at": "2026-11-28 12:37:14 +0800",
+ "latest_published": "2026-11-28 11:16",
+ "fresh_today": 7,
+ "total": 69,
  "stale": false,
  "per_source": {
-  "yicai": 16,
   "stcn": 11,
+  "cs": 16,
+  "yicai": 16,
+  "reuters": 6,
   "ft": 12,
-  "cs": 15,
-  "economist": 12,
-  "reuters": 6
+  "economist": 12
  },
- "checked_at": "2026-11-27 22:48:02 +0800"
+ "checked_at": "2026-11-28 12:37:14 +0800"
 }
